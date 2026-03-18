@@ -1,0 +1,484 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PARKYA Dashboard</title>
+
+    <!-- BOOTSTRAP CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome (ya usado por tu UI) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- TU CSS (reemplaza /vista/css/admin.css por el que te doy abajo) -->
+    <link rel="stylesheet" href="/ParkYa/wwwroot/css/admin.css">
+
+</head>
+<body>
+<!-- ===== TOPBAR (hamburger left) ===== -->
+<nav class="navbar navbar-light bg-white shadow-sm px-3 topbar">
+    <div class="d-flex align-items-center">
+        <!-- HAMBURGER (muestra offcanvas en mobile) -->
+        <button class="btn btn-outline-primary me-3 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar" aria-label="Abrir menú">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Logo pequeño (opcional en topbar) -->
+        <img src="/ParkYa/wwwroot/assets/logo1.jpeg" class="d-none d-md-inline-block logo-img me-3" alt="logo">
+
+        <!-- Search -->
+        <input class="form-control search d-none d-md-block" type="search" placeholder="Buscar placa…" aria-label="Buscar">
+    </div>
+
+    <div class="d-flex align-items-center gap-3">
+        <div class="top-info text-end me-2 d-none d-md-block">
+            <div class="date" id="fecha"></div>
+            <div class="time" id="reloj">00:00:00</div>
+        </div>
+
+        <i class="fa-regular fa-circle-question icon d-none d-md-inline"></i>
+
+        <div class="notif position-relative d-none d-md-inline-block">
+            <i class="fa-regular fa-bell fs-5"></i>
+            <span class="badge">3</span>
+        </div>
+
+        <div class="profile d-flex align-items-center">
+            <div class="circle">CR</div>
+            <div class="profile-text d-none d-md-flex flex-column ms-2">
+                <p class="name mb-0">Carlos Rodríguez</p>
+                <small class="profile-role">Administrador</small>
+            </div>
+            <button class="btn-salir ms-3">Salir</button>
+        </div>
+    </div>
+</nav>
+
+<!-- ===== OFFCANVAS SIDEBAR (mobile) ===== -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasSidebarLabel">PARKYA</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+    <div class="offcanvas-body p-0">
+        <!-- Reutilizamos la estructura de tu sidebar dentro del offcanvas -->
+        <aside class="sidebar-mobile p-3">
+            <div class="logo text-center mb-2">
+                <img src="/ParkYa/wwwroot/assets/logo1.jpeg" alt="Logo" class="logo-img">
+            </div>
+
+            <div class="user-info text-center mb-3">
+                <h3 class="h6 mb-1">Carlos Rodríguez</h3>
+                <span class="role">Administrador</span>
+            </div>
+
+            <div class="state-box mb-3">
+                <p class="mb-1"><span class="dot"></span> Disponible</p>
+                <p class="label mb-2">Ocupación</p>
+                <div class="progress">
+                    <div class="progress-bar" style="width: 28%"></div>
+                </div>
+                <small>28%</small>
+            </div>
+
+            <nav class="menu d-flex flex-column gap-1">
+                <a href="#" class="active p-2 rounded"><i class="fa-solid fa-table-columns me-2"></i> Dashboard</a>
+                <a href="#" class="p-2 rounded"><i class="fa-solid fa-car me-2"></i> Vehículos</a>
+                <a href="#" class="p-2 rounded"><i class="fa-regular fa-calendar me-2"></i> Reservas</a>
+                <a href="#" class="p-2 rounded"><i class="fa-regular fa-user me-2"></i> Clientes</a>
+                <a href="#" class="p-2 rounded"><i class="fa-solid fa-users me-2"></i> Empleados</a>
+                <a href="#" class="p-2 rounded"><i class="fa-solid fa-chart-line me-2"></i> Reportes</a>
+                <a href="#" class="p-2 rounded"><i class="fa-solid fa-tags me-2"></i> Tarifas</a>
+                <a href="#" class="p-2 rounded"><i class="fa-solid fa-gear me-2"></i> Configuración</a>
+            </nav>
+
+            <footer class="footer mt-auto text-center small">PARKYA © 2025</footer>
+        </aside>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- ===== SIDEBAR FIJO (desktop) ===== -->
+        <aside class="col-md-3 col-lg-2 d-none d-md-flex flex-column sidebar">
+            <div class="logo text-center mb-3">
+                <img src="/ParkYa/wwwroot/assets/logo1.jpeg" alt="Logo" class="logo-img">
+            </div>
+
+            <div class="user-info text-center mb-3">
+                <h3 class="h6 mb-1">Carlos Rodríguez</h3>
+                <span class="role">Administrador</span>
+            </div>
+
+            <div class="state-box mb-3">
+                <p class="mb-1"><span class="dot"></span> Disponible</p>
+                <p class="label mb-2">Ocupación</p>
+                <div class="progress">
+                    <div class="progress-bar" style="width: 28%"></div>
+                </div>
+                <small>28%</small>
+            </div>
+
+            <nav class="menu d-flex flex-column gap-1">
+                <a href="#" class="active p-2 rounded"><i class="fa-solid fa-table-columns me-2"></i> Dashboard</a>
+                <a href="#" class="p-2 rounded"><i class="fa-solid fa-car me-2"></i> Vehículos</a>
+                <a href="#" class="p-2 rounded"><i class="fa-regular fa-calendar me-2"></i> Reservas</a>
+                <a href="#" class="p-2 rounded"><i class="fa-regular fa-user me-2"></i> Clientes</a>
+                <a href="#" class="p-2 rounded"><i class="fa-solid fa-users me-2"></i> Empleados</a>
+                <a href="#" class="p-2 rounded"><i class="fa-solid fa-chart-line me-2"></i> Reportes</a>
+                <a href="#" class="p-2 rounded"><i class="fa-solid fa-tags me-2"></i> Tarifas</a>
+                <a href="#" class="p-2 rounded"><i class="fa-solid fa-gear me-2"></i> Configuración</a>
+            </nav>
+
+            <footer class="footer mt-auto text-center small">PARKYA © 2025</footer>
+        </aside>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <main class="col-12 col-md-9 col-lg-10 main">
+            <!-- Title -->
+            <section class="title">
+                <h2>Dashboard de Administrador</h2>
+                <p>Panel de control completo del sistema PARKYA</p>
+            </section>
+
+            <!-- Cards -->
+            <section class="cards row g-3">
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="card p-3 h-100">
+                        <p class="title">Espacios Totales</p>
+                        <h1>18</h1>
+                        <p class="sub">espacios</p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="card p-3 h-100">
+                        <p class="title">Disponibles</p>
+                        <h1 style="color:#1da749;">9</h1>
+                        <p class="sub">espacios</p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="card p-3 h-100">
+                        <p class="title">Ocupados</p>
+                        <h1 style="color:#d12626;">5</h1>
+                        <p class="sub">espacios</p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="card p-3 h-100">
+                        <p class="title">Vehículos Dentro</p>
+                        <h1>5</h1>
+                        <p class="sub">activos</p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="card large p-3 h-100">
+                        <p class="title">Ingresos del Día</p>
+                        <h1>$245.000</h1>
+                        <p class="sub">COP</p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="card p-3 h-100">
+                        <p class="title">Reservas</p>
+                        <h1>3</h1>
+                        <p class="sub">activas</p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="card p-3 h-100">
+                        <p class="title">Tiempo Promedio</p>
+                        <h1>2h 30m</h1>
+                        <p class="sub">de estancia</p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="card p-3 h-100">
+                        <p class="title">Empleados Activos</p>
+                        <h1>8</h1>
+                        <p class="sub">trabajando hoy</p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="card p-3 h-100">
+                        <p class="title">Total Semanal</p>
+                        <h1>$1595K</h1>
+                        <p class="green">+12% vs semana anterior</p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="card p-3 h-100">
+                        <p class="title">Rotación Diaria</p>
+                        <h1>42</h1>
+                        <p class="sub">vehículos procesados</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts -->
+            <section class="graph mt-4">
+                <p class="title">Ingresos Semanales</p>
+                <div style="height:320px;">
+                    <canvas id="chart"></canvas>
+                </div>
+            </section>
+
+            <!-- Map -->
+            <section class="graph mt-4">
+                <p class="title">Mapa del Parqueadero</p>
+
+                <div class="leyenda d-flex flex-wrap gap-3 mt-2">
+                    <div class="leyenda-item d-flex align-items-center gap-2">
+                        <span class="cuadro libre"></span>
+                        <span class="leyenda-text">Disponible</span>
+                    </div>
+                    <div class="leyenda-item d-flex align-items-center gap-2">
+                        <span class="cuadro ocupado"></span>
+                        <span class="leyenda-text">Ocupado</span>
+                    </div>
+                    <div class="leyenda-item d-flex align-items-center gap-2">
+                        <span class="cuadro reservado"></span>
+                        <span class="leyenda-text">Reservado</span>
+                    </div>
+                    <div class="leyenda-item d-flex align-items-center gap-2">
+                        <span class="cuadro mantenimiento"></span>
+                        <span class="leyenda-text">Mantenimiento</span>
+                    </div>
+                </div>
+
+                <div class="zona mt-3">
+                    <h3 class="titulo-zona">Zona A</h3>
+                    <div class="grid-parking mt-2">
+                        <div class="slot ocupado">A1</div>
+                        <div class="slot libre">A2</div>
+                        <div class="slot reservado">A3</div>
+                        <div class="slot libre">A4</div>
+                        <div class="slot mantenimiento">A5</div>
+                        <div class="slot ocupado">A6</div>
+                    </div>
+                </div>
+
+                <div class="zona mt-3">
+                    <h3 class="titulo-zona">Zona B</h3>
+                    <div class="grid-parking mt-2">
+                        <div class="slot libre">B1</div>
+                        <div class="slot ocupado">B2</div>
+                        <div class="slot libre">B3</div>
+                        <div class="slot reservado">B4</div>
+                        <div class="slot libre">B5</div>
+                        <div class="slot libre">B6</div>
+                    </div>
+                </div>
+
+                <div class="zona mt-3">
+                    <h3 class="titulo-zona">Zona C</h3>
+                    <div class="grid-parking mt-2">
+                        <div class="slot libre">C1</div>
+                        <div class="slot ocupado">C2</div>
+                        <div class="slot libre">C3</div>
+                        <div class="slot libre">C4</div>
+                        <div class="slot ocupado">C5</div>
+                        <div class="slot libre">C6</div>
+                    </div>
+                </div>
+
+                <!-- double graphs -->
+                <section class="graph double-graph mt-4">
+                    <div class="card-graph">
+                        <p class="title">Demanda por Hora</p>
+                        <div style="height:300px"><canvas id="demandaHora"></canvas></div>
+                    </div>
+
+                    <div class="card-graph">
+                        <p class="title">Distribución por Tipo de Vehículo</p>
+                        <div style="height:300px"><canvas id="tipoVehiculo"></canvas></div>
+                    </div>
+                </section>
+
+                <!-- actividad reciente -->
+                <div class="card card-full actividad-reciente mt-4">
+                    <h3>Actividad Reciente</h3>
+                    <ul class="actividad-lista">
+                        <li><span class="estado estado-verde"></span> Vehículo ABC123 ingresó al parqueadero — 10:25 AM</li>
+                        <li><span class="estado estado-rojo"></span> Vehículo TYU890 salió del parqueadero — 10:20 AM</li>
+                        <li><span class="estado estado-azul"></span> Reserva para placa KLM456 confirmada — 9:50 AM</li>
+                        <li><span class="estado estado-gris"></span> Mantenimiento programado — Zona B — 9:35 AM</li>
+                    </ul>
+                </div>
+
+                <!-- vehículos activos -->
+                <div class="card card-full vehiculos-activos mt-4">
+                    <h3>Vehículos Activos</h3>
+
+                    <ul class="vehiculos-lista" id="vehiculosActivos">
+                        <li data-placa="ABC123" data-entrada="2025-11-27T10:25:00" data-tipo="Automóvil" data-espacio="A1" class="d-grid">
+                            <div class="col placa">ABC123</div>
+                            <div class="col tipo">Automóvil</div>
+                            <div class="col duracion" data-entrada="2025-11-27T10:25:00">--</div>
+                            <div class="col espacio">A1</div>
+                            <div class="col propietario">Juan Pérez</div>
+                            <div class="col accion">
+                                <button class="btn-salida">Salida</button>
+                            </div>
+                        </li>
+
+                        <li data-placa="TYU890" data-entrada="2025-11-27T10:10:00" data-tipo="Camioneta" data-espacio="A3" class="d-grid">
+                            <div class="col placa">TYU890</div>
+                            <div class="col tipo">Camioneta</div>
+                            <div class="col duracion" data-entrada="2025-11-27T10:10:00">--</div>
+                            <div class="col espacio">A3</div>
+                            <div class="col propietario">María Gómez</div>
+                            <div class="col accion">
+                                <button class="btn-salida">Salida</button>
+                            </div>
+                        </li>
+
+                        <li data-placa="KLM456" data-entrada="2025-11-27T09:50:00" data-tipo="Motocicleta" data-espacio="B4" class="d-grid">
+                            <div class="col placa">KLM456</div>
+                            <div class="col tipo">Motocicleta</div>
+                            <div class="col duracion" data-entrada="2025-11-27T09:50:00">--</div>
+                            <div class="col espacio">B4</div>
+                            <div class="col propietario">Ana Martínez</div>
+                            <div class="col accion">
+                                <button class="btn-salida">Salida</button>
+                            </div>
+                        </li>
+
+                        <li data-placa="WXY777" data-entrada="2025-11-27T08:40:00" data-tipo="Automóvil" data-espacio="C1" class="d-grid">
+                            <div class="col placa">WXY777</div>
+                            <div class="col tipo">Automóvil</div>
+                            <div class="col duracion" data-entrada="2025-11-27T08:40:00">--</div>
+                            <div class="col espacio">C1</div>
+                            <div class="col propietario">Luis Fernández</div>
+                            <div class="col accion">
+                                <button class="btn-salida">Salida</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </section>
+        </main>
+    </div>
+</div>
+
+<!-- SCRIPTS: Bootstrap, Chart.js, y TU JS (ajustado) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- ==== FECHA / RELOJ ==== -->
+<script>
+function actualizarFechaHora() {
+    const ahora = new Date();
+    const opcionesFecha = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+    const fechaTexto = ahora.toLocaleDateString("es-ES", opcionesFecha);
+    document.getElementById("fecha").textContent = fechaTexto.charAt(0).toUpperCase() + fechaTexto.slice(1);
+    const horas = String(ahora.getHours()).padStart(2,"0");
+    const minutos = String(ahora.getMinutes()).padStart(2,"0");
+    const segundos = String(ahora.getSeconds()).padStart(2,"0");
+    document.getElementById("reloj").textContent = `${horas}:${minutos}:${segundos}`;
+}
+setInterval(actualizarFechaHora, 1000);
+actualizarFechaHora();
+</script>
+
+<script>
+const ctx = document.getElementById('chart').getContext('2d');
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'],
+        datasets: [{
+            label: 'Ingresos (COP)',
+            data: [170000,230000,190000,245000,280000,310000,160000],
+            borderColor: '#3b82f6',
+            backgroundColor: 'rgba(59,130,246,0.15)',
+            tension: 0.35,
+            borderWidth: 3,
+            pointBackgroundColor: '#3b82f6',
+            pointRadius: 5
+        }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero:false }, x: {} }, plugins: { legend: { labels: { color: '#333' } } } }
+});
+</script>
+
+<script>
+const ctxHora = document.getElementById('demandaHora').getContext('2d');
+new Chart(ctxHora, {
+    type: 'bar',
+    data: { labels: ["6 AM","7 AM","8 AM","9 AM","10 AM","11 AM","12 PM","1 PM","2 PM","3 PM","4 PM","5 PM","6 PM"],
+        datasets: [{ label: "Vehículos por hora", data: [3,5,9,12,15,18,20,17,14,10,8,6,4], backgroundColor:"#3b82f6", borderRadius:8 }] },
+    options: { responsive:true, maintainAspectRatio:false, scales:{ y:{ beginAtZero:true } } }
+});
+
+const ctxTipo = document.getElementById('tipoVehiculo').getContext('2d');
+new Chart(ctxTipo, {
+    type: 'doughnut',
+    data: {
+        labels: ["Automóviles","Motocicletas","Camionetas","Otros"],
+        datasets: [{ data: [45,30,15,10], backgroundColor: ["#3b82f6","#22c55e","#facc15","#9ca3af"], borderWidth:2 }]
+    },
+    options: { responsive:true, maintainAspectRatio:false }
+});
+</script>
+
+<script>
+function calcDuration(entradaISO) {
+    const entrada = new Date(entradaISO);
+    const ahora = new Date();
+    let diff = Math.floor((ahora - entrada)/1000);
+    const dias = Math.floor(diff/86400); diff -= dias*86400;
+    const horas = Math.floor(diff/3600); diff -= horas*3600;
+    const minutos = Math.floor(diff/60);
+    if (dias>0) return `${dias}d ${horas}h ${minutos}m`;
+    if (horas>0) return `${horas}h ${minutos}m`;
+    return `${minutos}m`;
+}
+function actualizarDuraciones() {
+    document.querySelectorAll('.vehiculos-lista .duracion').forEach(elem=>{
+        const entrada = elem.getAttribute('data-entrada');
+        if (entrada) elem.textContent = calcDuration(entrada);
+    });
+}
+function manejarSalida(event) {
+    if (!event.target.classList.contains('btn-salida')) return;
+    const li = event.target.closest('li');
+    if (!li) return;
+    const placa = li.dataset.placa;
+    const ahora = new Date();
+    const horaSalida = ahora.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    const actividadLista = document.querySelector('.actividad-lista');
+    if (actividadLista) {
+        const liAct = document.createElement('li');
+        liAct.innerHTML = `<span class="estado estado-verde"></span> Vehículo ${placa} salió del parqueadero — ${horaSalida}`;
+        actividadLista.prepend(liAct);
+    }
+    li.style.transition = 'opacity 300ms ease, transform 300ms ease';
+    li.style.opacity = '0';
+    li.style.transform = 'translateX(20px)';
+    setTimeout(()=>li.remove(),320);
+}
+document.addEventListener('DOMContentLoaded', ()=>{
+    actualizarDuraciones();
+    setInterval(actualizarDuraciones, 30000);
+    const lista = document.getElementById('vehiculosActivos');
+    if (lista) lista.addEventListener('click', manejarSalida);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,131 @@
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* ===== FONDO ===== */
+body {
+    background: linear-gradient(to bottom, #000000, #232a44);
+}
+
+/* ===== CONTENEDOR PRINCIPAL ===== */
+.registro-container {
+    background: rgb(187, 208, 229);
+    padding: 30px;
+    border-radius: 15px;
+    border: 2px solid #2762f7;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* ===== BOTÓN VOLVER ===== */
+.btn-volver {
+    background: #000;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* ===== TITULOS ===== */
+.logo {
+    display: block;
+    margin: 0 auto 10px;
+    width: 130px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 26px;
+    color: #fff;
+}
+
+.sub {
+    text-align: center;
+    color: #315eff;
+    margin-bottom: 20px;
+}
+
+/* ===== GRID DEL FORMULARIO ===== */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+/* Inputs full width en móvil */
+@media (max-width: 576px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===== INPUTS ===== */
+label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #d4d2d2;
+    background: #f5f5f5;
+}
+
+input:focus, select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 6px rgba(0,128,255,0.4);
+}
+
+/* ===== PASSWORD ===== */
+.password-container {
+    position: relative;
+}
+
+.password-container input {
+    padding-right: 40px;
+}
+
+.icon-eye {
+    width: 22px;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #555;
+}
+
+/* ===== BOTÓN CREAR CUENTA ===== */
+.btn-submit {
+    grid-column: span 2;
+    padding: 14px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Full width en móvil */
+@media (max-width: 576px) {
+    .btn-submit {
+        grid-column: span 1;
+    }
+}
+
+.tienes-cuenta {
+    text-align: center;
+    margin-top: 8px;
+}

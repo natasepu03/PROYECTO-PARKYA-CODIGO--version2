@@ -1,0 +1,216 @@
+@{
+    ViewData["Title"] = "Parqueadero - Cliente";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="~/css/cliente.css">
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div class="left-header">
+            <img src="~/assets/logo1.jpeg" class="logo-img">
+            <div class="welcome-text">
+                <h2>Bienvenido, <span id="nombreCliente">Juan Pérez</span></h2>
+                <p>Tu parqueadero, a un clic de distancia</p>
+            </div>
+        </div>
+
+        <div class="fecha-hora">
+            <span id="fecha"></span><br>
+            <span id="hora"></span>
+        </div>
+
+        <div class="right-header">
+            <button id="btnEditar" class="btn-nav">Editar Perfil</button>
+            <button id="btnSalir" class="btn-nav salir">Salir</button>
+        </div>
+
+    </header>
+
+    <main class="contenedor">
+
+        <!-- ================= MI INFORMACIÓN ================= -->
+        <section class="card info">
+            <h3>Mi Información</h3>
+            <p class="sub">Datos registrados en el sistema</p>
+
+            <div class="campo">
+                <span>Nombre Completo</span>
+                <p id="infoNombre">Juan Pérez</p>
+            </div>
+
+            <div class="campo">
+                <span>Correo</span>
+                <p id="infoCorreo">juan@example.com</p>
+            </div>
+
+            <div class="campo">
+                <span>Teléfono</span>
+                <p id="infoTelefono">3001234567</p>
+            </div>
+
+            <div class="campo">
+                <span>Tipo de Vehículo</span>
+                <p id="infoVehiculo">Automóvil</p>
+            </div>
+        </section>
+
+        <!-- ================= NUEVA RESERVA ================= -->
+        <section class="card nueva-reserva">
+            <h3>Nueva Reserva</h3>
+            <p class="sub">Reserva un espacio de parqueadero</p>
+
+            <div class="grupo">
+                <label>Espacio</label>
+                <select class="input">
+                    <option>Selecciona un espacio</option>
+                </select>
+            </div>
+
+            <div class="grupo">
+                <label>Fecha</label>
+                <input type="date" class="input">
+            </div>
+
+            <div class="fila-doble">
+                <div class="grupo">
+                    <label>Inicio</label>
+                    <input type="time" class="input">
+                </div>
+
+                <div class="grupo">
+                    <label>Fin</label>
+                    <input type="time" class="input">
+                </div>
+            </div>
+
+            <button class="btn principal">Proceder al Pago</button>
+        </section>
+
+        <!-- ================= CUPOS ================= -->
+        <section class="card cupos">
+            <h3>Disponibilidad de Cupos</h3>
+            <p class="sub">Espacios disponibles hoy</p>
+
+            <div class="zona">Zona A (Automóvil) <span class="tag">2 disponibles</span></div>
+            <div class="zona">Zona B (Motocicleta) <span class="tag">2 disponibles</span></div>
+            <div class="zona">Zona C (Camioneta) <span class="tag">2 disponibles</span></div>
+        </section>
+
+        <!-- ================= MIS RESERVAS ================= -->
+        <section class="card reservas">
+            <h3>Mis Reservas</h3>
+            <p class="sub">Monitorea tus reservas de parqueadero</p>
+
+            <div class="reserva activa">
+                <span class="badge azul">ACTIVA</span>
+                <h4>Espacio A-15</h4>
+                <p>Miércoles, 19 de noviembre de 2025</p>
+                <p>09:00 - 17:00</p>
+                <button class="btn rojo">Cancelar</button>
+            </div>
+
+            <div class="reserva completada">
+                <span class="badge gris">COMPLETADA</span>
+                <h4>Espacio B-23</h4>
+                <p>Domingo, 9 de noviembre de 2025</p>
+                <p>14:00 - 18:00</p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- ================= MODAL ================= -->
+    <div class="modal" id="modalEditar">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h3>Editar Perfil</h3>
+
+            <label>Nombre</label>
+            <input type="text" id="editNombre" class="input">
+
+            <label>Correo</label>
+            <input type="email" id="editCorreo" class="input">
+
+            <label>Teléfono</label>
+            <input type="text" id="editTelefono" class="input">
+
+            <label>Vehículo</label>
+            <input type="text" id="editVehiculo" class="input">
+
+            <button class="btn principal" id="guardarCambios">Guardar Cambios</button>
+        </div>
+    </div>
+
+    <div id="mensajeExito" class="mensaje-exito">
+        ✔️ Sus cambios se han guardado exitosamente
+    </div>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+
+        function actualizarFechaHora() {
+            const ahora = new Date();
+
+            document.getElementById("fecha").textContent =
+                ahora.toLocaleDateString("es-ES", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+
+            document.getElementById("hora").textContent =
+                ahora.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+        }
+        setInterval(actualizarFechaHora, 1000);
+        actualizarFechaHora();
+
+        document.getElementById("btnSalir").onclick = () => {
+            window.location.href = "login.html";
+        };
+
+        const modal = document.getElementById("modalEditar");
+        const btnEditar = document.getElementById("btnEditar");
+        const closeModal = document.getElementById("closeModal");
+
+        btnEditar.onclick = () => {
+            modal.style.display = "flex";
+
+            document.getElementById("editNombre").value = document.getElementById("infoNombre").textContent;
+            document.getElementById("editCorreo").value = document.getElementById("infoCorreo").textContent;
+            document.getElementById("editTelefono").value = document.getElementById("infoTelefono").textContent;
+            document.getElementById("editVehiculo").value = document.getElementById("infoVehiculo").textContent;
+        };
+
+        closeModal.onclick = () => modal.style.display = "none";
+
+        document.getElementById("guardarCambios").onclick = () => {
+
+            document.getElementById("infoNombre").textContent = document.getElementById("editNombre").value;
+            document.getElementById("infoCorreo").textContent = document.getElementById("editCorreo").value;
+            document.getElementById("infoTelefono").textContent = document.getElementById("editTelefono").value;
+            document.getElementById("infoVehiculo").textContent = document.getElementById("editVehiculo").value;
+            document.getElementById("nombreCliente").textContent = document.getElementById("editNombre").value;
+
+            modal.style.display = "none";
+
+            const mensaje = document.getElementById("mensajeExito");
+            mensaje.classList.add("mostrar");
+
+            setTimeout(() => {
+                mensaje.classList.remove("mostrar");
+            }, 3000);
+        };
+
+    </script>
+
+</body>
+
+</html>

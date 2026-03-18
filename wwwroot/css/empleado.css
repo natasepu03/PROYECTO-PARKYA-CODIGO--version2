@@ -1,0 +1,207 @@
+/* RESET Y TIPOGRAFÍA */
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    color: #222;
+}
+
+/* TITULOS */
+h1, h2, h3 { margin: 0; }
+.sub { color: #666; margin-bottom: 20px; }
+
+/* BOTÓN SALIR (coincide con badge azul) */
+.btn-salir {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 600;
+}
+.btn-salir:hover { background-color: #005fcc; }
+
+/* BARRA SUPERIOR */
+.top-bar {
+    width: 100%;
+    background: #082f63;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+}
+
+/* BUSCADOR */
+.search {
+    width: 280px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #bbb;
+}
+
+/* INFORMACIÓN DE FECHA/HORA */
+.top-info { text-align: center; }
+.date { display: block; font-size: 14px; color: #ffffff; }
+.time { font-weight: bold; font-size: 18px; color: #ffffff; }
+
+/* LAYOUT GENERAL */
+.layout { display: flex; align-items: flex-start; }
+
+/* SIDEBAR */
+.sidebar {
+    width: 260px;
+    background: #ffffff;
+    padding: 20px;
+    border-right: 2px solid #e5e5e5;
+    height: calc(100vh - 65px);
+    overflow-y: auto;
+    position: sticky;
+    top: 65px;
+}
+
+/* side-user */
+.side-user { text-align: center; }
+.side-logo { width: 100px; height: auto; display: block; margin: 0 auto 8px; }
+
+/* BADGES Y COLORES */
+.badge { padding: 5px 10px; border-radius: 10px; color: white; font-size: 13px; display: inline-block; }
+.blue { background: #007bff; }
+.green { background: #2ecc71; }
+.red { background: #e74c3c; }
+.gray { background: #7f8c8d; }
+
+/* ESTADO */
+.estado { margin-top: 20px; text-align: center; }
+.estado .titulo { font-weight: bold; margin-bottom: 10px; }
+.bar-bg { background: #ddd; height: 8px; border-radius: 5px; width: 100%; overflow: hidden; }
+.bar-fill { height: 8px; background: #007bff; border-radius: 5px; }
+
+/* MENU LATERAL */
+.menu { margin-top: 20px; }
+.menu .item {
+    display: block;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #333;
+    text-decoration: none;
+}
+.menu .active, .menu .item:hover { background: #007bff; color: #fff; }
+
+/* CONTENIDO PRINCIPAL */
+.contenido {
+    padding: 28px;
+    width: 100%;
+}
+
+/* CARDS */
+.cards { margin-bottom: 30px; }
+.card {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    border-left: 5px solid #007bff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+.card.green { border-left-color: #2ecc71; }
+.card.red { border-left-color: #e74c3c; }
+.card.blue { border-left-color: #007bff; }
+.card h2 { margin: 10px 0 4px; font-size: 32px; }
+.card .titulo { font-size: 14px; color: #555; }
+
+/* Mapa y grid de slots */
+.mapa {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    margin-top: 12px;
+}
+.legend span { padding: 6px 12px; border-radius: 6px; margin-right: 6px; font-size: 12px; color: #fff; display: inline-block; }
+
+/* GRID DE ESPACIOS */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+}
+.slot { padding: 14px; border-radius: 10px; text-align: center; color: white; font-weight: 700; }
+.slot.green { background: #2ecc71; }
+.slot.red { background: #e74c3c; }
+.slot.blue { background: #3498db; }
+.slot.gray { background: #7f8c8d; }
+
+/* ACTIVIDAD */
+.actividad ul { list-style: none; padding: 0; margin: 0; }
+.actividad li { padding: 10px; margin-bottom: 8px; border-radius: 8px; font-size: 14px; color: #fff; }
+.actividad .green { background: #2ecc71; }
+.actividad .red { background: #e74c3c; }
+.actividad .blue { background: #3498db; }
+
+/* TABLA */
+.tabla { margin-top: 20px; background: #fff; padding: 16px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+.table { margin-top: 12px; }
+th { background: #007bff; color: #fff; padding: 10px; }
+td { padding: 10px; border-bottom: 1px solid #eee; }
+
+/* ESTADO ACTIVO / BOTÓN SALIDA */
+.estado.active { background: #2ecc71; padding: 5px 10px; border-radius: 8px; color: #fff; display: inline-block; }
+.salida { padding: 8px 12px; background: #e74c3c; border: none; border-radius: 6px; color: #fff; cursor: pointer; }
+.salida:hover { background: #c0392b; }
+
+/* TOP INFO centrado (reloj/fecha) */
+.top-info.centered { position: absolute; left: 50%; transform: translateX(-50%); }
+
+/* =========================
+   RESPONSIVE / MEDIA QUERIES
+   ========================= */
+
+/* Pantallas grandes ya ok; ahora adaptaciones */
+@media (max-width: 1199px) {
+    .sidebar { width: 220px; }
+    .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 991px) {
+    /* Cuando entra tablet/móvil el layout se apila */
+    .layout { flex-direction: column; }
+    .sidebar { display: none; } /* se muestra el offcanvas en móvil */
+    .top-info.centered { position: relative; left: auto; transform: none; }
+    .contenido { padding: 18px; }
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .card h2 { font-size: 28px; }
+    .search { display: none; }
+}
+
+@media (max-width: 767px) {
+    .grid { grid-template-columns: repeat(1, 1fr); }
+    .mapa { padding: 14px; }
+    .cards .card { padding: 14px; }
+    .card h2 { font-size: 24px; }
+    .slot { padding: 12px; font-weight: 700; }
+    .side-logo { width: 90px; }
+    .search { display: none; }
+    .top-bar { padding: 0 12px; }
+    .btn-salir { padding: 6px 12px; font-size: 13px; }
+}
+
+/* Pequeños ajustes móviles */
+@media (max-width: 480px) {
+    .contenido { padding: 12px; }
+    .card h2 { font-size: 22px; }
+    th, td { padding: 8px; font-size: 13px; }
+    .legend span { padding: 5px 8px; font-size: 11px; }
+}

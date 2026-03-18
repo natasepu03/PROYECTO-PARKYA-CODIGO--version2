@@ -1,0 +1,119 @@
+* {
+    margin: 0; /* Elimina márgenes por defecto */
+    padding: 0; /* Elimina relleno por defecto */
+    box-sizing: border-box; /* Hace que el tamaño sea más fácil de controlar */
+    font-family: Arial, sans-serif; /* Fuente general */
+}
+/*REGISTRO/*
+/* --- EFECTO HOVER DEL BOTÓN --- */
+.btn-login:hover {
+    background: #000000; /* Azul más oscuro al pasar el mouse */
+}
+
+/*REGISTRO/*
+/*    FONDO GENERAL DEL REGISTRO  */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #010c24, #131414);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+/*         CONTENEDOR PRINCIPAL   */
+
+.registro-container {
+    width: 700px;
+    background: rgb(193, 211, 228);
+
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    border: 2px solid #2762f7;
+}
+
+/* Botón volver */
+.btn-volver {
+    background: black;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+
+/*            TÍTULOS             */
+
+.logo {
+    display: block;
+    margin: 0 auto 10px auto;
+    width: 140px;
+}
+
+h1 {
+    text-align: center;
+    margin: 0;
+    font-size: 30px;
+    color:#fffdfd;
+}
+
+.sub {
+    text-align: center;
+    margin-top: 5px;
+    color: #315eff;
+    margin-bottom: 30px;
+}
+
+/*          INPUTS Y SELECTS      */
+
+label {
+    font-size: 15px;
+    font-weight: bold;
+    color: #070707;
+    margin-bottom: 5px;
+    display: block;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: #f5f5f5;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus, select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 6px rgba(0, 128, 255, 0.4);
+}
+
+/* ============================== */
+/*      BOTÓN CREAR CUENTA        */
+/* ============================== */
+.btn-submit {
+    grid-column: span 2;
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    margin-top: 20px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+}
+.btn-submit:hover {
+    background: #1d4ed8;
+}

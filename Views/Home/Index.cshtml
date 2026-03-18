@@ -1,0 +1,195 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PARKYA</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="@Url.Content("~/css/index.css")">
+
+</head>
+
+<body>
+
+
+    <section class="header-section text-center">
+        <img src="@Url.Content("~/assets/logo1.jpeg")" class="logo" alt="PARKYA">
+        <h1 class="titulo">Tu Parqueadero, A Un Clic de Distancia</h1>
+        <p class="subtitulo">Gestión inteligente de parqueaderos</p>
+    </section>
+
+
+    <section class="section-cards">
+
+        <div class="container mt-5">
+            <div class="row justify-content-center g-4">
+
+                <!-- REGISTRO -->
+                <div class="col-md-5">
+                    <div class="card-custom animate-up">
+                        <div class="icono-contenedor">
+                            <i class="bi bi-person-plus-fill icono"></i>
+                        </div>
+                        <h4 class="titulo-card">¿Eres Nuevo?</h4>
+                        <p class="texto-card">Crea tu cuenta y comienza a disfrutar de nuestros servicios</p>
+
+                        <a href="@Url.Content("~/Autenticacion/Registro.cshtml")" class="btn btn-primary btn-custom">
+                            <i class="bi bi-person-plus"></i> Registrarse
+                        </a>
+                        <ul class="lista">
+                            <li>Registro rápido y sencillo</li>
+                            <li>Acceso inmediato al sistema</li>
+                            <li>Gestiona tus reservas fácilmente</li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="col-md-5">
+                    <div class="card-custom animate-up">
+                        <div class="icono-contenedor">
+                            <i class="bi bi-box-arrow-in-right icono"></i>
+                        </div>
+                        <h4 class="titulo-card">¿Ya Tienes Cuenta?</h4>
+                        <p class="texto-card">Ingresa con tu documento para acceder a tu cuenta</p>
+
+
+                        <a href="@Url.Content("~/Autenticacion/login.cshtml")" class="btn btn-dark btn-custom">
+                            <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+                        </a>
+
+                        <ul class="lista">
+                            <li>Acceso rápido a tus reservas</li>
+                            <li>Historial completo disponible</li>
+                            <li>Gestión administrativa</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+
+    <section class="beneficios-section text-center">
+        <h2 class="titulo-beneficios">¿Por Qué Elegir PARKYA?</h2>
+        <p class="subtexto-beneficios">La solución completa para la gestión de parqueaderos</p>
+
+        <div class="container mt-4">
+            <div class="row justify-content-center g-4">
+
+                <div class="col-md-3 col-6">
+                    <div class="mini-card animate-up">
+                        <i class="bi bi-clock icono-beneficio"></i>
+                        <h5>Reservas 24/7</h5>
+                        <p>Reserva tu espacio en cualquier momento</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-6">
+                    <div class="mini-card animate-up">
+                        <i class="bi bi-geo-alt icono-beneficio"></i>
+                        <h5>Ubicación Privilegiada</h5>
+                        <p>Espacios seguros y bien ubicados</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-6">
+                    <div class="mini-card animate-up">
+                        <i class="bi bi-shield-check icono-beneficio"></i>
+                        <h5>Seguridad Garantizada</h5>
+                        <p>Vigilancia y protección constante</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-6">
+                    <div class="mini-card animate-up">
+                        <i class="bi bi-car-front icono-beneficio"></i>
+                        <h5>Para Todo Vehículo</h5>
+                        <p>Autos, motos, camionetas y más</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="tarifas text-center">
+        <div class="icon-tarifa"><i class="bi bi-currency-dollar"></i></div>
+        <h2 class="titulo-tarifas">Tarifas Competitivas</h2>
+        <p class="subtexto-beneficios">Precios por hora - Paga solo lo que usas</p>
+
+        <div class="container mt-4">
+            <div class="row justify-content-center g-4">
+
+                <div class="col-md-2 col-6">
+                    <div class="precio-card animate-up">
+                        <i class="bi bi-bicycle icono-precio"></i>
+                        <h5>Bicicleta</h5>
+                        <h3>$500</h3><small>por hora</small>
+                        <p>Espacio compacto y seguro</p>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-6">
+                    <div class="precio-card precio-activo animate-up">
+                        <i class="bi bi-scooter icono-precio"></i>
+                        <h5>Motocicleta</h5>
+                        <h3>$1,500</h3><small>por hora</small>
+                        <p>Zona techada para motos</p>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-6">
+                    <div class="precio-card animate-up">
+                        <i class="bi bi-car-front icono-precio"></i>
+                        <h5>Automóvil</h5>
+                        <h3>$3,000</h3><small>por hora</small>
+                        <p>Espacio estándar cubierto</p>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-6">
+                    <div class="precio-card animate-up">
+                        <i class="bi bi-truck icono-precio"></i>
+                        <h5>Camioneta</h5>
+                        <h3>$4,000</h3><small>por hora</small>
+                        <p>Espacio amplio y seguro</p>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-6">
+                    <div class="precio-card animate-up">
+                        <i class="bi bi-truck-flatbed icono-precio"></i>
+                        <h5>Camión</h5>
+                        <h3>$5,000</h3><small>por hora</small>
+                        <p>Zona especial para carga</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="footer text-center">
+        <p>© 2025 PARKYA - Sistema de Gestión de Parqueaderos</p>
+        <small>Tu parqueadero, a un clic de distancia</small>
+    </footer>
+
+</body>
+
+</html>

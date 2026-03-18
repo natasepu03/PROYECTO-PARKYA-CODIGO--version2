@@ -1,0 +1,375 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: #f4f4f4;
+    padding: 20px;
+}
+
+/* ==================== HEADER ==================== */
+
+.header {
+    width: 100%;
+    background: #0077b6; /* mismo color que "Proceder al Pago" */
+    color: white;
+    padding: 18px 35px;
+    border-radius: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+/* Ajuste para que el contenido no quede debajo de la barra */
+.contenedor {
+    margin-top: 120px;
+}
+
+.left-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-img {
+    height: 55px;
+    max-width: 150px;
+    width: auto;
+    object-fit: contain;
+
+    background: transparent; /* elimina fondo blanco */
+    padding: 0;               /* elimina bordes blancos */
+    border-radius: 0;         /* evita cortes */
+    box-shadow: none;         /* elimina sombra */
+}
+
+/* Botones derecha */
+.right-header .btn-nav {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background: white;
+    color: #023e8a;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: 600;
+}
+
+.right-header .btn-nav:hover {
+    background: #caf0f8;
+}
+
+.right-header .salir {
+    background: #d00000;
+    color: white;
+}
+
+.right-header .salir:hover {
+    background: #9d0000;
+}
+
+.fecha-hora {
+    text-align: center;
+    font-size: 14px;
+}
+
+/* ==================== CONTENEDOR ==================== */
+
+.contenedor {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+/* ==================== TARJETAS GENERALES ==================== */
+
+.card {
+    border-radius: 18px;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.card h3 {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.card .sub {
+    margin-bottom: 18px;
+    color: #666;
+    font-size: 14px;
+}
+
+/* ==================== MI INFORMACIÓN ==================== */
+
+.campo {
+    margin-bottom: 18px;
+}
+
+.campo span {
+    font-size: 13px;
+    color: #444;
+}
+
+.campo p {
+    background: #f1f1f1;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-top: 4px;
+}
+
+/* ==================== NUEVA RESERVA ==================== */
+
+.nueva-reserva {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.grupo label {
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.input {
+    padding: 10px 14px;
+    border: 2px solid #adb5bd;
+    border-radius: 10px;
+    font-size: 15px;
+    background: #fff;
+    width: 100%;
+}
+
+.fila-doble {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+/* Botón principal */
+.btn.principal {
+    background: #0077b6;
+    color: white;
+    padding: 14px;
+    border: none;
+    width: 100%;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.btn.principal:hover {
+    background: #005f8e;
+}
+
+/* ==================== CUPOS ==================== */
+
+.zona {
+    background: #f1f1f1;
+    padding: 10px 14px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+}
+
+.tag {
+    background: #0096c7;
+    padding: 4px 10px;
+    color: white;
+    border-radius: 8px;
+}
+
+/* ==================== MIS RESERVAS ==================== */
+
+.reserva {
+    border-left: 5px solid #777;
+    padding: 12px 14px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.reserva h4 {
+    margin: 3px 0;
+}
+
+.badge {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    color: white;
+}
+
+.azul { background: #0077b6; }
+.gris { background: #6c757d; }
+
+.btn.rojo {
+    background: #d00000;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin-top: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn.rojo:hover {
+    background: #a00000;
+}
+
+/* ==================== MODAL ==================== */
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.45);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    width: 380px;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+    animation: fadeUp 0.3s ease;
+}
+
+.close {
+    float: right;
+    font-size: 25px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+@keyframes fadeUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.mensaje-exito {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-size: 15px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+    z-index: 9999;
+    pointer-events: none;
+}
+.mensaje-exito.mostrar {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================================
+                     RESPONSIVE DESIGN
+   ============================================================ */
+
+/* ----------- tablets medianas (≤ 992px) ----------- */
+@media (max-width: 992px) {
+    .contenedor {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ----------- tablets pequeñas (≤ 768px) ----------- */
+@media (max-width: 768px) {
+
+    body { padding: 10px; }
+
+    .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .left-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .right-header {
+        display: flex;
+        gap: 10px;
+    }
+
+    .logo-img {
+        height: 60px;
+        max-width: 200px;
+    }
+
+    .contenedor {
+        grid-template-columns: 1fr;
+        margin-top: 180px;
+    }
+
+    .fila-doble {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        width: 90%;
+    }
+}
+
+/* ----------- móviles pequeños (≤ 480px) ----------- */
+@media (max-width: 480px) {
+
+    .header {
+        padding: 15px;
+    }
+
+    .welcome-text h2 {
+        font-size: 17px;
+    }
+
+    .logo-img {
+        height: 50px;
+        max-width: 160px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .btn-nav {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .input {
+        font-size: 14px;
+    }
+}

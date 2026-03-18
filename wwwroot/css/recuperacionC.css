@@ -1,0 +1,94 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #0f1822;
+    margin: 0;
+    padding: 0;
+}
+
+/* ===== CAJA DEL FORMULARIO ===== */
+.form-box {
+    background: #c3ddff;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0px 4px 14px rgba(0,0,0,0.15);
+    text-align: center;
+}
+
+/* Logo */
+.logo {
+    width: 120px;
+    margin-bottom: 12px;
+    max-width: 100%;
+}
+
+/* Título */
+h2 {
+    margin-bottom: 6px;
+    color: #222;
+}
+
+/* Subtexto */
+.descripcion {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 22px;
+}
+
+/* ===== INPUTS ===== */
+label {
+    font-weight: bold;
+    color: #333;
+}
+
+input {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+
+input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 6px rgba(0,123,255,0.4);
+}
+
+/* ===== BOTÓN ENVIAR ===== */
+.btn-enviar {
+    background: #007bff;
+    border: none;
+    padding: 12px;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-enviar:hover {
+    background: #005fcc;
+}
+
+/* ===== LINK VOLVER ===== */
+.volver {
+    font-size: 14px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.volver:hover {
+    text-decoration: underline;
+}
+
+/* ===== RESPONSIVE AJUSTES ===== */
+@media (max-width: 480px) {
+    .form-box {
+        padding: 25px;
+    }
+
+    .logo {
+        width: 95px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+}
