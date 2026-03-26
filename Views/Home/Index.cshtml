@@ -45,8 +45,8 @@
                         <h4 class="titulo-card">¿Eres Nuevo?</h4>
                         <p class="texto-card">Crea tu cuenta y comienza a disfrutar de nuestros servicios</p>
 
-                        <a href="@Url.Content("~/Autenticacion/Registro.cshtml")" class="btn btn-primary btn-custom">
-                            <i class="bi bi-person-plus"></i> Registrarse
+                        <a asp-controller="Autenticacion" asp-action="Registro" class="btn btn-primary btn-custom">
+                            Registrarse
                         </a>
                         <ul class="lista">
                             <li>Registro rápido y sencillo</li>
@@ -66,8 +66,8 @@
                         <p class="texto-card">Ingresa con tu documento para acceder a tu cuenta</p>
 
 
-                        <a href="@Url.Content("~/Autenticacion/login.cshtml")" class="btn btn-dark btn-custom">
-                            <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+                        <a asp-controller="Autenticacion" asp-action="Login" class="btn btn-dark btn-custom">
+                            Iniciar Sesión
                         </a>
 
                         <ul class="lista">

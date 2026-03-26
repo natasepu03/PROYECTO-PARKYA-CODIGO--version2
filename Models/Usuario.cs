@@ -14,9 +14,10 @@ namespace ParkYa.Models
 
         public int Rol_id_rol { get; set; }
         public Rol? Rol { get; set; }
+        public ICollection<Vehiculo>? Vehiculos { get; set; }
 
-        public List<Vehiculo> Vehiculos { get; set; } = new List<Vehiculo>();
-        public List<Reserva> Reservas { get; set; } = new List<Reserva>();
         public List<Venta> Ventas { get; set; } = new List<Venta>();
+        
+
     }
 }

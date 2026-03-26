@@ -14,7 +14,7 @@ body {
 
 .header {
     width: 100%;
-    background: #0077b6; /* mismo color que "Proceder al Pago" */
+    background: #0077b6;
     color: white;
     padding: 18px 35px;
     border-radius: 0;
@@ -22,15 +22,19 @@ body {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-
     position: fixed;
     top: 0;
     left: 0;
     z-index: 1000;
 }
+
 /* Ajuste para que el contenido no quede debajo de la barra */
 .contenedor {
     margin-top: 120px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    align-items: start;
 }
 
 .left-header {
@@ -39,16 +43,26 @@ body {
     gap: 15px;
 }
 
+.right-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.form-salir {
+    display: inline-block;
+    margin: 0;
+}
+
 .logo-img {
     height: 55px;
     max-width: 150px;
     width: auto;
     object-fit: contain;
-
-    background: transparent; /* elimina fondo blanco */
-    padding: 0;               /* elimina bordes blancos */
-    border-radius: 0;         /* evita cortes */
-    box-shadow: none;         /* elimina sombra */
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
 }
 
 /* Botones derecha */
@@ -61,6 +75,9 @@ body {
     cursor: pointer;
     transition: 0.3s;
     font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .right-header .btn-nav:hover {
@@ -81,14 +98,6 @@ body {
     font-size: 14px;
 }
 
-/* ==================== CONTENEDOR ==================== */
-
-.contenedor {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
-}
-
 /* ==================== TARJETAS GENERALES ==================== */
 
 .card {
@@ -97,6 +106,7 @@ body {
     background: white;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     transition: 0.3s;
+    width: 100%;
 }
 
 .card:hover {
@@ -112,6 +122,23 @@ body {
     margin-bottom: 18px;
     color: #666;
     font-size: 14px;
+}
+
+/* Orden visual */
+.info {
+    order: 1;
+}
+
+.vehiculo {
+    order: 2;
+}
+
+.nueva-reserva {
+    order: 3;
+}
+
+.pago {
+    order: 4;
 }
 
 /* ==================== MI INFORMACIÓN ==================== */
@@ -143,6 +170,7 @@ body {
 .grupo label {
     margin-bottom: 6px;
     font-weight: 600;
+    display: block;
 }
 
 .input {
@@ -177,6 +205,14 @@ body {
 
 .btn.principal:hover {
     background: #005f8e;
+}
+
+/* ==================== MÉTODO DE PAGO ==================== */
+
+.pago {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 /* ==================== CUPOS ==================== */
@@ -248,6 +284,7 @@ body {
     background: rgba(0,0,0,0.45);
     justify-content: center;
     align-items: center;
+    z-index: 2000;
 }
 
 .modal-content {
@@ -287,6 +324,7 @@ body {
     z-index: 9999;
     pointer-events: none;
 }
+
 .mensaje-exito.mostrar {
     opacity: 1;
     transform: translateY(0);
@@ -301,12 +339,20 @@ body {
     .contenedor {
         grid-template-columns: 1fr;
     }
+
+    .info,
+    .vehiculo,
+    .nueva-reserva,
+    .pago {
+        order: initial;
+    }
 }
 
 /* ----------- tablets pequeñas (≤ 768px) ----------- */
 @media (max-width: 768px) {
-
-    body { padding: 10px; }
+    body {
+        padding: 10px;
+    }
 
     .header {
         flex-direction: column;
@@ -323,6 +369,9 @@ body {
     .right-header {
         display: flex;
         gap: 10px;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
     .logo-img {
@@ -346,7 +395,6 @@ body {
 
 /* ----------- móviles pequeños (≤ 480px) ----------- */
 @media (max-width: 480px) {
-
     .header {
         padding: 15px;
     }

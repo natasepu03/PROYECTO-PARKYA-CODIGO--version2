@@ -9,7 +9,6 @@ namespace ParkYa.Models
         public string horario { get; set; } = string.Empty;
 
         public int Tipo_vehiculo_idTipo_vehiculo { get; set; }
-        public TipoVehiculo? TipoVehiculo { get; set; }
 
         public List<Reserva> Reservas { get; set; } = new List<Reserva>();
     }

@@ -12,6 +12,6 @@ namespace ParkYa.Models
 
         public int total_cupos { get; set; }
 
-        public required string tipo_espacio { get; set; }  = string.Empty;
+        
     }
 }

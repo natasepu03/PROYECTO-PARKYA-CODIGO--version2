@@ -17,9 +17,6 @@ namespace ParkYa.Models.ViewModels
         public int documento { get; set; }
 
         [Required]
-        public int TipoVehiculoId { get; set; }
-
-        [Required]
         [EmailAddress]
         public string correo { get; set; } = string.Empty;
 
