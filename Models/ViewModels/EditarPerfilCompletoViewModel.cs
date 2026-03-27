@@ -19,14 +19,5 @@ namespace ParkYa.Models.ViewModels
 
         [Required]
         public string Telefono { get; set; } = string.Empty;
-        [Required]
-        public string Placa { get; set; } = string.Empty;
-
-        [Required]
-        public string Marca { get; set; } = string.Empty;
-
-        [Required]
-        public string Color { get; set; } = string.Empty;
-    
     }
 }

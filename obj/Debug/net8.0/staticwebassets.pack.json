@@ -5,6 +5,18 @@
       "PackagePath": "staticwebassets\\assets\\agregar-usuario.png"
     },
     {
+      "Id": "C:\\Users\\USUARIO\\OneDrive\\Documentos\\PROYECTO-PARKYA-CODIGO- version2\\wwwroot\\assets\\bicicleta.png",
+      "PackagePath": "staticwebassets\\assets\\bicicleta.png"
+    },
+    {
+      "Id": "C:\\Users\\USUARIO\\OneDrive\\Documentos\\PROYECTO-PARKYA-CODIGO- version2\\wwwroot\\assets\\camioneta.png",
+      "PackagePath": "staticwebassets\\assets\\camioneta.png"
+    },
+    {
+      "Id": "C:\\Users\\USUARIO\\OneDrive\\Documentos\\PROYECTO-PARKYA-CODIGO- version2\\wwwroot\\assets\\carro.png",
+      "PackagePath": "staticwebassets\\assets\\carro.png"
+    },
+    {
       "Id": "C:\\Users\\USUARIO\\OneDrive\\Documentos\\PROYECTO-PARKYA-CODIGO- version2\\wwwroot\\assets\\flecha usuario.png",
       "PackagePath": "staticwebassets\\assets\\flecha usuario.png"
     },
@@ -25,12 +37,16 @@
       "PackagePath": "staticwebassets\\assets\\logo1.jpeg"
     },
     {
+      "Id": "C:\\Users\\USUARIO\\OneDrive\\Documentos\\PROYECTO-PARKYA-CODIGO- version2\\wwwroot\\assets\\moto.png",
+      "PackagePath": "staticwebassets\\assets\\moto.png"
+    },
+    {
       "Id": "C:\\Users\\USUARIO\\OneDrive\\Documentos\\PROYECTO-PARKYA-CODIGO- version2\\wwwroot\\css\\admin.css",
       "PackagePath": "staticwebassets\\css\\admin.css"
     },
     {
-      "Id": "C:\\Users\\USUARIO\\OneDrive\\Documentos\\PROYECTO-PARKYA-CODIGO- version2\\wwwroot\\css\\cliente.css",
-      "PackagePath": "staticwebassets\\css\\cliente.css"
+      "Id": "C:\\Users\\USUARIO\\OneDrive\\Documentos\\PROYECTO-PARKYA-CODIGO- version2\\wwwroot\\css\\cliente-moderno.css",
+      "PackagePath": "staticwebassets\\css\\cliente-moderno.css"
     },
     {
       "Id": "C:\\Users\\USUARIO\\OneDrive\\Documentos\\PROYECTO-PARKYA-CODIGO- version2\\wwwroot\\css\\empleado.css",

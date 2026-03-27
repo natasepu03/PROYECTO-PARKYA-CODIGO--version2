@@ -1,313 +1,566 @@
 @model ParkYa.Models.Usuario
 @{
     ViewData["Title"] = "Parqueadero - Cliente";
+    var vehiculos = Model.Vehiculos?.ToList() ?? new List<ParkYa.Models.Vehiculo>();
+    var vehiculoActual = vehiculos.FirstOrDefault();
 }
 
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/css/cliente.css">
+    <link rel="stylesheet" href="~/css/cliente-moderno.css" />
 </head>
 
 <body>
 
-<header class="header">
+    <div class="page-shell">
 
-    <div class="left-header">
-        <img src="~/assets/logo1.jpeg" class="logo-img">
-        <div class="welcome-text">
-            <h2>Bienvenido, @Model.nombre @Model.apellido</h2>
-            <p>Tu parqueadero, a un clic de distancia</p>
-        </div>
-    </div>
-
-    <div class="fecha-hora">
-        <span id="fecha"></span><br>
-        <span id="hora"></span>
-    </div>
-
-    <div class="right-header">
-        <button id="btnEditar" class="btn-nav" type="button">Editar Perfil</button>
-
-        <form asp-controller="Autenticacion" asp-action="Logout" method="post" style="display:inline;">
-            @Html.AntiForgeryToken()
-            <button type="submit" class="btn-nav salir">Salir</button>
-        </form>
-    </div>
-
-</header>
-
-@if (TempData["Mensaje"] != null)
-{
-    <div style="color:rgb(63, 213, 123); margin:15px;">
-        @TempData["Mensaje"]
-    </div>
-}
-
-@if (TempData["Error"] != null)
-{
-    <div style="color:rgb(208, 0, 255); margin:15px;">
-        @TempData["Error"]
-    </div>
-}
-@if (TempData["Error"] != null)
-{
-    <div style="color:red; margin:20px;">
-        @TempData["Error"]
-    </div>
-}
-
-<main class="contenedor">
-
-    <!-- INFO -->
-    <section class="card info">
-        <h3>Mi Información</h3>
-
-        <div class="campo">
-            <span>Nombre Completo</span>
-            <p>@Model.nombre @Model.apellido</p>
-        </div>
-
-        <div class="campo">
-            <span>Correo Electronico</span>
-            <p>@Model.correo</p>
-        </div>
-
-        <div class="campo">
-            <span>Teléfono</span>
-            <p>@Model.telefono</p>
-        </div>
-    </section>
-
-    <!-- VEHÍCULO -->
-    <section class="card vehiculo">
-        <h3>Vehículo</h3>
-
-        @if (Model.Vehiculos != null && Model.Vehiculos.Any())
-        {
-            var v = Model.Vehiculos.First();
-
-            <div class="campo">
-                <span>Placa</span>
-                <p>@v.placa</p>
-            </div>
-
-            <div class="campo">
-                <span>Marca</span>
-                <p>@v.marca</p>
-            </div>
-
-            <div class="campo">
-                <span>Color</span>
-                <p>@v.color</p>
-            </div>
-
-            <div class="campo">
-                    <span>Tipo de vehículo</span>
-                    <p>@(v.TipoVehiculo?.nombre_tipo ?? "No definido")</p>
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="brand-box">
+                <img src="~/assets/logo1.jpeg" alt="ParkYa" class="brand-logo" />
+                <div class="brand-text">
+                    <h2>ParkYa</h2>
+                    <p>Cliente</p>
                 </div>
-        }
-        else
-        {       
-            <form asp-controller="Clientes" asp-action="GuardarVehiculo" method="post">
+            </div>
+
+            <div class="user-mini-card">
+                <div class="user-avatar">@Model.nombre.Substring(0, 1).ToUpper()</div>
+                <div>
+                    <h3>@Model.nombre @Model.apellido</h3>
+                    <p>@Model.correo</p>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-link active" type="button" onclick="mostrarSeccion('inicio', this)">
+                    <span>🏠</span> Inicio
+                </button>
+
+                <button class="nav-link" type="button" onclick="mostrarSeccion('mi-informacion', this)">
+                    <span>👤</span> Mi información
+                </button>
+
+                <button class="nav-link" type="button" onclick="mostrarSeccion('mis-vehiculos', this)">
+                    <span>🚗</span> Mis vehículos
+                </button>
+
+                <button class="nav-link" type="button" onclick="mostrarSeccion('mis-reservas', this)">
+                    <span>📅</span> Mis reservas
+                </button>
+            </nav>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="main-content">
+
+            <!-- HEADER -->
+            <header class="topbar">
+                <div class="welcome-block">
+                    <h1>Bienvenido, @Model.nombre @Model.apellido</h1>
+                    <p>Tu parqueadero, a un clic de distancia</p>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="fecha-hora">
+                        <span id="fecha"></span>
+                        <span id="hora"></span>
+                    </div>
+
+                    <button id="btnEditar" class="btn-top editar-btn" type="button">Editar Perfil</button>
+
+                    <form asp-controller="Autenticacion" asp-action="Logout" method="post" class="logout-form">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn-top logout-btn">Cerrar sesión</button>
+                    </form>
+                </div>
+            </header>
+
+            @if (TempData["Mensaje"] != null)
+            {
+                <div class="alert success">
+                    @TempData["Mensaje"]
+                </div>
+            }
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert danger">
+                    @TempData["Error"]
+                </div>
+            }
+
+            <!-- SECCION INICIO -->
+            <section id="inicio" class="contenido-seccion activa">
+                <div class="dashboard-grid">
+
+                    <section class="glass-card card-perfil-resumen">
+                        <div class="card-header">
+                            <h3>Perfil rápido</h3>
+                            <span class="subtext">Información principal del cliente</span>
+                        </div>
+
+                        <div class="perfil-resumen-box">
+                            <div class="perfil-avatar-grande">
+                                @Model.nombre.Substring(0, 1).ToUpper()
+                            </div>
+
+                            <div class="perfil-resumen-info">
+                                <h2>@Model.nombre @Model.apellido</h2>
+                                <p>@Model.correo</p>
+                                <p>@Model.telefono</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="glass-card card-vehiculo-actual">
+                        <div class="card-header">
+                            <h3>Vehículo actual</h3>
+                            <span class="subtext">Tu vehículo principal registrado</span>
+                        </div>
+
+                        @if (vehiculoActual != null)
+                        {
+                            var tipo = vehiculoActual.TipoVehiculo?.nombre_tipo;
+
+                            <div class="vehiculo-destacado">
+                                <div class="vehiculo-icono">
+                                    @if (tipo == "Moto")
+                                    {
+                                        <img src="~/assets/moto.png" class="vehiculo-img" />
+                                    }
+                                    else if (tipo == "Camioneta")
+                                    {
+                                        <img src="~/assets/camioneta.png" class="vehiculo-img" />
+                                    }
+                                    else if (tipo == "Bicicleta")
+                                    {
+                                        <img src="~/assets/bicicleta.png" class="vehiculo-img" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/assets/carro.png" class="vehiculo-img" />
+                                    }
+                                </div>
+
+                                <div>
+                                    <h2>@vehiculoActual.placa - @vehiculoActual.marca</h2>
+                                    <p>Color: @vehiculoActual.color</p>
+                                    <p>Tipo: @(tipo ?? "No definido")</p>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <p>No tienes vehículo registrado.</p>
+                        }
+                    </section>
+
+                    <section class="glass-card card-reserva">
+                        <div class="card-header">
+                            <h3>Realiza tu reserva</h3>
+                            <span class="subtext">Agenda tu espacio de parqueadero</span>
+                        </div>
+
+                        @if (vehiculoActual != null)
+                        {
+                            <form asp-controller="Clientes" asp-action="CrearReserva" method="post" class="form-modern">
+                                @Html.AntiForgeryToken()
+
+                                <input type="hidden" name="VehiculoId" value="@vehiculoActual.id_vehiculo" />
+                                <input type="hidden" name="TipoVehiculoId"
+                                       value="@vehiculoActual.Tipo_vehiculo_idTipo_vehiculo" />
+                                <input type="hidden" name="MetodoPago" value="Pagar en parqueadero" />
+                                <input type="hidden" name="Monto" value="20000" />
+
+                                <div class="form-group">
+                                    <label>Fecha</label>
+                                    <input type="date" name="Fecha" class="input-modern" required />
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Inicio</label>
+                                        <input type="time" name="HoraEntrada" class="input-modern" required />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Fin</label>
+                                        <input type="time" name="HoraSalida" class="input-modern" required />
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn-primary-full">Guardar reserva</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <p>Debes registrar un vehículo antes de hacer una reserva.</p>
+                        }
+                    </section>
+
+                    <section class="glass-card card-pago">
+                        <div class="card-header">
+                            <h3>Método de pago</h3>
+                            <span class="subtext">Confirma el pago de tu última reserva</span>
+                        </div>
+
+                        @if (vehiculoActual != null)
+                        {
+                            <form asp-controller="Clientes" asp-action="ConfirmarPago" method="post" class="form-modern">
+                                @Html.AntiForgeryToken()
+
+                                <div class="form-group">
+                                    <label>Método</label>
+                                    <select name="metodoPago" class="input-modern" required>
+                                        <option value="Pagar en parqueadero">Pagar en parqueadero</option>
+                                        <option value="Nequi">Nequi</option>
+                                        <option value="Daviplata">Daviplata</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Monto</label>
+                                    <input type="text" name="monto" value="20000" class="input-modern" readonly />
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Vehículo</label>
+                                    <input type="text" class="input-modern"
+                                           value="@vehiculoActual.placa - @vehiculoActual.marca" readonly />
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="button" class="btn-cancel">Cancelar</button>
+                                    <button type="submit" class="btn-confirm">Confirmar</button>
+                                </div>
+                            </form>
+                        }
+                    </section>
+                </div>
+            </section>
+
+            <!-- SECCION MI INFORMACION -->
+            <section id="mi-informacion" class="contenido-seccion">
+                <div class="single-content">
+                    <section class="glass-card">
+                        <div class="card-header">
+                            <h3>Mi información</h3>
+                            <span class="subtext">Datos completos del cliente</span>
+                        </div>
+
+                        <div class="info-grid">
+                            <div class="info-field">
+                                <label>Nombre completo</label>
+                                <div>@Model.nombre @Model.apellido</div>
+                            </div>
+
+                            <div class="info-field">
+                                <label>Correo electrónico</label>
+                                <div>@Model.correo</div>
+                            </div>
+
+                            <div class="info-field">
+                                <label>Teléfono</label>
+                                <div>@Model.telefono</div>
+                            </div>
+
+                            <div class="info-field">
+                                <label>Documento</label>
+                                <div>@Model.documento</div>
+                            </div>
+
+                            <div class="info-field">
+                                <label>Tipo de documento</label>
+                                <div>@Model.tipo_doc</div>
+                            </div>
+
+                            <div class="info-field">
+                                <label>Estado</label>
+                                <div>@(Model.estado ? "Activo" : "Inactivo")</div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <!-- SECCION MIS VEHICULOS -->
+            <section id="mis-vehiculos" class="contenido-seccion">
+    <div class="single-content">
+
+        <!-- LISTA DE VEHICULOS -->
+        <section class="glass-card">
+            <div class="card-header">
+                <h3>Mis vehículos</h3>
+                <span class="subtext">Todos los vehículos registrados</span>
+            </div>
+
+            @if (vehiculos.Any())
+            {
+                <div class="vehiculos-lista">
+                    @foreach (var vehiculo in vehiculos)
+                    {
+                        var tipo = vehiculo.TipoVehiculo?.nombre_tipo;
+
+                        <div class="vehiculo-card-lista">
+
+                            <!-- ICONO -->
+                            <div class="vehiculo-lista-icono">
+                                @if (tipo == "Moto")
+                                {
+                                    <img src="~/assets/moto.png" class="vehiculo-img" />
+                                }
+                                else if (tipo == "Camioneta")
+                                {
+                                    <img src="~/assets/camioneta.png" class="vehiculo-img" />
+                                }
+                                else if (tipo == "Bicicleta")
+                                {
+                                    <img src="~/assets/bicicleta.png" class="vehiculo-img" />
+                                }
+                                else
+                                {
+                                    <img src="~/assets/carro.png" class="vehiculo-img" />
+                                }
+                            </div>
+
+                            <!-- INFO -->
+                            <div class="vehiculo-lista-info">
+                                <h4>@vehiculo.placa</h4>
+                                <p><strong>Marca:</strong> @vehiculo.marca</p>
+                                <p><strong>Color:</strong> @vehiculo.color</p>
+                                <p><strong>Tipo:</strong> @(tipo ?? "No definido")</p>
+
+                                <!-- BOTONES -->
+                                <div class="acciones-vehiculo">
+                                    <button type="button"
+                                            class="btn-editar"
+                                            onclick="mostrarFormularioEditar(@vehiculo.id_vehiculo)">
+                                        Editar
+                                    </button>
+
+                                    <form asp-controller="Clientes" asp-action="EliminarVehiculo" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@vehiculo.id_vehiculo" />
+
+                                        <button type="submit"
+                                                class="btn-eliminar"
+                                                onclick="return confirm('¿Seguro que quieres eliminar este vehículo?');">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <!-- FORMULARIO EDITAR -->
+                                <div id="form-editar-@vehiculo.id_vehiculo" class="form-editar" style="display:none;">
+                                    <form asp-controller="Clientes" asp-action="EditarVehiculo" method="post" class="form-editar-grid">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@vehiculo.id_vehiculo" />
+
+                                        <div class="campo-editar">
+                                            <label>Placa</label>
+                                            <input type="text" name="placa" value="@vehiculo.placa" class="input-editar" required />
+                                        </div>
+
+                                        <div class="campo-editar">
+                                            <label>Marca</label>
+                                            <input type="text" name="marca" value="@vehiculo.marca" class="input-editar" required />
+                                        </div>
+
+                                        <div class="campo-editar">
+                                            <label>Color</label>
+                                            <input type="text" name="color" value="@vehiculo.color" class="input-editar" required />
+                                        </div>
+
+                                        <div class="campo-editar">
+                                            <label>Tipo</label>
+                                            <select name="tipoVehiculoId" class="input-editar" required>
+                                                <option value="1" selected="@(vehiculo.Tipo_vehiculo_idTipo_vehiculo == 1)">Automóvil</option>
+                                                <option value="2" selected="@(vehiculo.Tipo_vehiculo_idTipo_vehiculo == 2)">Moto</option>
+                                                <option value="3" selected="@(vehiculo.Tipo_vehiculo_idTipo_vehiculo == 3)">Camioneta</option>
+                                                <option value="4" selected="@(vehiculo.Tipo_vehiculo_idTipo_vehiculo == 4)">Bicicleta</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="acciones-editar">
+                                            <button type="submit" class="btn-guardar">Guardar cambios</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p>No tienes vehículos registrados.</p>
+            }
+        </section><br />
+
+        <!-- FORMULARIO NUEVO VEHICULO -->
+        <section class="glass-card">
+            <div class="card-header">
+                <h3>Registrar nuevo vehículo</h3>
+                <span class="subtext">Agrega otro vehículo a tu cuenta</span>
+            </div>
+
+            <form asp-controller="Clientes" asp-action="GuardarVehiculo" method="post" class="form-modern">
                 @Html.AntiForgeryToken()
 
-                <div class="grupo">
+                <div class="form-group">
                     <label>Placa</label>
-                    <input type="text" name="placa" placeholder="Placa" class="input" required>
+                    <input type="text" name="placa" class="input-modern" required />
                 </div>
 
-                <div class="grupo">
+                <div class="form-group">
                     <label>Marca</label>
-                    <input type="text" name="marca" placeholder="Marca" class="input" required>
+                    <input type="text" name="marca" class="input-modern" required />
                 </div>
 
-                <div class="grupo">
+                <div class="form-group">
                     <label>Color</label>
-                    <input type="text" name="color" placeholder="Color" class="input" required>
+                    <input type="text" name="color" class="input-modern" required />
                 </div>
 
-                <div class="grupo">
+                <div class="form-group">
                     <label>Tipo de vehículo</label>
-                    <select name="tipoVehiculoId" class="input" required>
-                        <option value="">Seleccione un tipo</option>
+                    <select name="tipoVehiculoId" class="input-modern" required>
                         <option value="1">Automóvil</option>
                         <option value="2">Moto</option>
                         <option value="3">Camioneta</option>
-                        <option value="3">Camion</option>
+                        <option value="4">Bicicleta</option>
                     </select>
                 </div>
 
-                <button type="submit" class="btn principal">Guardar</button>
+                <button type="submit" class="btn-primary-full">Guardar nuevo vehículo</button>
             </form>
-        }
-    </section>
+        </section>
 
-    <!-- NUEVA RESERVA -->
-    <section class="card nueva-reserva">
-        <h3>Realiza tu reserva</h3>
-
-        @if (Model.Vehiculos != null && Model.Vehiculos.Any())
-        {
-            var v = Model.Vehiculos.First();
-
-            <form asp-controller="Clientes" asp-action="CrearReserva" method="post">
-                @Html.AntiForgeryToken()
-
-                <input type="hidden" name="VehiculoId" value="@v.id_vehiculo" />
-                <input type="hidden" name="TipoVehiculoId" value="@v.Tipo_vehiculo_idTipo_vehiculo" />
-                <input type="hidden" name="MetodoPago" value="Pagar en parqueadero" />
-                <input type="hidden" name="Monto" value="20000" />
-
-                <div class="grupo">
-                    <label>Fecha</label>
-                    <input type="date" name="Fecha" class="input" required>
-                </div><br />
-
-                <div class="fila-doble">
-                    <div class="grupo">
-                        <label>Inicio</label>
-                        <input type="time" name="HoraEntrada" class="input" required>
-                    </div> <br />
-
-                    <div class="grupo">
-                        <label>Fin</label>
-                        <input type="time" name="HoraSalida" class="input" required>
-                    </div> <br />
-                </div>
-
-                <button type="submit" class="btn principal">Guardar reserva</button>
-            </form>
-        }
-        else
-        {
-            <p>No tienes vehículo registrado.</p>
-        }
-    </section>
-
-    <!-- PAGO -->
-    <section class="card pago">
-        <h3>Método de pago</h3>
-
-        @if (Model.Vehiculos != null && Model.Vehiculos.Any())
-        {
-            var v = Model.Vehiculos.First();
-
-            <form asp-controller="Clientes" asp-action="ConfirmarPago" method="post">
-                @Html.AntiForgeryToken()
-
-                <div class="grupo">
-                    <label>Método</label>
-                    <select name="metodoPago" class="input" required>
-                        <option value="Pagar en parqueadero">Pagar en parqueadero</option>
-                        <option value="Nequi">Nequi</option>
-                        <option value="Daviplata">Daviplata</option>
-                    </select>
-                </div><br /> 
-
-                <div class="grupo">
-                    <label>Monto</label>
-                    <input name="monto" class="input" value="20000" readonly>
-                </div><br />
-
-                <div class="grupo">
-                    <label>Vehículo</label>
-                    <input class="input" value="@v.placa - @v.marca" readonly>
-                </div><br />
-
-                <div style="display:flex; gap:10px;">
-                    <button type="button" class="btn rojo" onclick="window.location.href='@Url.Action("Index","Clientes")'">Cancelar</button>
-                    <button type="submit" class="btn principal">Confirmar</button>
-                </div>
-            </form>
-        }
-    </section>
-
-</main>
-
-<!-- MODAL -->
-<div class="modal" id="modalEditar">
-    <div class="modal-content">
-        <span class="close" id="closeModal">&times;</span>
-        <h3>Editar Perfil</h3>
-
-        <form asp-controller="Clientes" asp-action="EditarPerfilCompleto" method="post">
-            @Html.AntiForgeryToken()
-
-            <input type="hidden" name="IdUsuario" value="@Model.id_usuario" />
-            <input type="hidden" name="IdVehiculo" value="@(Model.Vehiculos?.FirstOrDefault()?.id_vehiculo)" />
-
-            <label>Nombre</label>
-            <input type="text" name="Nombre" value="@Model.nombre" class="input" required>
-
-            <label>Apellido</label>
-            <input type="text" name="Apellido" value="@Model.apellido" class="input" required>
-
-            <label>Correo</label>
-            <input type="email" name="Correo" value="@Model.correo" class="input" required>
-
-            <label>Teléfono</label>
-            <input type="text" name="Telefono" value="@Model.telefono" class="input" required>
-
-            <label>Placa</label>
-            <input type="text" name="Placa" value="@(Model.Vehiculos?.FirstOrDefault()?.placa ?? "")" class="input" required>
-
-            <label>Marca</label>
-            <input type="text" name="Marca" value="@(Model.Vehiculos?.FirstOrDefault()?.marca ?? "")" class="input" required>
-
-            <label>Color</label>
-            <input type="text" name="Color" value="@(Model.Vehiculos?.FirstOrDefault()?.color ?? "")" class="input" required>
-
-            <button type="submit" class="btn principal">Guardar Cambios</button>
-        </form>
     </div>
-</div>
+</section>
 
-<script>
-function actualizarFechaHora() {
-    const ahora = new Date();
+                        <!-- SECCION MIS RESERVAS -->
+                        <section id="mis-reservas" class="contenido-seccion">
+                            <div class="single-content">
+                                <section class="glass-card">
+                                    <div class="card-header">
+                                        <h3>Mis reservas</h3>
+                                        <span class="subtext">Historial de reservas realizadas</span>
+                                    </div>
 
-    document.getElementById("fecha").textContent =
-        ahora.toLocaleDateString("es-ES", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric"
-        });
+                                    <div class="reservas-placeholder">
+                                        <p>Esta sección la conectamos en el siguiente paso para mostrar reservas reales desde la
+                                            base de
+                                            datos.</p>
+                                            <p>Ya dejamos el diseño listo.</p>
+                                        </div>
+                                    </section>
+                                </div>
+                            </section>
 
-    document.getElementById("hora").textContent =
-        ahora.toLocaleTimeString("es-ES", {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit"
-        });
-}
+                        </main>
+                    </div>
 
-setInterval(actualizarFechaHora, 1000);
-actualizarFechaHora();
+                    <!-- MODAL EDITAR PERFIL -->
+                    <div class="modal" id="modalEditar">
+                        <div class="modal-content">
+                            <span class="close" id="closeModal">&times;</span>
+                            <h3>Editar Perfil</h3>
 
-const modal = document.getElementById("modalEditar");
-const btnEditar = document.getElementById("btnEditar");
-const closeModal = document.getElementById("closeModal");
+                            <form asp-controller="Clientes" asp-action="EditarPerfilCompleto" method="post">
+                                @Html.AntiForgeryToken()
 
-btnEditar.onclick = () => {
-    modal.style.display = "flex";
-};
+                                <input type="hidden" name="IdUsuario" value="@Model.id_usuario" />
+                                <input type="hidden" name="IdVehiculo" value="@(vehiculoActual?.id_vehiculo)" />
 
-closeModal.onclick = () => {
-    modal.style.display = "none";
-};
+                                <label>Nombre</label>
+                                <input type="text" name="Nombre" value="@Model.nombre" class="input-modern" required />
 
-window.onclick = (event) => {
-    if (event.target === modal) {
-        modal.style.display = "none";
-    }
-};
-</script>
+                                <label>Apellido</label>
+                                <input type="text" name="Apellido" value="@Model.apellido" class="input-modern" required />
 
-</body>
-</html>
+                                <label>Correo</label>
+                                <input type="email" name="Correo" value="@Model.correo" class="input-modern" required />
+
+                                <label>Teléfono</label>
+                                <input type="text" name="Telefono" value="@Model.telefono" class="input-modern" required />
+
+                                <button type="submit" class="btn-primary-full">Guardar cambios</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <script>
+                            function actualizarFechaHora() {
+                                const ahora = new Date();
+
+                                document.getElementById("fecha").textContent =
+                                    ahora.toLocaleDateString("es-ES", {
+                                        weekday: "long",
+                                        year: "numeric",
+                                        month: "long",
+                                        day: "numeric"
+                                    });
+
+                                document.getElementById("hora").textContent =
+                                    ahora.toLocaleTimeString("es-ES", {
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                        second: "2-digit"
+                                    });
+                            }
+
+                            setInterval(actualizarFechaHora, 1000);
+                            actualizarFechaHora();
+
+                            function mostrarSeccion(id, boton) {
+                                const secciones = document.querySelectorAll(".contenido-seccion");
+                                const botones = document.querySelectorAll(".nav-link");
+
+                                secciones.forEach(sec => sec.classList.remove("activa"));
+                                botones.forEach(btn => btn.classList.remove("active"));
+
+                                document.getElementById(id).classList.add("activa");
+                                boton.classList.add("active");
+                            }
+
+                            const modal = document.getElementById("modalEditar");
+                            const btnEditar = document.getElementById("btnEditar");
+                            const closeModal = document.getElementById("closeModal");
+
+                            btnEditar.onclick = () => {
+                                modal.style.display = "flex";
+                            };
+
+                            closeModal.onclick = () => {
+                                modal.style.display = "none";
+                            };
+
+                            window.onclick = (event) => {
+                                if (event.target === modal) {
+                                    modal.style.display = "none";
+                                }
+                            };
+
+                            function mostrarFormularioEditar(id) {
+                                const form = document.getElementById("form-editar-" + id);
+
+                                if (form.style.display === "none" || form.style.display === "") {
+                                    form.style.display = "block";
+                                } else {
+                                    form.style.display = "none";
+                                }
+                            }
+
+                    </script>
+
+                </body>
+
+            </html>

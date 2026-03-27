@@ -55,7 +55,6 @@ namespace ParkYa.Controllers
             }
 
             var usuario = await _context.usuario
-                .Include(u => u.Vehiculos)
                 .FirstOrDefaultAsync(u => u.id_usuario == usuarioId.Value);
 
             if (usuario == null)
@@ -66,18 +65,9 @@ namespace ParkYa.Controllers
             usuario.correo = model.Correo;
             usuario.telefono = model.Telefono;
 
-            var vehiculo = usuario.Vehiculos?.FirstOrDefault();
-
-            if (vehiculo != null)
-            {
-                vehiculo.placa = model.Placa;
-                vehiculo.marca = model.Marca;
-                vehiculo.color = model.Color;
-            }
-
             await _context.SaveChangesAsync();
 
-            TempData["Mensaje"] = "Perfil y vehículo actualizados correctamente.";
+            TempData["Mensaje"] = "Perfil actualizado correctamente.";
             return RedirectToAction("Index");
         }
 
@@ -202,6 +192,60 @@ namespace ParkYa.Controllers
             ");
 
             TempData["Mensaje"] = "Pago guardado correctamente.";
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EliminarVehiculo(int id)
+        {
+            var usuarioId = ObtenerUsuarioId();
+
+            if (usuarioId == null)
+                return RedirectToAction("Login", "Autenticacion");
+
+            var vehiculo = await _context.vehiculo
+                .FirstOrDefaultAsync(v => v.id_vehiculo == id && v.Usuario_id_usuario == usuarioId.Value);
+
+            if (vehiculo == null)
+            {
+                TempData["Error"] = "Vehículo no encontrado.";
+                return RedirectToAction("Index");
+            }
+
+            _context.vehiculo.Remove(vehiculo);
+            await _context.SaveChangesAsync();
+
+            TempData["Mensaje"] = "Vehículo eliminado correctamente.";
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarVehiculo(int id, string placa, string marca, string color, int tipoVehiculoId)
+        {
+            var usuarioId = ObtenerUsuarioId();
+
+            if (usuarioId == null)
+                return RedirectToAction("Login", "Autenticacion");
+
+            var vehiculo = await _context.vehiculo
+                .FirstOrDefaultAsync(v => v.id_vehiculo == id && v.Usuario_id_usuario == usuarioId.Value);
+
+            if (vehiculo == null)
+            {
+                TempData["Error"] = "Vehículo no encontrado.";
+                return RedirectToAction("Index");
+            }
+
+            vehiculo.placa = placa;
+            vehiculo.marca = marca;
+            vehiculo.color = color;
+            vehiculo.Tipo_vehiculo_idTipo_vehiculo = tipoVehiculoId;
+
+            await _context.SaveChangesAsync();
+
+            TempData["Mensaje"] = "Vehículo actualizado correctamente.";
             return RedirectToAction("Index");
         }
 
