@@ -1,0 +1,289 @@
+@model ParkYa.ViewModels.EmpleadoReservasViewModel
+@{
+    ViewData["Title"] = "Reservas";
+    var nombreCompleto = $"{Model.Empleado.nombre} {Model.Empleado.apellido}";
+    var inicial = !string.IsNullOrWhiteSpace(Model.Empleado.nombre)
+        ? Model.Empleado.nombre.Substring(0, 1).ToUpper()
+        : "E";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/CSS/empleado.css">
+    <script>
+        function actualizarFechaHora() {
+            const ahora = new Date();
+            const horas = String(ahora.getHours()).padStart(2, "0");
+            const minutos = String(ahora.getMinutes()).padStart(2, "0");
+            const segundos = String(ahora.getSeconds()).padStart(2, "0");
+
+            const reloj = document.getElementById("reloj");
+            const fecha = document.getElementById("fecha");
+
+            if (reloj) reloj.textContent = `${horas}:${minutos}:${segundos}`;
+
+            const opcionesFecha = {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            };
+
+            const fechaTexto = ahora.toLocaleDateString("es-ES", opcionesFecha);
+            const fechaCap = fechaTexto.charAt(0).toUpperCase() + fechaTexto.slice(1);
+
+            if (fecha) fecha.textContent = fechaCap;
+        }
+
+        setInterval(actualizarFechaHora, 1000);
+        document.addEventListener("DOMContentLoaded", actualizarFechaHora);
+    </script>
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="side-brand">
+                <img src="~/assets/logo1.jpeg" class="side-logo" alt="logo">
+                <div class="brand-text">
+                    <h2>ParkYa</h2>
+                    <span>Empleado</span>
+                </div>
+            </div>
+
+            <div class="side-user">
+                <div class="avatar">@inicial</div>
+                <div class="side-user-info">
+                    <h3>@nombreCompleto</h3>
+                    <p>@Model.Empleado.correo</p>
+                </div>
+            </div>
+
+            <nav class="menu">
+                <a class="item" href="@Url.Action("Index", "Empleado")">🏠 Inicio</a>
+                <a class="item" href="@Url.Action("Vehiculos", "Empleado")">🚗 Vehículos</a>
+                <a class="item active" href="@Url.Action("Reservas", "Empleado")">📅 Reservas</a>
+            </nav>
+        </aside>
+
+        <main class="main-wrapper">
+            <header class="top-panel">
+                <div class="top-panel-left">
+                    <h1>Reservas</h1>
+                    <p>Control actual e historial de reservas</p>
+                </div>
+
+                <div class="top-panel-right">
+                    <div class="top-info">
+                        <span class="date" id="fecha"></span>
+                        <span class="time" id="reloj">00:00:00</span>
+                    </div>
+
+                    <div class="top-actions">
+                        <button class="btn-pill btn-danger-custom"
+                                onclick="location.href='@Url.Action("Login","Autenticacion")'">
+                            Cerrar sesión
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <section class="dashboard-grid">
+                <article class="panel-card">
+                    <h2>Resumen</h2>
+                    <p class="sub">Estado actual e historial</p>
+
+                    <div class="summary-stats">
+                        <div class="stat-mini">
+                            <span>Activas o pendientes</span>
+                            <strong>@Model.TotalActivasOPendientes</strong>
+                        </div>
+                        <div class="stat-mini">
+                            <span>Hoy</span>
+                            <strong>@Model.TotalHoy</strong>
+                        </div>
+                        <div class="stat-mini">
+                            <span>Semana</span>
+                            <strong>@Model.TotalSemana</strong>
+                        </div>
+                        <div class="stat-mini">
+                            <span>Mes</span>
+                            <strong>@Model.TotalMes</strong>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="panel-card table-card">
+                    <h2>Reservas activas o pendientes</h2>
+                    <p class="sub">Reservas que requieren seguimiento</p>
+
+                    <div class="table-wrap">
+                        @if (Model.ReservasActuales.Any())
+                        {
+                            <table class="employee-table">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Cliente</th>
+                                        <th>Placa</th>
+                                        <th>Fecha</th>
+                                        <th>Hora entrada</th>
+                                        <th>Hora salida</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ReservasActuales)
+                                    {
+                                        <tr>
+                                            <td>@item.CodigoReserva</td>
+                                            <td>@item.Cliente</td>
+                                            <td>@item.Placa</td>
+                                            <td>@item.Fecha.ToString("dd/MM/yyyy")</td>
+                                            <td>@item.HoraEntrada.ToString(@"hh\:mm")</td>
+                                            <td>@item.HoraSalida.ToString(@"hh\:mm")</td>
+                                            <td>
+                                                <span class="estado-badge @(item.Estado == "Activo" ? "estado-activo" : "estado-inactivo")">
+                                                    @item.Estado
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="empty-state">No hay reservas activas o pendientes.</div>
+                        }
+                    </div>
+                </article>
+
+                <article class="panel-card table-card">
+                    <h2>Historial del día</h2>
+                    <div class="table-wrap">
+                        @if (Model.HistorialHoy.Any())
+                        {
+                            <table class="employee-table">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Cliente</th>
+                                        <th>Placa</th>
+                                        <th>Fecha</th>
+                                        <th>Hora entrada</th>
+                                        <th>Hora salida</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.HistorialHoy)
+                                    {
+                                        <tr>
+                                            <td>@item.CodigoReserva</td>
+                                            <td>@item.Cliente</td>
+                                            <td>@item.Placa</td>
+                                            <td>@item.Fecha.ToString("dd/MM/yyyy")</td>
+                                            <td>@item.HoraEntrada.ToString(@"hh\:mm")</td>
+                                            <td>@item.HoraSalida.ToString(@"hh\:mm")</td>
+                                            <td>@item.Estado</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="empty-state">No hay reservas registradas hoy.</div>
+                        }
+                    </div>
+                </article>
+
+                <article class="panel-card table-card">
+                    <h2>Historial de la semana</h2>
+                    <div class="table-wrap">
+                        @if (Model.HistorialSemana.Any())
+                        {
+                            <table class="employee-table">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Cliente</th>
+                                        <th>Placa</th>
+                                        <th>Fecha</th>
+                                        <th>Hora entrada</th>
+                                        <th>Hora salida</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.HistorialSemana)
+                                    {
+                                        <tr>
+                                            <td>@item.CodigoReserva</td>
+                                            <td>@item.Cliente</td>
+                                            <td>@item.Placa</td>
+                                            <td>@item.Fecha.ToString("dd/MM/yyyy")</td>
+                                            <td>@item.HoraEntrada.ToString(@"hh\:mm")</td>
+                                            <td>@item.HoraSalida.ToString(@"hh\:mm")</td>
+                                            <td>@item.Estado</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="empty-state">No hay reservas registradas esta semana.</div>
+                        }
+                    </div>
+                </article>
+
+                <article class="panel-card table-card">
+                    <h2>Historial del mes</h2>
+                    <div class="table-wrap">
+                        @if (Model.HistorialMes.Any())
+                        {
+                            <table class="employee-table">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Cliente</th>
+                                        <th>Placa</th>
+                                        <th>Fecha</th>
+                                        <th>Hora entrada</th>
+                                        <th>Hora salida</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.HistorialMes)
+                                    {
+                                        <tr>
+                                            <td>@item.CodigoReserva</td>
+                                            <td>@item.Cliente</td>
+                                            <td>@item.Placa</td>
+                                            <td>@item.Fecha.ToString("dd/MM/yyyy")</td>
+                                            <td>@item.HoraEntrada.ToString(@"hh\:mm")</td>
+                                            <td>@item.HoraSalida.ToString(@"hh\:mm")</td>
+                                            <td>@item.Estado</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="empty-state">No hay reservas registradas este mes.</div>
+                        }
+                    </div>
+                </article>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
