@@ -117,6 +117,9 @@ namespace ParkYa.Data
                 entity.Property(e => e.fecha)
                     .HasColumnName("fecha");
 
+                entity.Property(e=> e.hora_reservada) 
+                    .HasColumnName("hora_reservada"); 
+
                 entity.Property(e => e.hora_entrada)
                     .HasColumnName("hora_entrada");
 
@@ -124,7 +127,8 @@ namespace ParkYa.Data
                     .HasColumnName("hora_salida");
 
                 entity.Property(e => e.Estado)
-                    .HasColumnName("estado");
+                    .HasColumnName("estado")
+                    .HasConversion<string>();
 
                 entity.Property(e => e.Usuario_id_usuario)
                     .HasColumnName("Usuario_id_usuario");
@@ -135,27 +139,22 @@ namespace ParkYa.Data
                 entity.Property(e => e.Vehiculo_id_vehiculo)
                     .HasColumnName("Vehiculo_id_vehiculo");
 
-                entity.Ignore("Usuarioid_usuario");
                 entity.Ignore("Tarifaid_tarifas");
                 entity.Ignore("Tarifaid_tarifas1");
-                entity.Ignore("Vehiculoid_vehiculo");
-                entity.Ignore("Tarifa");
-                entity.Ignore("Usuario");
-                entity.Ignore("Vehiculo");
 
-                entity.HasOne<Usuario>()
-                    .WithMany()
-                    .HasForeignKey(e => e.Usuario_id_usuario)
+                entity.HasOne(r => r.Usuario)
+                    .WithMany(u => u.Reservas)
+                    .HasForeignKey(r => r.Usuario_id_usuario)
                     .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne<Tarifa>()
                     .WithMany(t => t.Reservas)
-                    .HasForeignKey(e => e.TarifaId)
+                    .HasForeignKey(r => r.TarifaId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne<Vehiculo>()
+                entity.HasOne(r => r.Vehiculo)
                     .WithMany()
-                    .HasForeignKey(e => e.Vehiculo_id_vehiculo)
+                    .HasForeignKey(r => r.Vehiculo_id_vehiculo)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
@@ -189,36 +188,36 @@ namespace ParkYa.Data
             });
 
             modelBuilder.Entity<Venta>(entity =>
-{
-    entity.HasKey(e => e.id_pago);
-    entity.ToTable("venta");
+            {
+                entity.HasKey(e => e.id_pago);
+                entity.ToTable("venta");
 
-    entity.Property(e => e.id_pago)
-        .HasColumnName("id_pago");
+                entity.Property(e => e.id_pago)
+                    .HasColumnName("id_pago");
 
-    entity.Property(e => e.cod_pago)
-        .HasColumnName("cod_pago");
+                entity.Property(e => e.cod_pago)
+                    .HasColumnName("cod_pago");
 
-    entity.Property(e => e.monto)
-        .HasColumnName("monto");
+                entity.Property(e => e.monto)
+                    .HasColumnName("monto");
 
-    entity.Property(e => e.fecha_pago)
-        .HasColumnName("fecha_pago");
+                entity.Property(e => e.fecha_pago)
+                    .HasColumnName("fecha_pago");
 
-    entity.Property(e => e.metodo_pago)
-        .HasColumnName("metodo_pago");
+                entity.Property(e => e.metodo_pago)
+                    .HasColumnName("metodo_pago");
 
-    entity.Property(e => e.Usuario_id_usuario)
-        .HasColumnName("Usuario_id_usuario");
+                entity.Property(e => e.Usuario_id_usuario)
+                    .HasColumnName("Usuario_id_usuario");
 
-    entity.Property(e => e.Reserva_id_reserva)
-        .HasColumnName("Reserva_id_reserva");
+                entity.Property(e => e.Reserva_id_reserva)
+                    .HasColumnName("Reserva_id_reserva");
 
-    entity.Ignore("Usuario");
-    entity.Ignore("Reserva");
-    entity.Ignore("Usuarioid_usuario");
-    entity.Ignore("Reservaid_reserva");
-});
+                entity.Ignore("Usuario");
+                entity.Ignore("Reserva");
+                entity.Ignore("Usuarioid_usuario");
+                entity.Ignore("Reservaid_reserva");
+            });
 
             modelBuilder.Entity<DetalleVenta>(entity =>
             {

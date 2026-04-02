@@ -30,11 +30,19 @@ namespace ParkYa.Controllers
 
             var usuario = await _context.usuario
                 .Include(u => u.Vehiculos!)
-                .ThenInclude(v => v.TipoVehiculo)
-                .FirstOrDefaultAsync(u => u.id_usuario == usuarioId.Value); ;
+                    .ThenInclude(v => v.TipoVehiculo)
+                .FirstOrDefaultAsync(u => u.id_usuario == usuarioId.Value);
 
             if (usuario == null)
                 return RedirectToAction("Login", "Autenticacion");
+
+            var reservas = await _context.reserva
+                .Where(r => r.Usuario_id_usuario == usuarioId.Value)
+                .Include(r => r.Vehiculo)
+                .OrderByDescending(r => r.id_reserva)
+                .ToListAsync();
+
+            ViewBag.Reservas = reservas;
 
             return View(usuario);
         }
@@ -152,9 +160,9 @@ namespace ParkYa.Controllers
 
             await _context.Database.ExecuteSqlInterpolatedAsync($@"
                 INSERT INTO reserva
-                (cod_reserva, fecha, hora_entrada, hora_salida, estado, Usuario_id_usuario, Tarifas_id_tarifas, Vehiculo_id_vehiculo)
+                (cod_reserva, fecha, hora_reservada, hora_entrada, hora_salida, estado, Usuario_id_usuario, Tarifas_id_tarifas, Vehiculo_id_vehiculo)
                 VALUES
-                ({codReserva}, {model.Fecha}, {model.HoraEntrada}, {model.HoraSalida}, {"Pendiente"}, {usuarioId.Value}, {tarifaId.Value}, {model.VehiculoId})
+                ({codReserva}, {model.Fecha}, {model.HoraReservada}, {null}, {null}, {"Pendiente"}, {usuarioId.Value}, {tarifaId.Value}, {model.VehiculoId})
             ");
 
             TempData["Mensaje"] = "Reserva guardada correctamente.";
@@ -204,12 +212,29 @@ namespace ParkYa.Controllers
             if (usuarioId == null)
                 return RedirectToAction("Login", "Autenticacion");
 
+            var vehiculoSeleccionado = HttpContext.Session.GetInt32("VehiculoSeleccionado");
+
+            if (vehiculoSeleccionado == id)
+            {
+                TempData["Error"] = "No puedes eliminar el vehículo actual.";
+                return RedirectToAction("Index");
+            }
+
             var vehiculo = await _context.vehiculo
                 .FirstOrDefaultAsync(v => v.id_vehiculo == id && v.Usuario_id_usuario == usuarioId.Value);
 
             if (vehiculo == null)
             {
                 TempData["Error"] = "Vehículo no encontrado.";
+                return RedirectToAction("Index");
+            }
+
+            var tieneReservas = await _context.reserva
+                .AnyAsync(r => r.Vehiculo_id_vehiculo == id);
+
+            if (tieneReservas)
+            {
+                TempData["Error"] = "No puedes eliminar este vehículo porque tiene reservas asociadas.";
                 return RedirectToAction("Index");
             }
 
@@ -246,6 +271,86 @@ namespace ParkYa.Controllers
             await _context.SaveChangesAsync();
 
             TempData["Mensaje"] = "Vehículo actualizado correctamente.";
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SeleccionarVehiculoActual(int id)
+        {
+            var usuarioId = ObtenerUsuarioId();
+
+            if (usuarioId == null)
+                return RedirectToAction("Login", "Autenticacion");
+
+            HttpContext.Session.SetInt32("VehiculoSeleccionado", id);
+
+            TempData["Mensaje"] = "Vehículo actual cambiado correctamente.";
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CancelarReserva(int id)
+        {
+            var usuarioId = ObtenerUsuarioId();
+
+            if (usuarioId == null)
+                return RedirectToAction("Login", "Autenticacion");
+
+            var reserva = await _context.reserva
+                .FirstOrDefaultAsync(r => r.id_reserva == id && r.Usuario_id_usuario == usuarioId.Value);
+
+            if (reserva == null)
+            {
+                TempData["Error"] = "Reserva no encontrada.";
+                return RedirectToAction("Index");
+            }
+
+            if (reserva.Estado != Estado.Pendiente)
+            {
+                TempData["Error"] = "Solo puedes cancelar reservas pendientes.";
+                return RedirectToAction("Index");
+            }
+
+            reserva.Estado = Estado.Cancelada;
+
+            await _context.SaveChangesAsync();
+
+            TempData["Mensaje"] = "Reserva cancelada correctamente.";
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarReserva(int id, DateTime fecha, TimeSpan horaReservada)
+        {
+            var usuarioId = ObtenerUsuarioId();
+
+            if (usuarioId == null)
+                return RedirectToAction("Login", "Autenticacion");
+
+            var reserva = await _context.reserva
+                .FirstOrDefaultAsync(r => r.id_reserva == id && r.Usuario_id_usuario == usuarioId.Value);
+
+            if (reserva == null)
+            {
+                TempData["Error"] = "Reserva no encontrada.";
+                return RedirectToAction("Index");
+            }
+
+            if (reserva.Estado != Estado.Pendiente)
+            {
+                TempData["Error"] = "Solo puedes editar reservas pendientes.";
+                return RedirectToAction("Index");
+            }
+
+            reserva.fecha = fecha;
+            reserva.hora_reservada = horaReservada;
+
+            await _context.SaveChangesAsync();
+
+            TempData["Mensaje"] = "Reserva actualizada correctamente.";
             return RedirectToAction("Index");
         }
 
