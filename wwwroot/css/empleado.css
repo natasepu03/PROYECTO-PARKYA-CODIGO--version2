@@ -514,3 +514,104 @@ body {
 .modal-save-btn:hover {
     opacity: 0.96;
 }
+.btn-finalizar {
+    background-color: #28a745; /* verde */
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 20px; /* 🔥 forma ovalada */
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-finalizar:hover {
+    background: #16a34a;
+}
+.modal-content {
+    border-radius: 28px;
+    padding: 24px;
+    border: none;
+    box-shadow: 0 20px 50px rgba(15, 63, 131, 0.18);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--borde);
+    padding-bottom: 12px;
+}
+.modal-title {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--texto);
+}
+.modal-footer {
+    border: none;
+}
+
+.modal input {
+    border-radius: 14px;
+    height: 50px;
+    border: 1px solid var(--borde);
+    padding: 0 14px;
+    font-size: 15px;
+}
+
+.modal input:focus {
+    border-color: var(--azul-medio);
+    box-shadow: 0 0 0 3px rgba(47, 104, 178, 0.15);
+}
+.modal .btn-success {
+    width: 100%;
+    height: 52px;
+    border-radius: 18px;
+    font-weight: 800;
+    font-size: 16px;
+    background: linear-gradient(90deg, var(--azul-oscuro), var(--azul-medio));
+    border: none;
+}
+.modal-body label {
+    font-weight: 700;
+    color: var(--texto);
+    margin-bottom: 6px;
+}
+
+.modal-body .form-control {
+    margin-bottom: 10px;
+}
+.estado-cancelada {
+    background-color: var(--rojo); 
+    color: white; 
+}
+.estado-finalizada {
+    background-color: var(--verde);
+    color: white;
+}
+.modal-btn-inline {
+    width: auto !important; 
+}
+.modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    padding: 16px 24px; 
+}
+
+.btn-modal-footer {
+    height: 52px;
+    font-weight: 800;
+    font-size: 16px;
+    border-radius: 18px;
+    padding: 0 24px;
+    background: linear-gradient(90deg, var(--azul-oscuro), var(--azul-medio));
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+}
+
+.btn-modal-footer:hover {
+    opacity: 0.95;
+}
