@@ -68,10 +68,13 @@ namespace ParkYa.Controllers
             if (usuario == null)
                 return RedirectToAction("Login", "Autenticacion");
 
+            
             usuario.nombre = model.Nombre;
             usuario.apellido = model.Apellido;
             usuario.correo = model.Correo;
             usuario.telefono = model.Telefono;
+            usuario.documento = model.Documento;
+            usuario.tipo_doc = model.TipoDocumento;
 
             await _context.SaveChangesAsync();
 

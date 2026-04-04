@@ -19,5 +19,8 @@ namespace ParkYa.Models.ViewModels
 
         [Required]
         public string Telefono { get; set; } = string.Empty;
+
+        public int Documento { get; set;}
+        public string TipoDocumento {get; set; } =string.Empty;
     }
 }
