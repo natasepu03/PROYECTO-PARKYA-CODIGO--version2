@@ -20,8 +20,9 @@ namespace ParkYa.ViewModels
         public string Color { get; set; } = string.Empty;
         public string Propietario { get; set; } = string.Empty;
         public DateTime Fecha { get; set; }
-        public TimeSpan HoraEntrada { get; set; }
-        public TimeSpan HoraSalida { get; set; }
+        public TimeSpan? HoraEntrada { get; set; }
+        public TimeSpan? HoraSalida { get; set; }
+        public TimeSpan? HoraReservada { get; set; }
         public string Estado { get; set; } = string.Empty;
     }
 }
