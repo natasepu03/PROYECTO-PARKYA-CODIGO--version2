@@ -24,8 +24,10 @@ namespace ParkYa.ViewModels
         public string Placa { get; set; } = string.Empty;
         public string Cliente { get; set; } = string.Empty;
         public DateTime Fecha { get; set; }
-        public TimeSpan HoraEntrada { get; set; }
-        public TimeSpan HoraSalida { get; set; }
+        public TimeSpan? HoraEntrada { get; set; }
+        public TimeSpan? HoraSalida { get; set; }
+         public TimeSpan? HoraReservada { get; set; }
         public string Estado { get; set; } = string.Empty;
+        public decimal TarifaHora { get; set; }
     }
 }
