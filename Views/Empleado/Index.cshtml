@@ -77,8 +77,9 @@
 
             <nav class="menu">
                <a class="item" asp-controller="Empleado" asp-action="Index">🏠 Inicio</a>
-               <a class="item" asp-controller="Empleado" asp-action="Vehiculos">🚗 Vehículos</a>
+               <a class="item" asp-controller="Empleado" asp-action="Reportes">📊 Reportes</a>
                <a class="item" asp-controller="Empleado" asp-action="Reservas">📅 Reservas</a>
+            </nav>
         </aside>
 
         <main class="main-wrapper">
@@ -145,55 +146,7 @@
                     </div>
                 </article>
 
-                <article class="panel-card table-card">
-                    <h2>Vehículos activos</h2>
-                    <p class="sub">Datos reales obtenidos desde reservas activas</p>
-
-                    <div class="table-wrap">
-                        @if (Model.VehiculosActivos != null && Model.VehiculosActivos.Any())
-                        {
-                            <table class="employee-table">
-                                <thead>
-                                    <tr>
-                                        <th>Placa</th>
-                                        <th>Marca</th>
-                                        <th>Color</th>
-                                        <th>Propietario</th>
-                                        <th>Fecha</th>
-                                        <th>Hora entrada</th>
-                                        <th>Hora salida</th>
-                                        <th>Estado</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.VehiculosActivos)
-                                    {
-                                        <tr>
-                                            <td>@item.Placa</td>
-                                            <td>@item.Marca</td>
-                                            <td>@item.Color</td>
-                                            <td>@item.Propietario</td>
-                                            <td>@item.Fecha.ToString("dd/MM/yyyy")</td>
-                                            <td>@item.HoraEntrada.ToString(@"hh\:mm")</td>
-                                            <td>@item.HoraSalida.ToString(@"hh\:mm")</td>
-                                            <td>
-                                                <span class="estado-badge @(item.Estado == "Activo" ? "estado-activo" : "estado-inactivo")">
-                                                    @item.Estado
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        }
-                        else
-                        {
-                            <div class="empty-state">
-                                No hay vehículos activos en este momento.
-                            </div>
-                        }
-                    </div>
-                </article>
+               
             </section>
         </main>
     </div>
@@ -214,7 +167,7 @@
 
             <nav class="menu">
                 <a class="item" asp-controller="Empleado" asp-action="Index">🏠 Inicio</a>
-                <a class="item" asp-controller="Empleado" asp-action="Vehiculos">🚗 Vehículos</a>
+                <a class="item" asp-controller="Empleado" asp-action="Vehiculos">📊 Reportes</a>
                 <a class="item" asp-controller="Empleado" asp-action="Reservas">📅 Reservas</a>
             </nav>
         </div>
