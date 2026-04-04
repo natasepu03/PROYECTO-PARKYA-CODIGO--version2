@@ -24,7 +24,6 @@ namespace ParkYa.Models
     public enum Estado
     {
         Pendiente,
-        Activa,
         Finalizada,
         Cancelada
     }
