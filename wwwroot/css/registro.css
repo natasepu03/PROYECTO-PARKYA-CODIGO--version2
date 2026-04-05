@@ -1,131 +1,238 @@
-/* ===== RESET ===== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
 }
 
-/* ===== FONDO ===== */
 body {
-    background: linear-gradient(to bottom, #000000, #232a44);
+    font-family: "Segoe UI", sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #061b38 0%, #203d58 70%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    color: #1e2a4a;
 }
 
-/* ===== CONTENEDOR PRINCIPAL ===== */
+.d-flex {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .registro-container {
-    background: rgb(187, 208, 229);
-    padding: 30px;
-    border-radius: 15px;
-    border: 2px solid #2762f7;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    width: 100%;
+    max-width: 550px;
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 34px 34px 28px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.20);
+    position: relative;
 }
 
-/* ===== BOTÓN VOLVER ===== */
 .btn-volver {
-    background: #000;
-    color: #fff;
-    padding: 8px 15px;
-    border-radius: 8px;
     border: none;
-    cursor: pointer;
+    background: #23395d;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 12px;
     font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+    margin-bottom: 18px;
 }
 
-/* ===== TITULOS ===== */
+.btn-volver:hover {
+    background: #1a2d4b;
+    transform: translateY(-1px);
+}
+
 .logo {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 18px;
     display: block;
-    margin: 0 auto 10px;
-    width: 130px;
+    margin: 0 auto 18px;
 }
 
 h1 {
     text-align: center;
-    font-size: 26px;
-    color: #fff;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1f2a4e;
+    margin-bottom: 6px;
 }
 
 .sub {
     text-align: center;
-    color: #315eff;
-    margin-bottom: 20px;
+    color: #5f6f92;
+    font-size: 15px;
+    margin-bottom: 24px;
 }
 
-/* ===== GRID DEL FORMULARIO ===== */
+form {
+    width: 100%;
+}
+
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 18px;
+    gap: 16px 16px;
 }
 
-/* Inputs full width en móvil */
-@media (max-width: 576px) {
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
+.form-grid > div {
+    display: flex;
+    flex-direction: column;
 }
 
-/* ===== INPUTS ===== */
-label {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 5px;
+.form-grid label {
+    font-size: 15px;
+    font-weight: 700;
+    color: #24345e;
+    margin-bottom: 8px;
 }
 
-input, select {
+.form-grid input,
+.form-grid select {
     width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #d4d2d2;
-    background: #f5f5f5;
+    border: 1.5px solid #c7d6ee;
+    background: #f5f7fb;
+    border-radius: 16px;
+    padding: 14px 16px;
+    font-size: 15px;
+    color: #1f2f55;
+    outline: none;
+    box-shadow: none;
+    transition: 0.2s ease;
 }
 
-input:focus, select:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 6px rgba(0,128,255,0.4);
+.form-grid input:focus,
+.form-grid select:focus {
+    border-color: #3388ff;
+    box-shadow: 0 0 0 4px rgba(67, 139, 255, 0.14);
+    background: #f5f7fb;
 }
 
-/* ===== PASSWORD ===== */
+.form-grid input::placeholder {
+    color: #8a97b3;
+}
+
 .password-container {
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .password-container input {
-    padding-right: 40px;
+    padding-right: 46px;
 }
 
 .icon-eye {
-    width: 22px;
     position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
+    right: 14px;
+    width: 20px;
+    height: 20px;
+    color: #5f6f92;
     cursor: pointer;
-    color: #555;
+    transition: 0.2s ease;
 }
 
-/* ===== BOTÓN CREAR CUENTA ===== */
+.icon-eye:hover {
+    color: #155ec6;
+}
+
 .btn-submit {
-    grid-column: span 2;
-    padding: 14px;
-    background: #2563eb;
-    color: white;
+    grid-column: 1 / -1;
+    width: 100%;
     border: none;
-    border-radius: 10px;
+    border-radius: 18px;
+    padding: 15px;
+    background: linear-gradient(135deg, #0b3770, #1c4178);
+    color: white;
+    font-size: 17px;
+    font-weight: 800;
     cursor: pointer;
+    box-shadow: 0 6px 12px rgb(26, 70, 135);
+    transition: 0.25s ease;
+    margin-top: 4px;
 }
 
 .btn-submit:hover {
-    background: #1d4ed8;
-}
-
-/* Full width en móvil */
-@media (max-width: 576px) {
-    .btn-submit {
-        grid-column: span 1;
-    }
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.22);
 }
 
 .tienes-cuenta {
+    grid-column: 1 / -1;
     text-align: center;
-    margin-top: 8px;
+    margin-top: 4px;
+    color: #5f6f92;
+    font-size: 14px;
+}
+
+.tienes-cuenta a {
+    color: #155ec6;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.tienes-cuenta a:hover {
+    text-decoration: underline;
+}
+
+.text-danger {
+    color: #c62828;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.validation-summary-errors,
+div[asp-validation-summary="All"] {
+    grid-column: 1 / -1;
+    background: #ffe4e4;
+    color: #a92a2a;
+    border: 1px solid #f1b3b3;
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .registro-container {
+        padding: 24px 20px;
+        border-radius: 22px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .btn-submit,
+    .tienes-cuenta,
+    .validation-summary-errors,
+    div[asp-validation-summary="All"] {
+        grid-column: auto;
+    }
+
+    h1 {
+        font-size: 1.7rem;
+    }
+
+    .logo {
+        width: 90px;
+        height: 90px;
+    }
+}
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none;
+}
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-textfield-decoration-container {
+    display: none !important;
 }

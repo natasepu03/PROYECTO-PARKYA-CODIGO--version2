@@ -30,6 +30,12 @@ namespace ParkYa.Data
                 entity.HasOne(e => e.Rol)
                     .WithMany(r => r.Usuarios)
                     .HasForeignKey(e => e.Rol_id_rol);
+
+                entity.Property(e => e.PreguntaSeguridad) 
+                    .HasColumnName("PreguntaSeguridad"); 
+
+                entity.Property(e => e.RespuestaSeguridad) 
+                    .HasColumnName("RespuestaSeguridad");     
             });
 
             modelBuilder.Entity<Rol>(entity =>

@@ -11,6 +11,9 @@ namespace ParkYa.Models
         public string telefono { get; set; } = string.Empty;
         public string contraseña { get; set; } = string.Empty;
         public bool estado { get; set; }
+        public string? PreguntaSeguridad { get; set; }
+        public string? RespuestaSeguridad { get; set; }
+
 
         public int Rol_id_rol { get; set; }
         public Rol? Rol { get; set; }

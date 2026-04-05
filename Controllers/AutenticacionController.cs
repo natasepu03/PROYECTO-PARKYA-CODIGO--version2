@@ -101,12 +101,16 @@ namespace ParkYa.Controllers
                 nombre = model.nombre,
                 apellido = model.apellido,
                 tipo_doc = model.tipo_doc,
-                documento = model.documento,
+                documento = model.documento ?? 0,
                 correo = model.correo,
                 telefono = model.telefono,
                 contraseña = BCrypt.Net.BCrypt.HashPassword(model.contraseña),
                 estado = true,
-                Rol_id_rol = rolCliente.id_rol
+                Rol_id_rol = rolCliente.id_rol,
+
+                PreguntaSeguridad = model.PreguntaSeguridad,
+                RespuestaSeguridad = model.RespuestaSeguridad
+
             };
 
             _context.usuario.Add(usuario);
@@ -139,6 +143,81 @@ namespace ParkYa.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
+            return RedirectToAction("Login");
+        }
+
+        [HttpGet]
+        public IActionResult Recuperacion()
+        {
+            return View(new ParkYa.Models.ViewModels.RecuperarPasswordViewModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Recuperacion(ParkYa.Models.ViewModels.RecuperarPasswordViewModel model)
+        {
+            if (!model.MostrarPaso2)
+            {
+                if (string.IsNullOrWhiteSpace(model.Correo))
+                {
+                    ModelState.AddModelError("Correo", "El correo es obligatorio");
+                    return View(model);
+                }
+
+                var usuario = await _context.usuario
+                    .FirstOrDefaultAsync(u => u.correo == model.Correo);
+
+                if (usuario == null)
+                {
+                    TempData["Error"] = "No existe una cuenta con ese correo.";
+                    return View(model);
+                }
+
+                model.PreguntaSeguridad = usuario.PreguntaSeguridad ?? "";
+                model.MostrarPaso2 = true;
+
+                ModelState.Clear();
+                return View(model);
+            }
+
+            var usuarioPaso2 = await _context.usuario
+                .FirstOrDefaultAsync(u => u.correo == model.Correo);
+
+            if (usuarioPaso2 == null)
+            {
+                TempData["Error"] = "No existe una cuenta con ese correo.";
+                return View(model);
+            }
+
+            if ((usuarioPaso2.RespuestaSeguridad ?? "").Trim().ToLower() !=
+                (model.RespuestaSeguridad ?? "").Trim().ToLower())
+            {
+                TempData["Error"] = "La respuesta de seguridad no es correcta.";
+                model.PreguntaSeguridad = usuarioPaso2.PreguntaSeguridad ?? "";
+                model.MostrarPaso2 = true;
+                return View(model);
+            }
+
+            if (string.IsNullOrWhiteSpace(model.NuevaPassword) || string.IsNullOrWhiteSpace(model.ConfirmarPassword))
+            {
+                TempData["Error"] = "Completa la nueva contraseña y su confirmación.";
+                model.PreguntaSeguridad = usuarioPaso2.PreguntaSeguridad ?? "";
+                model.MostrarPaso2 = true;
+                return View(model);
+            }
+
+            if (model.NuevaPassword != model.ConfirmarPassword)
+            {
+                TempData["Error"] = "Las contraseñas no coinciden.";
+                model.PreguntaSeguridad = usuarioPaso2.PreguntaSeguridad ??"";
+                model.MostrarPaso2 = true;
+                return View(model);
+            }
+
+            usuarioPaso2.contraseña = BCrypt.Net.BCrypt.HashPassword(model.NuevaPassword);
+            await _context.SaveChangesAsync();
+
+            TempData["Mensaje"] = "Contraseña actualizada correctamente.";
             return RedirectToAction("Login");
         }
     }

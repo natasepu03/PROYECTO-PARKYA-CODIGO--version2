@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "a9aGZ7lKRe/5tjNj96C6OLuKnz7lTtU841ypEYlce+I=",
+  "Hash": "Gb0ljeXVTtxomT0mqUi7B3e3g/urEvwUt9LjMVzLHuo=",
   "Source": "ParkYa",
   "BasePath": "_content/ParkYa",
   "Mode": "Default",
@@ -300,25 +300,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\login.css"
-    },
-    {
-      "Identity": "C:\\Users\\USUARIO\\OneDrive\\Documentos\\PROYECTO-PARKYA-CODIGO- version2\\wwwroot\\css\\recuperacionC.css",
-      "SourceId": "ParkYa",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\USUARIO\\OneDrive\\Documentos\\PROYECTO-PARKYA-CODIGO- version2\\wwwroot\\",
-      "BasePath": "_content/ParkYa",
-      "RelativePath": "css/recuperacionC.css",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\recuperacionC.css"
     },
     {
       "Identity": "C:\\Users\\USUARIO\\OneDrive\\Documentos\\PROYECTO-PARKYA-CODIGO- version2\\wwwroot\\css\\registro.css",

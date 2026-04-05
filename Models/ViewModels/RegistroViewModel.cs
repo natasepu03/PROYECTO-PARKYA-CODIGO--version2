@@ -14,7 +14,7 @@ namespace ParkYa.Models.ViewModels
         public string tipo_doc { get; set; } = string.Empty;
 
         [Required]
-        public int documento { get; set; }
+        public int? documento { get; set; }
 
         [Required]
         [EmailAddress]
@@ -30,5 +30,12 @@ namespace ParkYa.Models.ViewModels
         [Required]
         [Compare("contraseña")]
         public string confirmarContraseña { get; set; } = string.Empty;
+
+        [Required(ErrorMessage ="La pregunta de seguridad es obligatoria")]
+        public string PreguntaSeguridad { get; set; } = string.Empty;
+
+        [Required(ErrorMessage ="La respuesta de seguridad es obligatoria")]
+        public string RespuestaSeguridad { get; set; } = string.Empty;
+
     }
 }

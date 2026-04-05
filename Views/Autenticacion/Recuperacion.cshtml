@@ -1,0 +1,67 @@
+@model ParkYa.Models.ViewModels.RecuperarPasswordViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar contraseña</title>
+    <link rel="stylesheet" href="/css/login.css?v=9999">
+</head>
+<body>
+    <div class="registro-container">
+        <button class="btn-volver" onclick="location.href='@Url.Action("Login","Autenticacion")'">← Volver</button>
+
+        <img src="~/assets/logo1.jpeg" class="logo" alt="Logo">
+
+        <h1>Recuperar contraseña</h1>
+        <p class="sub">Valida tu identidad para cambiar tu contraseña</p>
+
+        <form asp-controller="Autenticacion" asp-action="Recuperacion" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="text-danger">@TempData["Error"]</div>
+            }
+
+            <div class="form-grid">
+                <label asp-for="Correo">Correo</label>
+                <input asp-for="Correo" class="form-control" placeholder="correo@example.com" />
+                <span asp-validation-for="Correo" class="text-danger"></span>
+
+                @if (Model.MostrarPaso2)
+                {
+                    <input asp-for="MostrarPaso2" type="hidden" />
+                    <input asp-for="PreguntaSeguridad" type="hidden" />
+
+                    <label>Pregunta de seguridad</label>
+                    <input value="@Model.PreguntaSeguridad" class="form-control" readonly />
+
+                    <label asp-for="RespuestaSeguridad">Tu respuesta</label>
+                    <input asp-for="RespuestaSeguridad" class="form-control" />
+                    <span asp-validation-for="RespuestaSeguridad" class="text-danger"></span>
+
+                    <label asp-for="NuevaPassword">Nueva contraseña</label>
+                    <input asp-for="NuevaPassword" type="password" class="form-control" />
+                    <span asp-validation-for="NuevaPassword" class="text-danger"></span>
+
+                    <label asp-for="ConfirmarPassword">Confirmar contraseña</label>
+                    <input asp-for="ConfirmarPassword" type="password" class="form-control" />
+                    <span asp-validation-for="ConfirmarPassword" class="text-danger"></span>
+
+                    <button class="btn-submit" type="submit">Cambiar contraseña</button>
+                }
+                else
+                {
+                    <button class="btn-submit" type="submit">Continuar</button>
+                }
+            </div>
+        </form>
+    </div>
+</body>
+</html>
