@@ -23,18 +23,21 @@ namespace ParkYa.Models.ViewModels
         [Required]
         public string telefono { get; set; } = string.Empty;
 
-        [Required]
-        [MinLength(6)]
+        [Required(ErrorMessage = "La contraseña es obligatoria")]
+        [DataType(DataType.Password)]
+        [StringLength(100, MinimumLength = 8, ErrorMessage = "La contraseña debe tener al menos 8 caracteres")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$",
+        ErrorMessage = "La contraseña debe tener mayúscula, minúscula, número y un carácter especial")]
         public string contraseña { get; set; } = string.Empty;
 
-        [Required]
-        [Compare("contraseña")]
+        [Required(ErrorMessage = "Debes confirmar la contraseña")]
+        [Compare("contraseña", ErrorMessage = "Las contraseñas no coinciden")]
         public string confirmarContraseña { get; set; } = string.Empty;
 
-        [Required(ErrorMessage ="La pregunta de seguridad es obligatoria")]
+        [Required(ErrorMessage = "La pregunta de seguridad es obligatoria")]
         public string PreguntaSeguridad { get; set; } = string.Empty;
 
-        [Required(ErrorMessage ="La respuesta de seguridad es obligatoria")]
+        [Required(ErrorMessage = "La respuesta de seguridad es obligatoria")]
         public string RespuestaSeguridad { get; set; } = string.Empty;
 
     }

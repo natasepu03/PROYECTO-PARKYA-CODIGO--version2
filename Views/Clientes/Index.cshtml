@@ -15,12 +15,15 @@
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/css/cliente-moderno.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
+
 <body>
 
     <div class="page-shell">
@@ -44,19 +47,19 @@
 
             <nav class="sidebar-nav">
                 <button class="nav-link active" type="button" onclick="mostrarSeccion('inicio', this)">
-                    <span>🏠</span> Inicio
+                    <span><i class="bi bi-house-door"></i></span> Inicio
                 </button>
 
                 <button class="nav-link" type="button" onclick="mostrarSeccion('mi-informacion', this)">
-                    <span>👤</span> Mi información
+                    <span><i class="bi bi-person"></i></span> Mi información
                 </button>
 
                 <button class="nav-link" type="button" onclick="mostrarSeccion('mis-vehiculos', this)">
-                    <span>🚗</span> Mis vehículos
+                    <span><i class="bi bi-car-front"></i></span> Mis vehículos
                 </button>
 
                 <button class="nav-link" type="button" onclick="mostrarSeccion('mis-reservas', this)">
-                    <span>📅</span> Mis reservas
+                    <span><i class="bi bi-calendar-check"></i></span> Mis reservas
                 </button>
             </nav>
         </aside>
@@ -175,7 +178,8 @@
                                 @Html.AntiForgeryToken()
 
                                 <input type="hidden" name="VehiculoId" value="@vehiculoActual.id_vehiculo" />
-                                <input type="hidden" name="TipoVehiculoId" value="@vehiculoActual.Tipo_vehiculo_idTipo_vehiculo" />
+                                <input type="hidden" name="TipoVehiculoId"
+                                       value="@vehiculoActual.Tipo_vehiculo_idTipo_vehiculo" />
                                 <input type="hidden" name="MetodoPago" value="Pagar en parqueadero" />
                                 <input type="hidden" name="Monto" value="20000" />
 
@@ -188,6 +192,10 @@
                                     <label>Hora estimada de llegada</label>
                                     <input type="time" name="HoraReservada" class="input-modern" required />
                                 </div>
+
+                                <small class="hora-help">
+                                    Horario permitido: 8:00 a. m. a 10:00 p. m.
+                                </small>
 
                                 <button type="submit" class="btn-primary-full">Guardar reserva</button>
                             </form>
@@ -209,8 +217,14 @@
                             <p>El valor se calculará automáticamente según:</p>
 
                             <ul>
-                                <li>⏱ Tiempo real de permanencia</li>
-                                <li>🚗 Tipo de vehículo</li>
+                                <li>
+                                    <i class="bi bi-clock"></i>
+                                    Tiempo real de permanencia
+                                </li>
+                                <li>
+                                    <i class="bi bi-car-front"></i>
+                                    Tipo de vehículo
+                                </li>
                             </ul>
 
                             <div class="pago-nota">
@@ -313,9 +327,11 @@
                                             <p><strong>Tipo:</strong> @(tipo ?? "No definido")</p>
 
                                             <div class="acciones-vehiculo">
-                                                @if (vehiculoActual == null || vehiculo.id_vehiculo != vehiculoActual.id_vehiculo)
+                                                @if (vehiculoActual == null || vehiculo.id_vehiculo !=
+                                                                                                                                                                                        vehiculoActual.id_vehiculo)
                                                 {
-                                                    <form asp-controller="Clientes" asp-action="SeleccionarVehiculoActual" method="post">
+                                                    <form asp-controller="Clientes" asp-action="SeleccionarVehiculoActual"
+                                                          method="post">
                                                         @Html.AntiForgeryToken()
                                                         <input type="hidden" name="id" value="@vehiculo.id_vehiculo" />
 
@@ -325,13 +341,13 @@
                                                     </form>
                                                 }
 
-                                                <button type="button"
-                                                        class="btn-editar"
+                                                <button type="button" class="btn-editar"
                                                         onclick="mostrarFormularioEditar(@vehiculo.id_vehiculo)">
                                                     Editar
                                                 </button>
 
-                                                @if (vehiculoActual != null && vehiculo.id_vehiculo == vehiculoActual.id_vehiculo)
+                                                @if (vehiculoActual != null && vehiculo.id_vehiculo ==
+                                                                                                                                                                                        vehiculoActual.id_vehiculo)
                                                 {
                                                     <button type="button" class="btn-eliminar deshabilitado" disabled>
                                                         Vehículo actual
@@ -339,15 +355,12 @@
                                                 }
                                                 else
                                                 {
-                                                    <form id="form-eliminar-@vehiculo.id_vehiculo"
-                                                          asp-controller="Clientes"
-                                                          asp-action="EliminarVehiculo"
-                                                          method="post">
+                                                    <form id="form-eliminar-@vehiculo.id_vehiculo" asp-controller="Clientes"
+                                                          asp-action="EliminarVehiculo" method="post">
                                                         @Html.AntiForgeryToken()
                                                         <input type="hidden" name="id" value="@vehiculo.id_vehiculo" />
 
-                                                        <button type="button"
-                                                                class="btn-eliminar"
+                                                        <button type="button" class="btn-eliminar"
                                                                 onclick="abrirModalEliminar(@vehiculo.id_vehiculo)">
                                                             Eliminar
                                                         </button>
@@ -355,448 +368,455 @@
                                                 }
                                             </div>
 
-                                            <div id="form-editar-@vehiculo.id_vehiculo" class="form-editar" style="display:none;">
-                                                <form asp-controller="Clientes" asp-action="EditarVehiculo" method="post" class="form-editar-grid">
+                                            <div id="form-editar-@vehiculo.id_vehiculo" class="form-editar"
+                                                 style="display:none;">
+                                                <form asp-controller="Clientes" asp-action="EditarVehiculo" method="post"
+                                                      class="form-editar-grid">
                                                     @Html.AntiForgeryToken()
                                                     <input type="hidden" name="id" value="@vehiculo.id_vehiculo" />
 
                                                     <div class="campo-editar">
                                                         <label>Placa</label>
-                                                        <input type="text" name="placa" value="@vehiculo.placa" class="input-editar" required />
+                                                        <input type="text" name="placa" value="@vehiculo.placa"
+                                                               class="input-editar" required />
                                                     </div>
 
                                                     <div class="campo-editar">
                                                         <label>Marca</label>
-                                                        <input type="text" name="marca" value="@vehiculo.marca" class="input-editar" required />
+                                                        <input type="text" name="marca" value="@vehiculo.marca"
+                                                               class="input-editar" required />
                                                     </div>
 
                                                     <div class="campo-editar">
                                                         <label>Color</label>
-                                                        <input type="text" name="color" value="@vehiculo.color" class="input-editar" required />
+                                                        <input type="text" name="color" value="@vehiculo.color"
+                                                               class="input-editar" required />
                                                     </div>
 
                                                     <div class="campo-editar">
                                                         <label>Tipo</label>
                                                         <select name="tipoVehiculoId" class="input-editar" required>
-                                                            <option value="1" selected="@(vehiculo.Tipo_vehiculo_idTipo_vehiculo == 1)">Automóvil</option>
-                                                            <option value="2" selected="@(vehiculo.Tipo_vehiculo_idTipo_vehiculo == 2)">Moto</option>
-                                                            <option value="3" selected="@(vehiculo.Tipo_vehiculo_idTipo_vehiculo == 3)">Camioneta</option>
-                                                            <option value="4" selected="@(vehiculo.Tipo_vehiculo_idTipo_vehiculo == 4)">Bicicleta</option>
-                                                        </select>
-                                                    </div>
+                                                            <option value="1"
+                                                                    selected="@(vehiculo.Tipo_vehiculo_idTipo_vehiculo == 1)">
+                                                                Automóvil</option>
+                                                                <option value="2"
+                                                                        selected="@(vehiculo.Tipo_vehiculo_idTipo_vehiculo == 2)">Moto
+                                                                </option>
+                                                                <option value="3"
+                                                                        selected="@(vehiculo.Tipo_vehiculo_idTipo_vehiculo == 3)">
+                                                                    Camioneta</option>
+                                                                    <option value="4"
+                                                                            selected="@(vehiculo.Tipo_vehiculo_idTipo_vehiculo == 4)">
+                                                                        Bicicleta</option>
+                                                                    </select>
+                                                                </div>
 
-                                                    <div class="acciones-editar">
-                                                        <button type="submit" class="btn-guardar">Guardar cambios</button>
+                                                                <div class="acciones-editar">
+                                                                    <button type="submit" class="btn-guardar">Guardar cambios</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
                                                     </div>
-                                                </form>
-                                            </div>
+                                                </div>
+                                            }
                                         </div>
-                                    </div>
-                                }
-                            </div>
-                        }
+                                    }
                         else
-                        {
-                            <p>No tienes vehículos registrados.</p>
-                        }
-                    </section>
+                                    {
+                                        <p>No tienes vehículos registrados.</p>
+                                    }
+                                </section>
 
-                    <br />
+                                <br />
 
-                    <section class="glass-card">
-                        <div class="card-header">
-                            <h3>Registrar nuevo vehículo</h3>
-                            <span class="subtext">Agrega otro vehículo a tu cuenta</span>
-                        </div>
+                                <section class="glass-card">
+                                    <div class="card-header">
+                                        <h3>Registrar nuevo vehículo</h3>
+                                        <span class="subtext">Agrega otro vehículo a tu cuenta</span>
+                                    </div>
 
-                        <form asp-controller="Clientes" asp-action="GuardarVehiculo" method="post" class="form-modern">
+                                    <form asp-controller="Clientes" asp-action="GuardarVehiculo" method="post" class="form-modern">
+                                        @Html.AntiForgeryToken()
+
+                                        <div class="form-group">
+                                            <label>Placa</label>
+                                            <input type="text" name="placa" class="input-modern" required />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Marca</label>
+                                            <input type="text" name="marca" class="input-modern" required />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Color</label>
+                                            <input type="text" name="color" class="input-modern" required />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Tipo de vehículo</label>
+                                            <select name="tipoVehiculoId" class="input-modern" required>
+                                                <option value="1">Automóvil</option>
+                                                <option value="2">Moto</option>
+                                                <option value="3">Camioneta</option>
+                                                <option value="4">Bicicleta</option>
+                                            </select>
+                                        </div>
+
+                                        <button type="submit" class="btn-primary-full">Guardar nuevo vehículo</button>
+                                    </form>
+                                </section>
+                            </div>
+                        </section>
+
+                        <section id="mis-reservas" class="contenido-seccion">
+                            <div class="single-content">
+                                <section class="glass-card">
+                                    <div class="card-header">
+                                        <h3>Mis reservas</h3>
+                                        <span class="subtext">Historial de reservas realizadas</span>
+                                    </div>
+
+                                    @if (reservas.Any())
+                                    {
+                                        <div class="reservas-lista">
+                                            @foreach (var reserva in reservas)
+                                            {
+                                                <div class="reserva-card">
+                                                    <div class="reserva-card-header">
+                                                        <h4>Reserva #@reserva.cod_reserva</h4>
+                                                        <span class="estado-badge estado-@reserva.Estado.ToString().ToLower()">
+                                                            @reserva.Estado
+                                                        </span>
+                                                    </div>
+
+                                                    <div class="reserva-info-grid">
+                                                        <div>
+                                                            <label>Fecha</label>
+                                                            <p>@reserva.fecha.ToString("dd/MM/yyyy")</p>
+                                                        </div>
+
+                                                        @if (reserva.hora_reservada != null)
+                                                        {
+                                                            <div>
+                                                                <label>Hora reservada</label>
+                                                                <p>@reserva.hora_reservada</p>
+                                                            </div>
+                                                        }
+
+                                                        @if (reserva.hora_entrada != null)
+                                                        {
+                                                            <div>
+                                                                <label>Hora de entrada</label>
+                                                                <p>@reserva.hora_entrada</p>
+                                                            </div>
+                                                        }
+
+                                                        @if (reserva.hora_salida != null)
+                                                        {
+                                                            <div>
+                                                                <label>Hora de salida</label>
+                                                                <p>@reserva.hora_salida</p>
+                                                            </div>
+                                                        }
+
+                                                        <div>
+                                                            <label>Vehículo</label>
+                                                            <p>
+                                                                @(reserva.Vehiculo != null
+                                                                    ? reserva.Vehiculo.placa + " - " + reserva.Vehiculo.marca
+                                                                    : "No disponible")
+                                                            </p>
+                                                        </div>
+
+                                                        @if (reserva.Estado == Estado.Pendiente && reserva.hora_entrada == null)
+                                                        {
+                                                            <div>
+                                                                <label>Estado de llegada</label>
+                                                                <p>Esperando llegada al parqueadero</p>
+                                                            </div>
+                                                        }
+                                                    </div>
+
+                                                    @if (reserva.Estado == Estado.Pendiente)
+                                                    {
+                                                        <div class="acciones-reserva">
+                                                            <button type="button" class="btn-editar"
+                                                                    onclick="mostrarEditarReserva(@reserva.id_reserva)">
+                                                                Editar reserva
+                                                            </button>
+
+                                                            <button type="button" class="btn-eliminar"
+                                                                    onclick="abrirModalCancelar(@reserva.id_reserva)">
+                                                                Cancelar reserva
+                                                            </button>
+                                                        </div>
+
+                                                        <form id="form-cancelar-@reserva.id_reserva" asp-controller="Clientes"
+                                                              asp-action="CancelarReserva" method="post" style="display:none;">
+                                                            @Html.AntiForgeryToken()
+                                                            <input type="hidden" name="id" value="@reserva.id_reserva" />
+                                                        </form>
+
+                                                        <div id="form-editar-reserva-@reserva.id_reserva" class="form-editar"
+                                                             style="display:none;">
+                                                            <form asp-controller="Clientes" asp-action="EditarReserva" method="post"
+                                                                  class="form-editar-grid">
+                                                                @Html.AntiForgeryToken()
+                                                                <input type="hidden" name="id" value="@reserva.id_reserva" />
+
+                                                                <div class="campo-editar">
+                                                                    <label>Fecha</label>
+                                                                    <input type="date" name="fecha"
+                                                                           value="@reserva.fecha.ToString("yyyy-MM-dd")" class="input-editar"
+                                                                           required />
+                                                                </div>
+
+                                                                <div class="campo-editar">
+                                                                    <label>Hora reservada</label>
+                                                                    <input type="time" name="horaReservada"
+                                                                           value="@(reserva.hora_reservada?.ToString(@"hh\:mm"))"
+                                                                           class="input-editar" required />
+                                                                </div>
+
+                                                                <div class="acciones-editar">
+                                                                    <button type="submit" class="btn-guardar">Guardar cambios</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="reservas-placeholder">
+                                            <p>No tienes reservas registradas todavía.</p>
+                                        </div>
+                                    }
+                                </section>
+                            </div>
+                        </section>
+                    </main>
+                </div>
+
+                <div class="modal" id="modalEditar">
+                    <div class="modal-content">
+                        <span class="close" id="closeModal">&times;</span>
+                        <h3>Editar Perfil</h3>
+
+                        <form asp-controller="Clientes" asp-action="EditarPerfilCompleto" method="post">
                             @Html.AntiForgeryToken()
 
-                            <div class="form-group">
-                                <label>Placa</label>
-                                <input type="text" name="placa" class="input-modern" required />
-                            </div>
+                            <input type="hidden" name="IdUsuario" value="@Model.id_usuario" />
 
-                            <div class="form-group">
-                                <label>Marca</label>
-                                <input type="text" name="marca" class="input-modern" required />
-                            </div>
+                            <label>Nombre</label>
+                            <input type="text" name="Nombre" value="@Model.nombre" required />
 
-                            <div class="form-group">
-                                <label>Color</label>
-                                <input type="text" name="color" class="input-modern" required />
-                            </div>
+                            <label>Apellido</label>
+                            <input type="text" name="Apellido" value="@Model.apellido" required />
 
-                            <div class="form-group">
-                                <label>Tipo de vehículo</label>
-                                <select name="tipoVehiculoId" class="input-modern" required>
-                                    <option value="1">Automóvil</option>
-                                    <option value="2">Moto</option>
-                                    <option value="3">Camioneta</option>
-                                    <option value="4">Bicicleta</option>
-                                </select>
-                            </div>
+                            <label>Correo</label>
+                            <input type="email" name="Correo" value="@Model.correo" required />
 
-                            <button type="submit" class="btn-primary-full">Guardar nuevo vehículo</button>
+                            <label>Teléfono</label>
+                            <input type="text" name="Telefono" value="@Model.telefono" required />
+
+                            <label>Documento</label>
+                            <input type="text" name="Documento" value="@Model.documento" required />
+
+                            <label>Tipo documento</label>
+                            <input type="text" name="TipoDocumento" value="@Model.tipo_doc" required />
+
+                            <button type="submit">Guardar cambios</button>
                         </form>
-                    </section>
+                    </div>
                 </div>
-            </section>
 
-            <section id="mis-reservas" class="contenido-seccion">
-                <div class="single-content">
-                    <section class="glass-card">
-                        <div class="card-header">
-                            <h3>Mis reservas</h3>
-                            <span class="subtext">Historial de reservas realizadas</span>
+                <div id="modalEliminar" class="modal-confirmacion">
+                    <div class="modal-confirmacion-contenido">
+                        <h3>Eliminar vehículo</h3>
+                        <p>¿Seguro que quieres eliminar este vehículo?</p>
+
+                        <div class="modal-confirmacion-botones">
+                            <button type="button" class="btn-cancelar-modal" onclick="cerrarModalEliminar()">
+                                Cancelar
+                            </button>
+                            <button type="button" class="btn-confirmar-modal" onclick="confirmarEliminacion()">
+                                Sí, eliminar
+                            </button>
                         </div>
-
-                        @if (reservas.Any())
-                        {
-                            <div class="reservas-lista">
-                                @foreach (var reserva in reservas)
-                                {
-                                    <div class="reserva-card">
-                                        <div class="reserva-card-header">
-                                            <h4>Reserva #@reserva.cod_reserva</h4>
-                                            <span class="estado-badge estado-@reserva.Estado.ToString().ToLower()">
-                                                @reserva.Estado
-                                            </span>
-                                        </div>
-
-                                        <div class="reserva-info-grid">
-                                            <div>
-                                                <label>Fecha</label>
-                                                <p>@reserva.fecha.ToString("dd/MM/yyyy")</p>
-                                            </div>
-
-                                            @if (reserva.hora_reservada != null)
-                                            {
-                                                <div>
-                                                    <label>Hora reservada</label>
-                                                    <p>@reserva.hora_reservada</p>
-                                                </div>
-                                            }
-
-                                            @if (reserva.hora_entrada != null)
-                                            {
-                                                <div>
-                                                    <label>Hora de entrada</label>
-                                                    <p>@reserva.hora_entrada</p>
-                                                </div>
-                                            }
-
-                                            @if (reserva.hora_salida != null)
-                                            {
-                                                <div>
-                                                    <label>Hora de salida</label>
-                                                    <p>@reserva.hora_salida</p>
-                                                </div>
-                                            }
-
-                                            <div>
-                                                <label>Vehículo</label>
-                                                <p>
-                                                    @(reserva.Vehiculo != null
-                                                        ? reserva.Vehiculo.placa + " - " + reserva.Vehiculo.marca
-                                                        : "No disponible")
-                                                </p>
-                                            </div>
-
-                                            @if (reserva.Estado == Estado.Pendiente && reserva.hora_entrada == null)
-                                            {
-                                                <div>
-                                                    <label>Estado de llegada</label>
-                                                    <p>Esperando llegada al parqueadero</p>
-                                                </div>
-                                            }
-                                        </div>
-
-                                        @if (reserva.Estado == Estado.Pendiente)
-                                        {
-                                            <div class="acciones-reserva">
-                                                <button type="button"
-                                                        class="btn-editar"
-                                                        onclick="mostrarEditarReserva(@reserva.id_reserva)">
-                                                    Editar reserva
-                                                </button>
-
-                                                <button type="button"
-                                                        class="btn-eliminar"
-                                                        onclick="abrirModalCancelar(@reserva.id_reserva)">
-                                                    Cancelar reserva
-                                                </button>
-                                            </div>
-
-                                            <form id="form-cancelar-@reserva.id_reserva"
-                                                  asp-controller="Clientes"
-                                                  asp-action="CancelarReserva"
-                                                  method="post"
-                                                  style="display:none;">
-                                                @Html.AntiForgeryToken()
-                                                <input type="hidden" name="id" value="@reserva.id_reserva" />
-                                            </form>
-
-                                            <div id="form-editar-reserva-@reserva.id_reserva" class="form-editar" style="display:none;">
-                                                <form asp-controller="Clientes" asp-action="EditarReserva" method="post" class="form-editar-grid">
-                                                    @Html.AntiForgeryToken()
-                                                    <input type="hidden" name="id" value="@reserva.id_reserva" />
-
-                                                    <div class="campo-editar">
-                                                        <label>Fecha</label>
-                                                        <input type="date"
-                                                               name="fecha"
-                                                               value="@reserva.fecha.ToString("yyyy-MM-dd")"
-                                                               class="input-editar"
-                                                               required />
-                                                    </div>
-
-                                                    <div class="campo-editar">
-                                                        <label>Hora reservada</label>
-                                                        <input type="time"
-                                                               name="horaReservada"
-                                                               value="@(reserva.hora_reservada?.ToString(@"hh\:mm"))"
-                                                               class="input-editar"
-                                                               required />
-                                                    </div>
-
-                                                    <div class="acciones-editar">
-                                                        <button type="submit" class="btn-guardar">Guardar cambios</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        }
-                                    </div>
-                                }
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="reservas-placeholder">
-                                <p>No tienes reservas registradas todavía.</p>
-                            </div>
-                        }
-                    </section>
+                    </div>
                 </div>
-            </section>
-        </main>
-    </div>
 
-    <div class="modal" id="modalEditar">
-    <div class="modal-content">
-        <span class="close" id="closeModal">&times;</span>
-        <h3>Editar Perfil</h3>
+                <div id="modalCancelar" class="modal-overlay" style="display:none;">
+                    <div class="modal-cancelar-box">
+                        <h3>Cancelar reserva</h3>
+                        <p>¿Seguro que deseas cancelar esta reserva?</p>
 
-        <form asp-controller="Clientes" asp-action="EditarPerfilCompleto" method="post">
-            @Html.AntiForgeryToken()
+                        <div class="modal-acciones">
+                            <button type="button" class="btn-secundario" onclick="cerrarModalCancelar()">
+                                Volver
+                            </button>
 
-            <input type="hidden" name="IdUsuario" value="@Model.id_usuario" />
+                            <button type="button" class="btn-eliminar" onclick="confirmarCancelarReserva()">
+                                Sí, cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-            <label>Nombre</label>
-            <input type="text" name="Nombre" value="@Model.nombre" required />
+                <script>
+                        function actualizarFechaHora() {
+                            const ahora = new Date();
 
-            <label>Apellido</label>
-            <input type="text" name="Apellido" value="@Model.apellido" required />
+                            document.getElementById("fecha").textContent =
+                                ahora.toLocaleDateString("es-ES", {
+                                    weekday: "long",
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric"
+                                });
 
-            <label>Correo</label>
-            <input type="email" name="Correo" value="@Model.correo" required />
+                            document.getElementById("hora").textContent =
+                                ahora.toLocaleTimeString("es-ES", {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    second: "2-digit"
+                                });
+                        }
 
-            <label>Teléfono</label>
-            <input type="text" name="Telefono" value="@Model.telefono" required />
+                        setInterval(actualizarFechaHora, 1000);
+                        actualizarFechaHora();
 
-            <label>Documento</label>
-            <input type="text" name="Documento" value="@Model.documento" required />
+                        function mostrarSeccion(id, boton) {
+                            const secciones = document.querySelectorAll(".contenido-seccion");
+                            const botones = document.querySelectorAll(".nav-link");
 
-            <label>Tipo documento</label>
-            <input type="text" name="TipoDocumento" value="@Model.tipo_doc" required />
+                            secciones.forEach(sec => sec.classList.remove("activa"));
+                            botones.forEach(btn => btn.classList.remove("active"));
 
-            <button type="submit">Guardar cambios</button>
-        </form>
-    </div>
-</div>
+                            document.getElementById(id).classList.add("activa");
+                            boton.classList.add("active");
+                        }
 
-    <div id="modalEliminar" class="modal-confirmacion">
-        <div class="modal-confirmacion-contenido">
-            <h3>Eliminar vehículo</h3>
-            <p>¿Seguro que quieres eliminar este vehículo?</p>
+                        const modal = document.getElementById("modalEditar");
+                        const btnEditar = document.getElementById("btnEditar");
+                        const closeModal = document.getElementById("closeModal");
 
-            <div class="modal-confirmacion-botones">
-                <button type="button" class="btn-cancelar-modal" onclick="cerrarModalEliminar()">
-                    Cancelar
-                </button>
-                <button type="button" class="btn-confirmar-modal" onclick="confirmarEliminacion()">
-                    Sí, eliminar
-                </button>
-            </div>
-        </div>
-    </div>
+                        btnEditar.onclick = () => {
+                            modal.style.display = "flex";
+                        };
 
-    <div id="modalCancelar" class="modal-overlay" style="display:none;">
-        <div class="modal-cancelar-box">
-            <h3>Cancelar reserva</h3>
-            <p>¿Seguro que deseas cancelar esta reserva?</p>
+                        closeModal.onclick = () => {
+                            modal.style.display = "none";
+                        };
 
-            <div class="modal-acciones">
-                <button type="button" class="btn-secundario" onclick="cerrarModalCancelar()">
-                    Volver
-                </button>
+                        window.onclick = (event) => {
+                            if (event.target === modal) {
+                                modal.style.display = "none";
+                            }
+                        };
 
-                <button type="button" class="btn-eliminar" onclick="confirmarCancelarReserva()">
-                    Sí, cancelar
-                </button>
-            </div>
-        </div>
-    </div>
+                        function mostrarFormularioEditar(id) {
+                            const form = document.getElementById("form-editar-" + id);
 
-    <script>
-        function actualizarFechaHora() {
-            const ahora = new Date();
+                            if (form.style.display === "none" || form.style.display === "") {
+                                form.style.display = "block";
+                            } else {
+                                form.style.display = "none";
+                            }
+                        }
 
-            document.getElementById("fecha").textContent =
-                ahora.toLocaleDateString("es-ES", {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric"
-                });
+                        function mostrarEditarReserva(id) {
+                            const form = document.getElementById("form-editar-reserva-" + id);
 
-            document.getElementById("hora").textContent =
-                ahora.toLocaleTimeString("es-ES", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    second: "2-digit"
-                });
-        }
+                            if (!form) {
+                                console.log("No se encontró el formulario de la reserva con id:", id);
+                                return;
+                            }
 
-        setInterval(actualizarFechaHora, 1000);
-        actualizarFechaHora();
+                            if (form.style.display === "none" || form.style.display === "") {
+                                form.style.display = "block";
+                            } else {
+                                form.style.display = "none";
+                            }
+                        }
 
-        function mostrarSeccion(id, boton) {
-            const secciones = document.querySelectorAll(".contenido-seccion");
-            const botones = document.querySelectorAll(".nav-link");
+                        let formularioEliminarActual = null;
 
-            secciones.forEach(sec => sec.classList.remove("activa"));
-            botones.forEach(btn => btn.classList.remove("active"));
+                        function abrirModalEliminar(id) {
+                            formularioEliminarActual = document.getElementById("form-eliminar-" + id);
 
-            document.getElementById(id).classList.add("activa");
-            boton.classList.add("active");
-        }
+                            const modalEliminar = document.getElementById("modalEliminar");
+                            if (!modalEliminar) {
+                                console.log("No se encontró modalEliminar");
+                                return;
+                            }
 
-        const modal = document.getElementById("modalEditar");
-        const btnEditar = document.getElementById("btnEditar");
-        const closeModal = document.getElementById("closeModal");
+                            if (!formularioEliminarActual) {
+                                console.log("No se encontró el formulario:", "form-eliminar-" + id);
+                                return;
+                            }
 
-        btnEditar.onclick = () => {
-            modal.style.display = "flex";
-        };
+                            modalEliminar.style.display = "flex";
+                        }
 
-        closeModal.onclick = () => {
-            modal.style.display = "none";
-        };
+                        function cerrarModalEliminar() {
+                            const modalEliminar = document.getElementById("modalEliminar");
+                            if (modalEliminar) {
+                                modalEliminar.style.display = "none";
+                            }
+                            formularioEliminarActual = null;
+                        }
 
-        window.onclick = (event) => {
-            if (event.target === modal) {
-                modal.style.display = "none";
-            }
-        };
+                        function confirmarEliminacion() {
+                            if (!formularioEliminarActual) {
+                                console.log("No hay formulario de eliminación seleccionado");
+                                return;
+                            }
 
-        function mostrarFormularioEditar(id) {
-            const form = document.getElementById("form-editar-" + id);
+                            formularioEliminarActual.submit();
+                        }
 
-            if (form.style.display === "none" || form.style.display === "") {
-                form.style.display = "block";
-            } else {
-                form.style.display = "none";
-            }
-        }
+                        let reservaIdCancelar = null;
 
-        function mostrarEditarReserva(id) {
-            const form = document.getElementById("form-editar-reserva-" + id);
+                        function abrirModalCancelar(id) {
+                            reservaIdCancelar = id;
 
-            if (!form) {
-                console.log("No se encontró el formulario de la reserva con id:", id);
-                return;
-            }
+                            const modalCancelar = document.getElementById("modalCancelar");
+                            if (!modalCancelar) {
+                                console.log("No se encontró el modalCancelar");
+                                return;
+                            }
 
-            if (form.style.display === "none" || form.style.display === "") {
-                form.style.display = "block";
-            } else {
-                form.style.display = "none";
-            }
-        }
+                            modalCancelar.style.display = "flex";
+                        }
 
-        let formularioEliminarActual = null;
+                        function cerrarModalCancelar() {
+                            const modalCancelar = document.getElementById("modalCancelar");
+                            if (modalCancelar) {
+                                modalCancelar.style.display = "none";
+                            }
+                            reservaIdCancelar = null;
+                        }
 
-        function abrirModalEliminar(id) {
-            formularioEliminarActual = document.getElementById("form-eliminar-" + id);
+                        function confirmarCancelarReserva() {
+                            if (!reservaIdCancelar) {
+                                console.log("No hay reserva seleccionada para cancelar");
+                                return;
+                            }
 
-            const modalEliminar = document.getElementById("modalEliminar");
-            if (!modalEliminar) {
-                console.log("No se encontró modalEliminar");
-                return;
-            }
+                            const form = document.getElementById("form-cancelar-" + reservaIdCancelar);
+                            if (!form) {
+                                console.log("No se encontró el formulario:", "form-cancelar-" + reservaIdCancelar);
+                                return;
+                            }
 
-            if (!formularioEliminarActual) {
-                console.log("No se encontró el formulario:", "form-eliminar-" + id);
-                return;
-            }
+                            form.submit();
+                        }
+                </script>
+            </body>
 
-            modalEliminar.style.display = "flex";
-        }
-
-        function cerrarModalEliminar() {
-            const modalEliminar = document.getElementById("modalEliminar");
-            if (modalEliminar) {
-                modalEliminar.style.display = "none";
-            }
-            formularioEliminarActual = null;
-        }
-
-        function confirmarEliminacion() {
-            if (!formularioEliminarActual) {
-                console.log("No hay formulario de eliminación seleccionado");
-                return;
-            }
-
-            formularioEliminarActual.submit();
-        }
-
-        let reservaIdCancelar = null;
-
-        function abrirModalCancelar(id) {
-            reservaIdCancelar = id;
-
-            const modalCancelar = document.getElementById("modalCancelar");
-            if (!modalCancelar) {
-                console.log("No se encontró el modalCancelar");
-                return;
-            }
-
-            modalCancelar.style.display = "flex";
-        }
-
-        function cerrarModalCancelar() {
-            const modalCancelar = document.getElementById("modalCancelar");
-            if (modalCancelar) {
-                modalCancelar.style.display = "none";
-            }
-            reservaIdCancelar = null;
-        }
-
-        function confirmarCancelarReserva() {
-            if (!reservaIdCancelar) {
-                console.log("No hay reserva seleccionada para cancelar");
-                return;
-            }
-
-            const form = document.getElementById("form-cancelar-" + reservaIdCancelar);
-            if (!form) {
-                console.log("No se encontró el formulario:", "form-cancelar-" + reservaIdCancelar);
-                return;
-            }
-
-            form.submit();
-        }
-    </script>
-</body>
-</html>
+        </html>

@@ -68,7 +68,7 @@ namespace ParkYa.Controllers
             if (usuario == null)
                 return RedirectToAction("Login", "Autenticacion");
 
-            
+
             usuario.nombre = model.Nombre;
             usuario.apellido = model.Apellido;
             usuario.correo = model.Correo;
@@ -145,11 +145,59 @@ namespace ParkYa.Controllers
                 return Content("DEBUG: ModelState inválido -> " + string.Join(" | ", errores));
             }
 
+            var ahora = DateTime.Now;
+            var hoy = ahora.Date;
+            var horaActual = ahora.TimeOfDay;
+
+            var horaInicio = new TimeSpan(8, 0, 0);   
+            var horaFin = new TimeSpan(22, 0, 0);     
+
+            // 1. No permitir fechas pasadas
+            if (model.Fecha.Date < hoy)
+            {
+                TempData["Error"] = "No puedes hacer una reserva en una fecha pasada.";
+                return RedirectToAction("Index");
+            }
+
+            // 2. No permitir reservas con más de 7 días de anticipación
+            if (model.Fecha.Date > hoy.AddDays(7))
+            {
+                TempData["Error"] = "Solo puedes reservar con máximo 7 días de anticipación.";
+                return RedirectToAction("Index");
+            }
+
+            // 3. Validar horario permitido: entre 8:00 a. m. y 10:00 p. m.
+            if (model.HoraReservada < horaInicio || model.HoraReservada > horaFin)
+            {
+                TempData["Error"] = "Solo puedes reservar entre las 8:00 a. m. y las 10:00 p. m.";
+                return RedirectToAction("Index");
+            }
+
+            // 4. Si la reserva es para hoy, la hora debe ser posterior a la actual
+            if (model.Fecha.Date == hoy && model.HoraReservada <= horaActual)
+            {
+                TempData["Error"] = "Debes seleccionar una hora posterior a la actual.";
+                return RedirectToAction("Index");
+            }
+
             var vehiculo = await _context.vehiculo
                 .FirstOrDefaultAsync(v => v.id_vehiculo == model.VehiculoId && v.Usuario_id_usuario == usuarioId.Value);
 
             if (vehiculo == null)
                 return Content("DEBUG: vehiculo es null");
+
+            // 5. Evitar reserva duplicada para el mismo vehículo, fecha y hora
+            var reservaExistente = await _context.reserva.AnyAsync(r =>
+                r.Vehiculo_id_vehiculo == model.VehiculoId &&
+                r.fecha == model.Fecha &&
+                r.hora_reservada == model.HoraReservada
+            );
+
+            if (reservaExistente)
+            {
+                TempData["Error"] = "Ya existe una reserva para ese vehículo en esa fecha y hora.";
+                return RedirectToAction("Index");
+            }
 
             var tarifaId = await _context.tarifas
                 .Where(t => t.Tipo_vehiculo_idTipo_vehiculo == vehiculo.Tipo_vehiculo_idTipo_vehiculo)
@@ -162,10 +210,10 @@ namespace ParkYa.Controllers
             var codReserva = new Random().Next(100000, 999999);
 
             await _context.Database.ExecuteSqlInterpolatedAsync($@"
-                INSERT INTO reserva
-                (cod_reserva, fecha, hora_reservada, hora_entrada, hora_salida, estado, Usuario_id_usuario, Tarifas_id_tarifas, Vehiculo_id_vehiculo)
-                VALUES
-                ({codReserva}, {model.Fecha}, {model.HoraReservada}, {null}, {null}, {"Pendiente"}, {usuarioId.Value}, {tarifaId.Value}, {model.VehiculoId})
+            INSERT INTO reserva
+            (cod_reserva, fecha, hora_reservada, hora_entrada, hora_salida, estado, Usuario_id_usuario, Tarifas_id_tarifas, Vehiculo_id_vehiculo)
+            VALUES
+            ({codReserva}, {model.Fecha}, {model.HoraReservada}, {null}, {null}, {"Pendiente"}, {usuarioId.Value}, {tarifaId.Value}, {model.VehiculoId})
             ");
 
             TempData["Mensaje"] = "Reserva guardada correctamente.";

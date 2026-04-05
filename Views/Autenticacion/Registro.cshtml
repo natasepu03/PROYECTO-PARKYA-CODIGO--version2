@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro - ParkYa</title>
     <link rel="stylesheet" href="/css/registro.css?v=9999">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 
 <body>
@@ -74,80 +75,98 @@
                                                 <!-- CONTRASEÑA -->
                                                 <div>
                                                     <label for="password">Contraseña</label>
+
                                                     <div class="password-container">
-                                                        <input asp-for="contraseña" type="password" id="password" placeholder="Crea una contraseña"
-                                                               minlength="6" required>
-                                                            <svg id="togglePass1" class="icon-eye" viewBox="0 0 24 24">
-                                                                <path
-                                                                d="M12 5C7 5 2.73 8.11 1 12c1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7z"
-                                                                stroke="currentColor" stroke-width="2" fill="none" />
-                                                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none" />
-                                                            </svg>
-                                                        </div>
+                                                        <input asp-for="contraseña" type="password" id="password" class="form-control"
+                                                               placeholder="Crea una contraseña segura" required />
+
+                                                        <svg id="togglePass1" class="icon-eye" viewBox="0 0 24 24">
+                                                            <path
+                                                            d="M12 5C7 5 2.73 8.11 1 12c1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7z"
+                                                            stroke="currentColor" stroke-width="2" fill="none" />
+                                                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none" />
+                                                        </svg>
                                                     </div>
 
-                                                    <!-- CONFIRMAR CONTRASEÑA -->
-                                                    <div>
-                                                        <label for="confirmpassword">Confirmar contraseña</label>
-                                                        <div class="password-container">
-                                                            <input asp-for="confirmarContraseña" type="password" id="confirmpassword"
-                                                                   placeholder="Repite la contraseña" minlength="6" required>
-                                                                <svg id="togglePass2" class="icon-eye" viewBox="0 0 24 24">
-                                                                    <path
-                                                                    d="M12 5C7 5 2.73 8.11 1 12c1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7z"
-                                                                    stroke="currentColor" stroke-width="2" fill="none" />
-                                                                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none" />
-                                                                </svg>
-                                                            </div>
+                                                    <span asp-validation-for="contraseña" class="text-danger"></span>
+                                                </div>
+
+                                                <!-- CONFIRMAR CONTRASEÑA -->
+                                                <div>
+                                                    <label for="confirmPassword">Confirmar contraseña</label>
+
+                                                    <div class="password-container">
+                                                        <input asp-for="confirmarContraseña" type="password" id="confirmPassword"
+                                                               class="form-control" placeholder="Repite la contraseña" required />
+
+                                                        <svg id="togglePass2" class="icon-eye" viewBox="0 0 24 24">
+                                                            <path
+                                                            d="M12 5C7 5 2.73 8.11 1 12c1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7z"
+                                                            stroke="currentColor" stroke-width="2" fill="none" />
+                                                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none" />
+                                                        </svg>
+                                                    </div>
+                                                    <span asp-validation-for="confirmarContraseña" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="password-help-container">
+                                                        <div class="password-box">
+                                                            <i class="bi bi-shield-lock"></i>
+                                                            <span>Mínimo 8 caracteres, con mayúscula, minúscula, número y símbolo especial.</span>
                                                         </div>
+                                                </div>
 
-                                                        <div>
-                                                            <label asp-for="PreguntaSeguridad">Pregunta de seguridad</label>
-                                                            <select asp-for="PreguntaSeguridad" required>
-                                                                <option selected disabled value="">Selecciona una pregunta</option>
-                                                                <option value="¿Nombre de tu primera mascota?">¿Nombre de tu primera mascota?</option>
-                                                                <option value="¿Ciudad donde naciste?">¿Ciudad donde naciste?</option>
-                                                                <option value="¿Nombre de tu escuela primaria?">¿Nombre de tu escuela primaria?</option>
-                                                                <option value="¿Comida favorita?">¿Comida favorita?</option>
-                                                            </select>
-                                                            <span asp-validation-for="PreguntaSeguridad" class="text-danger"></span>
-                                                        </div>
+                                                <div>
+                                                    <label asp-for="PreguntaSeguridad">Pregunta de seguridad</label>
+                                                    <select asp-for="PreguntaSeguridad" required>
+                                                        <option selected disabled value="">Selecciona una pregunta</option>
+                                                        <option value="¿Nombre de tu primera mascota?">¿Nombre de tu primera mascota?</option>
+                                                        <option value="¿Ciudad donde naciste?">¿Ciudad donde naciste?</option>
+                                                        <option value="¿Nombre de tu escuela primaria?">¿Nombre de tu escuela primaria?</option>
+                                                        <option value="¿Comida favorita?">¿Comida favorita?</option>
+                                                    </select>
+                                                    <span asp-validation-for="PreguntaSeguridad" class="text-danger"></span>
+                                                </div>
 
-                                                        <div>
-                                                            <label asp-for="RespuestaSeguridad">Respuesta de seguridad</label>
-                                                            <input asp-for="RespuestaSeguridad" type="text" placeholder="Escribe tu respuesta" required>
-                                                                <span asp-validation-for="RespuestaSeguridad" class="text-danger"></span>
-                                                            </div>
+                                                <div>
+                                                    <label asp-for="RespuestaSeguridad">Respuesta de seguridad</label>
+                                                    <input asp-for="RespuestaSeguridad" type="text" placeholder="Escribe tu respuesta" required>
+                                                        <span asp-validation-for="RespuestaSeguridad" class="text-danger"></span>
+                                                    </div>
 
-                                                            <button class="btn-submit" type="submit">Crear Cuenta</button>
+                                                    <button class="btn-submit" type="submit">Crear Cuenta</button>
 
-                                                            <p class="tienes-cuenta">
-                                                                ¿Ya tienes cuenta?
-                                                                <a asp-controller="Autenticacion" asp-action="Login">Inicia sesión</a>
-                                                            </p>
-
-                                                        </div>
-                                                    </form>
+                                                    <p class="tienes-cuenta">
+                                                        ¿Ya tienes cuenta?
+                                                        <a asp-controller="Autenticacion" asp-action="Login">Inicia sesión</a>
+                                                    </p>
 
                                                 </div>
-                                            </div>
-                                            <script>
-                                                    const passwordInput = document.getElementById('password');
-                                                    const confirmPasswordInput = document.getElementById('confirmpassword');
+                                            </form>
 
-                                                    const togglePass1 = document.getElementById('togglePass1');
-                                                    const togglePass2 = document.getElementById('togglePass2');
+                                        </div>
+                                    </div>
+                                    <script>
+                                            // CONTRASEÑA
+                                            const togglePass1 = document.getElementById("togglePass1");
+                                            const password = document.getElementById("password");
 
-                                                    togglePass1.addEventListener('click', function () {
-                                                        passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
-                                                    });
+                                            togglePass1.addEventListener("click", () => {
+                                                const type = password.type === "password" ? "text" : "password";
+                                                password.type = type;
+                                            });
 
-                                                    togglePass2.addEventListener('click', function () {
-                                                        confirmPasswordInput.type = confirmPasswordInput.type === 'password' ? 'text' : 'password';
-                                                    });
-                                            </script>
-                                        </body>
+                                            // CONFIRMAR CONTRASEÑA
+                                            const togglePass2 = document.getElementById("togglePass2");
+                                            const confirmPassword = document.getElementById("confirmPassword");
 
-                                    </html>
+                                            togglePass2.addEventListener("click", () => {
+                                                const type = confirmPassword.type === "password" ? "text" : "password";
+                                                confirmPassword.type = type;
+                                            });
+                                    </script>
+                                </body>
+
+                            </html>
 
 
