@@ -1,0 +1,11 @@
+using ParkYa.Models;
+
+namespace ParkYa.ViewModels
+{
+    public class DashboardAdminViewModel
+    {
+        public Usuario Administrador { get; set; } = new Usuario();
+            public Parqueadero Parqueadero { get; set; }
+
+    }
+}

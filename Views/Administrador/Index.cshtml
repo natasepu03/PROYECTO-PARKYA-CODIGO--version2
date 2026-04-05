@@ -1,0 +1,322 @@
+
+@model ParkYa.ViewModels.DashboardAdminViewModel
+@{
+    ViewData["Title"] = "Dashboard Admnistrador";
+    var nombreCompleto = $"{Model.Administrador.nombre} {Model.Administrador.apellido}";
+    var inicial = !string.IsNullOrWhiteSpace(Model.Administrador.nombre)
+        ? Model.Administrador.nombre.Substring(0, 1).ToUpper()
+        : "E";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Si tu carpeta realmente es CSS y no css, cambia esta ruta -->
+    <link rel="stylesheet" href="~/css/empleado.css">
+
+    <script>
+        function actualizarFechaHora() {
+            const ahora = new Date();
+
+            const horas = String(ahora.getHours()).padStart(2, "0");
+            const minutos = String(ahora.getMinutes()).padStart(2, "0");
+            const segundos = String(ahora.getSeconds()).padStart(2, "0");
+
+            const reloj = document.getElementById("reloj");
+            const fecha = document.getElementById("fecha");
+
+            if (reloj) {
+                reloj.textContent = `${horas}:${minutos}:${segundos}`;
+            }
+
+            const opcionesFecha = {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            };
+
+            const fechaTexto = ahora.toLocaleDateString("es-ES", opcionesFecha);
+            const fechaCap = fechaTexto.charAt(0).toUpperCase() + fechaTexto.slice(1);
+
+            if (fecha) {
+                fecha.textContent = fechaCap;
+            }
+        }
+
+        setInterval(actualizarFechaHora, 1000);
+        document.addEventListener("DOMContentLoaded", actualizarFechaHora);
+    </script>
+</head>
+
+<body>
+    <div class="layout">
+
+        <aside class="sidebar">
+            <div class="side-brand">
+                <img src="~/assets/logo1.jpeg" class="side-logo" alt="logo">
+                <div class="brand-text">
+                    <h2>ParkYa</h2>
+                    <span>Administrador</span>
+                </div>
+            </div>
+
+            <div class="side-user">
+                <div class="avatar">@inicial</div>
+                <div class="side-user-info">
+                    <h3>@nombreCompleto</h3>
+                    <p>@Model.Administrador.correo</p>
+                </div>
+            </div>
+
+            <nav class="menu">
+               <a class="item" asp-controller="Empleado" asp-action="Index">🏠 Inicio</a>
+               @* <a class="item" asp-controller="Empleado" asp-action="Reportes">📊 Reportes</a>
+               <a class="item" asp-controller="Empleado" asp-action="Reservas">📅 Reservas</a> *@
+            </nav>
+        </aside>
+
+        <main class="main-wrapper">
+
+            <header class="top-panel">
+                <div class="top-panel-left">
+                    <h1>Bienvenido, @nombreCompleto</h1>
+                    <p>Panel de administración del sistema</p>
+                </div>
+
+                <div class="top-panel-right">
+                    <div class="top-info">
+                        <span class="date" id="fecha"></span>
+                        <span class="time" id="reloj">00:00:00</span>
+                    </div>
+
+                    <div class="top-actions">
+                        <button class="btn-pill btn-light-custom d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
+                            Menú
+                        </button>
+
+<div class="top-actions">
+    <button type="button" class="btn-pill btn-light-custom" onclick="abrirModalEditarPerfil()">
+        Editar Perfil
+    </button>
+
+    <button class="btn-pill btn-danger-custom"
+            onclick="location.href='@Url.Action("Login","Autenticacion")'">
+        Cerrar sesión
+    </button>
+</div>
+                </div>
+            </header>
+
+            <section class="dashboard-grid">
+                <article class="panel-card">
+                    <h2>Perfil rápido</h2>
+                    <p class="sub">Información principal del empleado</p>
+
+                    <div class="summary-box">
+                        <p><strong>Nombre:</strong> @nombreCompleto</p>
+                        <p><strong>Correo:</strong> @Model.Administrador.correo</p>
+                        <p><strong>Rol:</strong> Administrador</p>
+                    </div>
+                </article>
+
+                <article class="panel-card">
+                    <h2>Resumen del día</h2>
+                    <p class="sub">Información general del sistema</p>
+@* 
+                    <div class="summary-stats">
+                        <div class="stat-mini">
+                            <span>Total vehículos</span>
+                            <strong>@Model.TotalVehiculos</strong>
+                        </div>
+                        <div class="stat-mini">
+                            <span>Total reservas</span>
+                            <strong>@Model.TotalReservas</strong>
+                        </div>
+                        <div class="stat-mini">
+                            <span>Reservas activas</span>
+                            <strong>@Model.ReservasActivas</strong>
+                        </div>
+                    </div> *@
+                </article>
+<article class="panel-card">
+    <h2>Parqueadero</h2>
+    <p class="sub">Información general del parqueadero</p>
+
+    <form asp-action="ActualizarParqueadero" method="post">
+        @Html.AntiForgeryToken()
+        
+       <input type="hidden" name="id_Parqueadero" value="@Model.Parqueadero.id_Parqueadero" />
+
+       <div class="row align-items-end">
+
+    <div class="col-3">
+        <label>Nombre</label>
+        <input name="nombre" value="@Model.Parqueadero.nombre" class="form-control" />
+    </div>
+
+    <div class="col-3">
+        <label>Dirección</label>
+        <input name="direccion" value="@Model.Parqueadero.direccion" class="form-control" />
+    </div>
+
+    <div class="col-2">
+        <label>Total cupos</label>
+        <input name="total_cupos" value="@Model.Parqueadero.total_cupos" type="number" class="form-control" />
+    </div>
+
+    <div class="col-2">
+        <button type="submit" class="btn btn-success w-100">
+            Guardar cambios
+        </button>
+    </div>
+
+    </form>
+</article>
+               
+            </section>
+        </main>
+    </div>
+
+    <div class="offcanvas offcanvas-start offcanvas-custom" tabindex="-1" id="sidebarMenu">
+        <div class="offcanvas-header">
+            <h5 class="mb-0">Menú empleado</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="side-user">
+                <div class="avatar">@inicial</div>
+                <div class="side-user-info">
+                    <h3>@nombreCompleto</h3>
+                    <p>@Model.Administrador.correo</p>
+                </div>
+            </div>
+
+            <nav class="menu">
+                <a class="item" asp-controller="Empleado" asp-action="Index">🏠 Inicio</a>
+                <a class="item" asp-controller="Empleado" asp-action="Vehiculos">📊 Reportes</a>
+                <a class="item" asp-controller="Empleado" asp-action="Reservas">📅 Reservas</a>
+            </nav>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    @if (TempData["PerfilActualizado"] != null)
+{
+    <script>
+        alert('@TempData["PerfilActualizado"]');
+    </script>
+}
+@if (TempData["ParqueaderoActualizado"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        @TempData["ParqueaderoActualizado"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div id="modalEditarPerfil" class="modal-overlay-custom">
+    <div class="modal-card-custom">
+        <div class="modal-header-custom">
+            <h2>Editar Perfil</h2>
+            <button type="button" class="modal-close-btn" onclick="cerrarModalEditarPerfil()">×</button>
+        </div>
+
+        <form method="post" action="@Url.Action("ActualizarPerfilAdministrador", "Administrador")">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id_usuario" value="@Model.Administrador.id_usuario" />
+
+            <div class="form-group-custom">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" value="@Model.Administrador.nombre" required />
+            </div>
+
+            <div class="form-group-custom">
+                <label for="apellido">Apellido</label>
+                <input type="text" id="apellido" name="apellido" value="@Model.Administrador.apellido" required />
+            </div>
+
+            <div class="form-group-custom">
+                <label for="correo">Correo</label>
+                <input type="email" id="correo" name="correo" value="@Model.Administrador.correo" required />
+            </div>
+
+            <button type="submit" class="modal-save-btn">
+                Guardar cambios
+            </button>
+        </form>
+    </div>
+</div>
+
+@if (TempData["PerfilActualizado"] != null)
+{
+    <script>
+        alert('@TempData["PerfilActualizado"]');
+    </script>
+}
+
+<div id="modalEditarPerfil" class="modal-overlay-custom">
+    <div class="modal-card-custom">
+        <div class="modal-header-custom">
+            <h2>Editar Perfil</h2>
+            <button type="button" class="modal-close-btn" onclick="cerrarModalEditarPerfil()">×</button>
+        </div>
+
+        <form method="post" action="@Url.Action("ActualizarPerfilEmpleado", "Empleado")">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id_usuario" value="@Model.Administrador.id_usuario" />
+
+            <div class="form-group-custom">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" value="@Model.Administrador.nombre" required />
+            </div>
+
+            <div class="form-group-custom">
+                <label for="apellido">Apellido</label>
+                <input type="text" id="apellido" name="apellido" value="@Model.Administrador.apellido" required />
+            </div>
+
+            <div class="form-group-custom">
+                <label for="correo">Correo</label>
+                <input type="email" id="correo" name="correo" value="@Model.Administrador.correo" required />
+            </div>
+
+            <button type="submit" class="modal-save-btn">
+                Guardar cambios
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function abrirModalEditarPerfil() {
+        const modal = document.getElementById("modalEditarPerfil");
+        if (modal) {
+            modal.classList.add("show");
+        }
+    }
+
+    function cerrarModalEditarPerfil() {
+        const modal = document.getElementById("modalEditarPerfil");
+        if (modal) {
+            modal.classList.remove("show");
+        }
+    }
+
+    document.addEventListener("click", function (e) {
+        const modal = document.getElementById("modalEditarPerfil");
+        if (e.target === modal) {
+            cerrarModalEditarPerfil();
+        }
+    });
+</script>
+</body>
+
+</html>
