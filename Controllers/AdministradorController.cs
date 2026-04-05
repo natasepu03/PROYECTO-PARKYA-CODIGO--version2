@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ParkYa.Data;
-using ParkYa.ViewModels;
 using ParkYa.Models;
+using ParkYa.Models.ViewModels;
 
 
 namespace ParkYa.Controllers

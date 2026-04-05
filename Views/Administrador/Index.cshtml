@@ -1,4 +1,4 @@
-@model ParkYa.ViewModels.DashboardAdminViewModel
+@model ParkYa.Models.ViewModels.DashboardAdminViewModel
 @{
     ViewData["Title"] = "Dashboard Admnistrador";
     var nombreCompleto = $"{Model.Administrador.nombre} {Model.Administrador.apellido}";
@@ -152,23 +152,23 @@
     <form asp-action="ActualizarParqueadero" method="post">
         @Html.AntiForgeryToken()
         
-       <input type="hidden" name="id_Parqueadero" value="@Model.Parqueadero.id_Parqueadero" />
+       <input type="hidden" name="id_Parqueadero" value="@Model.Parqueadero?.id_Parqueadero" />
 
        <div class="row align-items-end g-4">
 
     <div class="col">
         <label>Nombre</label>
-        <input name="nombre" value="@Model.Parqueadero.nombre" class="form-control" />
+        <input name="nombre" value="@Model.Parqueadero?.nombre" class="form-control" />
     </div>
 
   <div class="col">
         <label>Dirección</label>
-        <input name="direccion" value="@Model.Parqueadero.direccion" class="form-control" />
+        <input name="direccion" value="@Model.Parqueadero?.direccion" class="form-control" />
     </div>
 
   <div class="col">
         <label>Total cupos</label>
-        <input name="total_cupos" value="@Model.Parqueadero.total_cupos" type="number" class="form-control" />
+        <input name="total_cupos" value="@Model.Parqueadero?.total_cupos" type="number" class="form-control" />
     </div>
 
     <div class="col">
