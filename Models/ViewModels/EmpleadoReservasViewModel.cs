@@ -29,5 +29,6 @@ namespace ParkYa.ViewModels
          public TimeSpan? HoraReservada { get; set; }
         public string Estado { get; set; } = string.Empty;
         public decimal TarifaHora { get; set; }
+        public decimal? Monto { get; set;}
     }
 }

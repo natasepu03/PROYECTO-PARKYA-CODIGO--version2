@@ -867,12 +867,12 @@ body {
     color: #b78103;
 }
 
-.estado-activo {
+.estado-activa {
     background: #dff7e8;
     color: #1d7a42;
 }
 
-.estado-cancelado {
+.estado-cancelada {
     background: #fde0e0;
     color: #a12b2b;
 }

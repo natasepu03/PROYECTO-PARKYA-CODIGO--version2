@@ -7,9 +7,9 @@ namespace ParkYa.Models
 
         public DateTime fecha { get; set; }
 
-        public TimeSpan? hora_reservada { get; set; }   // hora que pone el cliente
-        public TimeSpan? hora_entrada { get; set; }    // la registra el empleado
-        public TimeSpan? hora_salida { get; set; }     // la registra el empleado
+        public TimeSpan? hora_reservada { get; set; } 
+        public TimeSpan? hora_entrada { get; set; }    
+        public TimeSpan? hora_salida { get; set; }     
 
         public Estado Estado { get; set; }
 
@@ -19,11 +19,15 @@ namespace ParkYa.Models
 
         public Usuario? Usuario { get; set; }
         public Vehiculo? Vehiculo { get; set; }
+        public decimal? monto { get; set;}
+        public bool pagado { get; set; }
     }
 
     public enum Estado
     {
+
         Pendiente,
+        Activa,
         Finalizada,
         Cancelada
     }

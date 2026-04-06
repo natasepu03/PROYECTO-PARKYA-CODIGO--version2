@@ -149,8 +149,8 @@ namespace ParkYa.Controllers
             var hoy = ahora.Date;
             var horaActual = ahora.TimeOfDay;
 
-            var horaInicio = new TimeSpan(8, 0, 0);   
-            var horaFin = new TimeSpan(22, 0, 0);     
+            var horaInicio = new TimeSpan(8, 0, 0);
+            var horaFin = new TimeSpan(22, 0, 0);
 
             // 1. No permitir fechas pasadas
             if (model.Fecha.Date < hoy)
@@ -219,41 +219,41 @@ namespace ParkYa.Controllers
             TempData["Mensaje"] = "Reserva guardada correctamente.";
             return RedirectToAction("Index");
         }
+        /*
+                [HttpPost]
+                [ValidateAntiForgeryToken]
+                public async Task<IActionResult> ConfirmarPago(string metodoPago, decimal monto)
+                {
+                    var usuarioId = ObtenerUsuarioId();
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ConfirmarPago(string metodoPago, decimal monto)
-        {
-            var usuarioId = ObtenerUsuarioId();
+                    if (usuarioId == null)
+                        return RedirectToAction("Login", "Autenticacion");
 
-            if (usuarioId == null)
-                return RedirectToAction("Login", "Autenticacion");
+                    var ultimaReservaId = await _context.reserva
+                        .Where(r => r.Usuario_id_usuario == usuarioId.Value)
+                        .OrderByDescending(r => r.id_reserva)
+                        .Select(r => (int?)r.id_reserva)
+                        .FirstOrDefaultAsync();
 
-            var ultimaReservaId = await _context.reserva
-                .Where(r => r.Usuario_id_usuario == usuarioId.Value)
-                .OrderByDescending(r => r.id_reserva)
-                .Select(r => (int?)r.id_reserva)
-                .FirstOrDefaultAsync();
+                    if (ultimaReservaId == null)
+                    {
+                        TempData["Error"] = "No se encontró una reserva para asociar al pago.";
+                        return RedirectToAction("Index");
+                    }
 
-            if (ultimaReservaId == null)
-            {
-                TempData["Error"] = "No se encontró una reserva para asociar al pago.";
-                return RedirectToAction("Index");
-            }
+                    var codPago = "PAGO-" + new Random().Next(100000, 999999).ToString();
 
-            var codPago = "PAGO-" + new Random().Next(100000, 999999).ToString();
+                    await _context.Database.ExecuteSqlInterpolatedAsync($@"
+                        INSERT INTO venta
+                        (cod_pago, monto, fecha_pago, metodo_pago, Usuario_id_usuario, Reserva_id_reserva)
+                        VALUES
+                        ({codPago}, {monto}, {DateTime.Now}, {metodoPago}, {usuarioId.Value}, {ultimaReservaId.Value})
+                    ");
 
-            await _context.Database.ExecuteSqlInterpolatedAsync($@"
-                INSERT INTO venta
-                (cod_pago, monto, fecha_pago, metodo_pago, Usuario_id_usuario, Reserva_id_reserva)
-                VALUES
-                ({codPago}, {monto}, {DateTime.Now}, {metodoPago}, {usuarioId.Value}, {ultimaReservaId.Value})
-            ");
-
-            TempData["Mensaje"] = "Pago guardado correctamente.";
-            return RedirectToAction("Index");
-        }
-
+                    TempData["Mensaje"] = "Pago guardado correctamente.";
+                    return RedirectToAction("Index");
+                }
+        */
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EliminarVehiculo(int id)
@@ -403,6 +403,50 @@ namespace ParkYa.Controllers
 
             TempData["Mensaje"] = "Reserva actualizada correctamente.";
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SimularPago(int idReserva)
+        {
+            var reserva = await _context.reserva
+                .FirstOrDefaultAsync(r => r.id_reserva == idReserva);
+
+            if (reserva == null)
+                return NotFound();
+
+            return View(reserva);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmarPago(int idReserva)
+        {
+            var reserva = await _context.reserva
+                .FirstOrDefaultAsync(r => r.id_reserva == idReserva);
+
+            if (reserva == null)
+                return NotFound();
+
+            reserva.pagado = true;
+
+            await _context.SaveChangesAsync();
+
+            TempData["MensajePago"] = "Pago simulado realizado correctamente.";
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Comprobante(int idReserva)
+        {
+            var reserva = _context.reserva
+                .Include(r => r.Usuario)
+                .Include(r => r.Vehiculo)
+                .FirstOrDefault(r => r.id_reserva == idReserva);
+
+            if (reserva == null)
+            {
+                return NotFound();
+            }
+
+            return View(reserva);
         }
 
     }

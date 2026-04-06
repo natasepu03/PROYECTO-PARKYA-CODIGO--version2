@@ -1,0 +1,214 @@
+@model ParkYa.Models.Reserva
+
+@{
+    ViewData["Title"] = "Comprobante";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comprobante - ParkYa</title>
+    <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f7fb;
+                margin: 0;
+                padding: 30px;
+            }
+
+            .comprobante-container {
+                max-width: 800px;
+                margin: auto;
+                background: white;
+                border-radius: 16px;
+                padding: 30px;
+                box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+            }
+
+            h1 {
+                color: #1e3a8a;
+                margin-bottom: 10px;
+            }
+
+            .subtitulo {
+                color: #555;
+                margin-bottom: 25px;
+            }
+
+            .bloque {
+                margin-bottom: 20px;
+                padding: 16px;
+                background: #f9fafb;
+                border-radius: 12px;
+            }
+
+            .bloque h3 {
+                margin-top: 0;
+                color: #2563eb;
+            }
+
+            .fila {
+                margin-bottom: 10px;
+            }
+
+            .label {
+                font-weight: bold;
+                color: #222;
+            }
+
+            .valor {
+                color: #444;
+            }
+
+            .acciones {
+                margin-top: 25px;
+                display: flex;
+                gap: 12px;
+            }
+
+            .btn {
+                padding: 10px 18px;
+                border: none;
+                border-radius: 999px;
+                cursor: pointer;
+                text-decoration: none;
+                font-size: 14px;
+            }
+
+            .btn-imprimir {
+                background: #2563eb;
+                color: white;
+            }
+
+            .btn-volver {
+                background: #22c55e;
+                color: white;
+            }
+
+            @@media print {
+                .acciones {
+                    display: none;
+                }
+
+                body {
+                    background: white;
+                    padding: 0;
+                }
+
+                .comprobante-container {
+                    box-shadow: none;
+                    border-radius: 0;
+                    max-width: 100%;
+                }
+            }
+    </style>
+</head>
+
+<body>
+    <div class="comprobante-container">
+
+        <div style="text-align:center; margin-bottom:25px;">
+
+            <img src="~/assets/logo1.jpeg" alt="ParkYa Logo" style="
+                height:90px;
+                border-radius:15px;
+                box-shadow:0 4px 12px rgba(0,0,0,0.2);
+                padding:2px;
+                background:rgb(0, 0, 0);
+                ">
+
+            </div>
+            <h1>Comprobante de Reserva</h1>
+            <p class="subtitulo">Detalle de la reserva del cliente</p>
+
+            <div class="bloque">
+                <h3>Datos del cliente</h3>
+                <div class="fila">
+                    <span class="label">Nombre:</span>
+                    <span class="valor">@Model.Usuario?.nombre @Model.Usuario?.apellido</span>
+                </div>
+                <div class="fila">
+                    <span class="label">Correo:</span>
+                    <span class="valor">@Model.Usuario?.correo</span>
+                </div>
+                <div class="fila">
+                    <span class="label">Documento:</span>
+                    <span class="valor">@Model.Usuario?.documento</span>
+                </div>
+            </div>
+
+            <div class="bloque">
+                <h3>Datos de la reserva</h3>
+                <div class="fila">
+                    <span class="label">Reserva #:</span>
+                    <span class="valor">@Model.id_reserva</span>
+                </div>
+                <div class="fila">
+                    <span class="label">Código:</span>
+                    <span class="valor">@Model.cod_reserva</span>
+                </div>
+                <div class="fila">
+                    <span class="label">Fecha:</span>
+                    <span class="valor">@Model.fecha.ToShortDateString()</span>
+                </div>
+                <div class="fila">
+                    <span class="label">Hora entrada:</span>
+                    <span class="valor">@Model.hora_entrada</span>
+                </div>
+                <div class="fila">
+                    <span class="label">Hora salida:</span>
+                    <span class="valor">@Model.hora_salida</span>
+                </div>
+                <div class="fila">
+                    <span class="label">Estado:</span>
+                    <span class="valor">@Model.Estado</span>
+                </div>
+            </div>
+
+            <div class="bloque">
+                <h3>Datos del vehículo</h3>
+                <div class="fila">
+                    <span class="label">Placa:</span>
+                    <span class="valor">@Model.Vehiculo?.placa</span>
+                </div>
+                <div class="fila">
+                    <span class="label">Marca:</span>
+                    <span class="valor">@Model.Vehiculo?.marca</span>
+                </div>
+                <div class="fila">
+                    <span class="label">Color:</span>
+                    <span class="valor">@Model.Vehiculo?.color</span>
+                </div>
+            </div>
+
+            <div class="acciones">
+                <button class="btn btn-imprimir" onclick="window.print()">Imprimir / Guardar PDF</button>
+                <a class="btn btn-volver" href="@Url.Action("Index", "Clientes")">Volver</a>
+            </div>
+            <div style="
+                margin-top:25px;
+                padding:15px;
+                background:#f1f5f9;
+                border-radius:12px;
+                text-align:center;
+                ">
+
+                <h3 style="margin:0; color:#555;">TOTAL PAGADO</h3>
+
+                <h1 style="
+                    margin:5px 0;
+                    color:#22c55e;
+                    font-size:32px;
+                    font-weight:800;
+                    ">
+                    $ @Convert.ToDecimal(Model.monto).ToString("N2", new System.Globalization.CultureInfo("es-CO"))
+                </h1>
+
+            </div>
+        </div>
+    </body>
+
+</html>

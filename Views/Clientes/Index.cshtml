@@ -328,7 +328,7 @@
 
                                             <div class="acciones-vehiculo">
                                                 @if (vehiculoActual == null || vehiculo.id_vehiculo !=
-                                                                                                                                                                                        vehiculoActual.id_vehiculo)
+                                                                                                                                                                                                                                                                                                                                                                                                                                        vehiculoActual.id_vehiculo)
                                                 {
                                                     <form asp-controller="Clientes" asp-action="SeleccionarVehiculoActual"
                                                           method="post">
@@ -347,7 +347,7 @@
                                                 </button>
 
                                                 @if (vehiculoActual != null && vehiculo.id_vehiculo ==
-                                                                                                                                                                                        vehiculoActual.id_vehiculo)
+                                                                                                                                                                                                                                                                                                                                                                                                                                        vehiculoActual.id_vehiculo)
                                                 {
                                                     <button type="button" class="btn-eliminar deshabilitado" disabled>
                                                         Vehículo actual
@@ -469,6 +469,14 @@
                             </div>
                         </section>
 
+                        @if (TempData["MensajePago"] != null)
+                        {
+                            <div
+                                style="margin-bottom: 20px; padding: 14px 18px; background: #dcfce7; color: #166534; border-radius: 12px; font-weight: 600;">
+                                @TempData["MensajePago"]
+                            </div>
+                        }
+
                         <section id="mis-reservas" class="contenido-seccion">
                             <div class="single-content">
                                 <section class="glass-card">
@@ -528,6 +536,37 @@
                                                                     : "No disponible")
                                                             </p>
                                                         </div>
+                                                        
+                                                        @if (reserva.monto != null)
+                                                        {
+                                                            <div>
+                                                                <label>Monto</label>
+                                                                <p>$ @reserva.monto</p>
+                                                            </div>
+                                                        }
+                                                        @if (reserva.monto != null && reserva.Estado.ToString() == "Finalizada")
+{
+    <div style="margin-top:10px;">
+        @if (reserva.pagado)
+        {
+            <span style="background:#22c55e; color:white; padding:6px 12px; border-radius:999px; font-weight:600;">
+                Pagado
+            </span>
+
+            <a href="@Url.Action("Comprobante", "Clientes", new { idReserva = reserva.id_reserva })"
+               style="background:#7125eb; color:white; padding:6px 12px; border-radius:999px; text-decoration:none; margin-left:10px; font-weight:600;">
+                Ver comprobante
+            </a>
+        }
+        else
+        {
+            <a href="@Url.Action("SimularPago", "Clientes", new { idReserva = reserva.id_reserva })"
+               style="background:#154472; color:white; padding:6px 12px; border-radius:999px; text-decoration:none; font-weight:600;">
+                Pagar
+            </a>
+        }
+    </div>
+}
 
                                                         @if (reserva.Estado == Estado.Pendiente && reserva.hora_entrada == null)
                                                         {

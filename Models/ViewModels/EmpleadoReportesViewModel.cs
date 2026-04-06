@@ -23,17 +23,17 @@ public List<ReservaItemViewModel> HistorialMes { get; set; } = new();
 
    
     public class ReservaItemViewModel
-    {
-        public int IdReserva { get; set; }
-        public string Cliente { get; set; } = string.Empty;
-        public string Placa { get; set; } = string.Empty;
-        public DateTime Fecha { get; set; }
-        public TimeSpan? HoraEntrada { get; set; }
-        public TimeSpan? HoraSalida { get; set; }
-        public string Estado { get; set; } = string.Empty;
-
-       
-        public TimeSpan? HoraReservada { get; set; }
-        public decimal? TarifaHora { get; set; }
-    }
+{
+    public int IdReserva { get; set; }
+    public int CodigoReserva { get; set; }
+    public string Cliente { get; set; } = string.Empty;
+    public string Placa { get; set; } = string.Empty;
+    public DateTime Fecha { get; set; }
+    public TimeSpan? HoraEntrada { get; set; }
+    public TimeSpan? HoraSalida { get; set; }
+    public string Estado { get; set; } = string.Empty;
+    public TimeSpan? HoraReservada { get; set; }
+    public decimal? TarifaHora { get; set; }
+    public decimal? Monto { get; set; }
+}
 }

@@ -1,0 +1,222 @@
+@model ParkYa.Models.Reserva
+
+@{
+    ViewData["Title"] = "Simulación de Pago";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulación de Pago</title>
+    <style>
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+                background: linear-gradient(135deg, #eef2ff, #f8fafc);
+                min-height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #1f2937;
+            }
+
+            .pago-card {
+                width: 100%;
+                max-width: 520px;
+                background: white;
+                border-radius: 22px;
+                padding: 32px;
+                box-shadow: 0 14px 35px rgba(0, 0, 0, 0.12);
+                border: 1px solid #e5e7eb;
+            }
+
+            .logo-box {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .logo-box img {
+                height: 70px;
+                border-radius: 12px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+            }
+
+            .titulo {
+                text-align: center;
+                margin: 10px 0 4px;
+                font-size: 32px;
+                font-weight: 700;
+                color: #1e3a8a;
+            }
+
+            .subtitulo {
+                text-align: center;
+                color: #6b7280;
+                margin-bottom: 28px;
+            }
+
+            .fila {
+                display: flex;
+                justify-content: space-between;
+                gap: 20px;
+                padding: 12px 0;
+                border-bottom: 1px solid #f1f5f9;
+            }
+
+            .label {
+                font-weight: 600;
+                color: #475569;
+            }
+
+            .valor {
+                color: #111827;
+            }
+
+            .monto-total {
+                margin-top: 24px;
+                padding: 18px;
+                border-radius: 16px;
+                background: #eff6ff;
+                text-align: center;
+            }
+
+            .monto-total span {
+                display: block;
+                color: #64748b;
+                margin-bottom: 6px;
+            }
+
+            .monto-total strong {
+                font-size: 28px;
+                color: #16a34a;
+            }
+
+            .grupo {
+                margin-top: 24px;
+            }
+
+            .grupo label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: 600;
+                color: #374151;
+            }
+
+            .grupo select {
+                width: 100%;
+                padding: 12px 14px;
+                border-radius: 12px;
+                border: 1px solid #d1d5db;
+                font-size: 15px;
+                outline: none;
+            }
+
+            .grupo select:focus {
+                border-color: #60a5fa;
+                box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+            }
+
+            .acciones {
+                margin-top: 28px;
+                display: flex;
+                gap: 12px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .btn {
+                border: none;
+                border-radius: 999px;
+                padding: 12px 24px;
+                font-weight: 700;
+                cursor: pointer;
+                text-decoration: none;
+                transition: 0.2s ease;
+                display: inline-block;
+            }
+
+            .btn-confirmar {
+                background: linear-gradient(135deg, #22c55e, #16a34a);
+                color: white;
+            }
+
+            .btn-volver {
+                background: #e5e7eb;
+                color: #111827;
+            }
+
+            .btn:hover {
+                transform: translateY(-1px);
+                opacity: 0.95;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="pago-card">
+        <div class="logo-box">
+            <img src="/assets/logo1.jpeg" alt="ParkYa" />
+        </div>
+
+        <h1 class="titulo">Simulación de Pago</h1>
+        <p class="subtitulo">Revisa tu reserva y confirma el método de pago</p>
+
+        <div class="fila">
+            <span class="label">Reserva</span>
+            <span class="valor">#@Model.id_reserva</span>
+        </div>
+
+        <div class="fila">
+            <span class="label">Fecha</span>
+            <span class="valor">@Model.fecha.ToString("dd/MM/yyyy")</span>
+        </div>
+
+        <div class="fila">
+            <span class="label">Hora reservada</span>
+            <span class="valor">@Model.hora_reservada</span>
+        </div>
+
+        <div class="fila">
+            <span class="label">Hora entrada</span>
+            <span class="valor">@Model.hora_entrada</span>
+        </div>
+
+        <div class="fila">
+            <span class="label">Hora salida</span>
+            <span class="valor">@Model.hora_salida</span>
+        </div>
+
+        <div class="monto-total">
+            <span>Total a pagar</span>
+            <strong>@(Model.monto.HasValue? Model.monto.Value.ToString("C0") : "$0")</strong>
+        </div>
+
+        <div class="grupo">
+            <label for="metodoPago">Método de pago</label>
+            <select id="metodoPago" name="metodoPago">
+                <option>Efectivo</option>
+                <option>Tarjeta</option>
+                <option>Nequi</option>
+            </select>
+        </div>
+
+        <form asp-action="ConfirmarPago" asp-controller="Clientes" method="post">
+            <input type="hidden" name="idReserva" value="@Model.id_reserva" />
+
+            <div class="acciones">
+                <button type="submit" class="btn btn-confirmar">
+                    Confirmar pago
+                </button>
+
+                <a href="@Url.Action("Index", "Clientes")" class="btn btn-volver">
+                    Volver
+                </a>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

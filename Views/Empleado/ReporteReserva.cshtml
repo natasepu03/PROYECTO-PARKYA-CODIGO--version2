@@ -1,0 +1,177 @@
+@model ParkYa.ViewModels.ReservaReporteViewModel
+@{
+    ViewData["Title"] = "Reporte de Reserva";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Reporte de Reserva</title>
+    <style>
+            body {
+                font-family: Arial, sans-serif;
+                padding: 40px;
+                color: #222;
+                background: #f7f8fc;
+            }
+
+            .factura {
+                max-width: 600px;
+                margin: auto;
+                background: white;
+                padding: 30px;
+                border-radius: 16px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                border: 1px solid #eee;
+            }
+
+            h1 {
+                margin: 0 0 8px 0;
+                color: #1e3a8a;
+            }
+
+            .sub {
+                color: #666;
+                margin-bottom: 24px;
+            }
+
+            .fila {
+                display: flex;
+                justify-content: space-between;
+                gap: 20px;
+                margin-bottom: 12px;
+                padding-bottom: 8px;
+                border-bottom: 1px solid #f1f1f1;
+            }
+
+            .etiqueta {
+                font-weight: bold;
+            }
+
+            .total {
+                margin-top: 24px;
+                text-align: right;
+                font-size: 24px;
+                font-weight: bold;
+                color: #111827;
+            }
+
+            .estado {
+                display: inline-block;
+                padding: 6px 14px;
+                border-radius: 999px;
+                background: #22c55e;
+                color: white;
+                font-weight: bold;
+            }
+
+            .acciones {
+                margin-top: 30px;
+                text-align: center;
+            }
+
+            .btn-imprimir {
+                padding: 10px 18px;
+                border: none;
+                border-radius: 10px;
+                background: #2563eb;
+                color: white;
+                font-weight: bold;
+                cursor: pointer;
+            }
+
+            .btn-imprimir:hover {
+                opacity: 0.9;
+            }
+
+            @@media print {
+                .acciones {
+                    display: none;
+                }
+
+                body {
+                    background: white;
+                    padding: 0;
+                }
+
+                .factura {
+                    box-shadow: none;
+                    border: none;
+                }
+            }
+    </style>
+</head>
+
+<body>
+    <div class="factura">
+        <div style="text-align:center; margin-bottom:25px;">
+            <img src="~/assets/logo1.jpeg"
+                 style="height:80px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.2);" />
+
+            <h1 style="margin:5px 0; font-weight:600; color:#1e3a8a;">
+                ParkYa
+            </h1>
+
+            <small style="color:gray;">
+                Comprobante de reserva finalizada
+            </small>
+        </div>
+
+        <div class="fila">
+            <span class="etiqueta">Código de reserva</span>
+            <span>@Model.CodigoReserva</span>
+        </div>
+
+        <div class="fila">
+            <span class="etiqueta">Cliente</span>
+            <span>@Model.Cliente</span>
+        </div>
+
+        <div class="fila">
+            <span class="etiqueta">Placa</span>
+            <span>@Model.Placa</span>
+        </div>
+
+        <div class="fila">
+            <span class="etiqueta">Fecha</span>
+            <span>@Model.Fecha.ToString("dd/MM/yyyy")</span>
+        </div>
+
+        <div class="fila">
+            <span class="etiqueta">Hora reservada</span>
+            <span>@(Model.HoraReservada?.ToString(@"hh\:mm") ?? "--")</span>
+        </div>
+
+        <div class="fila">
+            <span class="etiqueta">Hora entrada</span>
+            <span>@(Model.HoraEntrada?.ToString(@"hh\:mm") ?? "--")</span>
+        </div>
+
+        <div class="fila">
+            <span class="etiqueta">Hora salida</span>
+            <span>@(Model.HoraSalida?.ToString(@"hh\:mm") ?? "--")</span>
+        </div>
+
+        <div class="fila">
+            <span class="etiqueta">Tarifa por hora</span>
+            <span>@(Model.TarifaHora?.ToString("C0") ?? "$0")</span>
+        </div>
+
+        <div class="fila">
+            <span class="etiqueta">Estado</span>
+            <span class="estado">@Model.Estado</span>
+        </div>
+
+        <div class="total">
+            Total pagado: @(Model.Monto?.ToString("C0") ?? "$0")
+        </div>
+
+        <div class="acciones">
+            <button class="btn-imprimir" onclick="window.print()">Imprimir / Guardar PDF</button>
+        </div>
+    </div>
+</body>
+
+</html>

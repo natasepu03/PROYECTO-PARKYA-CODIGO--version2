@@ -49,13 +49,14 @@ body {
 }
 
 .side-logo {
-    width: 78px;
-    height: 78px;
+    width: 90px;
+    height: 90px;
+    border-radius: 12px;
     object-fit: cover;
-    border-radius: 18px;
-    background: white;
-    padding: 6px;
+    background: rgb(0, 0, 0);
+    padding: 1.5px;
 }
+
 
 .brand-text h2 {
     font-size: 24px;
@@ -318,13 +319,24 @@ body {
     color: white;
 }
 
-.estado-activo {
-    background: var(--verde);
+.estado-activa {
+    background: #2ecc71;
 }
 
-.estado-inactivo {
-    background: #94a3b8;
+.estado-pendiente {
+    background: #f6d966;
+    color: rgb(91, 82, 48);
 }
+
+.estado-finalizada {
+    background: #2c3e50;
+}
+
+.estado-cancelada {
+    background: #d9301e;
+}
+
+
 
 .acciones {
     display: flex;
@@ -515,18 +527,18 @@ body {
     opacity: 0.96;
 }
 .btn-finalizar {
-    background-color: #28a745; /* verde */
+    background-color: #287da7; 
     color: white;
     border: none;
     padding: 6px 14px;
-    border-radius: 20px; /* 🔥 forma ovalada */
+    border-radius: 20px; 
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
 }
 
 .btn-finalizar:hover {
-    background: #16a34a;
+    background: #166da3;
 }
 .modal-content {
     border-radius: 28px;
@@ -614,4 +626,59 @@ body {
 
 .btn-modal-footer:hover {
     opacity: 0.95;
+}
+
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.quick-card {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    padding: 20px;
+    border-radius: 14px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.25s ease;
+    border: none;
+}
+
+.quick-card i {
+    font-size: 22px;
+}
+
+.quick-card span {
+    font-size: 14px;
+    text-align: center;
+}
+
+.quick-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+}
+#modalFinalizar .btn-accion {
+    width: 80%;
+    max-width: 260px;
+    border-radius: 20px;
+    padding: 10px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #1e496e, #11355d);
+    border: none;
+    color: white;
+}
+
+#modalFinalizar .btn-accion:hover {
+    opacity: 0.9;
+}
+.menu .item i {
+    margin-right: 8px;
+    font-size: 18px;
 }

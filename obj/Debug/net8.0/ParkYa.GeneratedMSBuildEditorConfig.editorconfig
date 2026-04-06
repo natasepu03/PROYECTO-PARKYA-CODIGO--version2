@@ -38,12 +38,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0ZW50aWNhY2lvblxSZWdpc3Ryby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/USUARIO/OneDrive/Documentos/PROYECTO-PARKYA-CODIGO- version2/Views/Clientes/Comprobante.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcQ29tcHJvYmFudGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/USUARIO/OneDrive/Documentos/PROYECTO-PARKYA-CODIGO- version2/Views/Clientes/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/USUARIO/OneDrive/Documentos/PROYECTO-PARKYA-CODIGO- version2/Views/Clientes/SimularPago.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcU2ltdWxhclBhZ28uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/USUARIO/OneDrive/Documentos/PROYECTO-PARKYA-CODIGO- version2/Views/Empleado/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbGVhZG9cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/USUARIO/OneDrive/Documentos/PROYECTO-PARKYA-CODIGO- version2/Views/Empleado/ReporteReserva.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbGVhZG9cUmVwb3J0ZVJlc2VydmEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/USUARIO/OneDrive/Documentos/PROYECTO-PARKYA-CODIGO- version2/Views/Empleado/Reportes.cshtml]
