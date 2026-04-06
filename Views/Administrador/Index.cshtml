@@ -1,4 +1,4 @@
-@model ParkYa.Models.ViewModels.DashboardAdminViewModel
+@model ParkYa.ViewModels.DashboardAdminViewModel
 @{
     ViewData["Title"] = "Dashboard Admnistrador";
     var nombreCompleto = $"{Model.Administrador.nombre} {Model.Administrador.apellido}";
@@ -76,9 +76,11 @@
             </div>
 
             <nav class="menu">
-               <a class="item" asp-controller="Empleado" asp-action="Index">🏠 Inicio</a>
-               @* <a class="item" asp-controller="Empleado" asp-action="Reportes">📊 Reportes</a>
-               <a class="item" asp-controller="Empleado" asp-action="Reservas">📅 Reservas</a> *@
+               <a class="item" asp-controller="Administrador" asp-action="Index">🏠 Inicio</a>
+               <a class="item" asp-controller="Administrador" asp-action="Usuarios">👤 Usuarios</a>
+               <a class="item" asp-controller="Administrador" asp-action="Tarifas">🏷️ Tarifas</a>
+               <a class="item" asp-controller="Administrador" asp-action="Reservas">📅Reservas</a>
+                 <a class="item" asp-controller="Administrador" asp-action="Reportes">📊Reportes</a>
             </nav>
         </aside>
 
@@ -129,21 +131,24 @@
                 <article class="panel-card">
                     <h2>Resumen del día</h2>
                     <p class="sub">Información general del sistema</p>
-@* 
                     <div class="summary-stats">
                         <div class="stat-mini">
-                            <span>Total vehículos</span>
-                            <strong>@Model.TotalVehiculos</strong>
+                            <span>Reservas hoy</span>
+                            <strong>@Model.ReservasHoy</strong>
                         </div>
                         <div class="stat-mini">
-                            <span>Total reservas</span>
-                            <strong>@Model.TotalReservas</strong>
+                            <span>Ingresos hoy</span>
+                            <strong>@Model.IngresosHoy.ToString("C")</strong>
                         </div>
                         <div class="stat-mini">
-                            <span>Reservas activas</span>
-                            <strong>@Model.ReservasActivas</strong>
+                            <span>Pendientes hoy</span>
+                            <strong>@Model.PendientesHoy</strong>
                         </div>
-                    </div> *@
+                        <div class="stat-mini">
+                            <span>Finalizadas hoy</span>
+                            <strong>@Model.FinalizadasHoy</strong>
+                        </div>
+                    </div>
                 </article>
 <article class="panel-card" style="grid-column: 1 / -1;">
     <h2>Parqueadero</h2>
@@ -152,23 +157,23 @@
     <form asp-action="ActualizarParqueadero" method="post">
         @Html.AntiForgeryToken()
         
-       <input type="hidden" name="id_Parqueadero" value="@Model.Parqueadero?.id_Parqueadero" />
+       <input type="hidden" name="id_Parqueadero" value="@Model.Parqueadero.id_Parqueadero" />
 
        <div class="row align-items-end g-4">
 
     <div class="col">
         <label>Nombre</label>
-        <input name="nombre" value="@Model.Parqueadero?.nombre" class="form-control" />
+        <input name="nombre" value="@Model.Parqueadero.nombre" class="form-control" />
     </div>
 
   <div class="col">
         <label>Dirección</label>
-        <input name="direccion" value="@Model.Parqueadero?.direccion" class="form-control" />
+        <input name="direccion" value="@Model.Parqueadero.direccion" class="form-control" />
     </div>
 
   <div class="col">
         <label>Total cupos</label>
-        <input name="total_cupos" value="@Model.Parqueadero?.total_cupos" type="number" class="form-control" />
+        <input name="total_cupos" value="@Model.Parqueadero.total_cupos" type="number" class="form-control" />
     </div>
 
     <div class="col">
@@ -296,3 +301,4 @@
 </body>
 
 </html>
+
