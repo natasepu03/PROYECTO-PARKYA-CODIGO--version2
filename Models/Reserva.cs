@@ -20,7 +20,7 @@ namespace ParkYa.Models
         public Usuario? Usuario { get; set; }
         public Vehiculo? Vehiculo { get; set; }
         public decimal? monto { get; set;}
-        public bool pagado { get; set; }
+        public bool pagado { get; set; } = false;
     }
 
     public enum Estado

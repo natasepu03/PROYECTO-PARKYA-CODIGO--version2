@@ -54,7 +54,7 @@ namespace ParkYa.Controllers
             var rol = (usuario.Rol?.nombre_rol ?? string.Empty).ToLower();
 
             if (rol.Contains("admin"))
-                return RedirectToAction("Index", "Admin");
+                return RedirectToAction("Index", "Administrador");
 
             if (rol.Contains("empleado"))
                 return RedirectToAction("Index", "Empleado");
