@@ -556,7 +556,7 @@
 
             if (data.ok) {
                 alert("Hora de entrada guardada correctamente.");
-                calcularDiasYHoras();
+                calcularMonto();
             } else {
                 alert("No se pudo guardar la hora de entrada.");
             }
@@ -612,13 +612,13 @@ async function guardarHoraSalida() {
         if (inputHoraSalida) {
             inputHoraSalida.addEventListener("input", function () {
                 document.getElementById("horaSalida").value = this.value;
-                calcularDiasYHoras();
+                calcularMonto();
             });
         }
 
         if (inputHoraEntrada) {
             inputHoraEntrada.addEventListener("input", function () {
-                calcularDiasYHoras();
+                calcularMonto();
             });
         }
     });
