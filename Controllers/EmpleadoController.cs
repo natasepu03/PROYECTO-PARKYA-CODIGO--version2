@@ -154,6 +154,93 @@ namespace ParkYa.Controllers
 
             return View(vm);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ReportePeriodo(string periodo)
+        {
+            var usuarioId = HttpContext.Session.GetInt32("UsuarioId");
+            if (usuarioId == null)
+                return RedirectToAction("Login", "Autenticacion");
+
+            var usuario = await _context.usuario
+                .FirstOrDefaultAsync(u => u.id_usuario == usuarioId.Value);
+
+            if (usuario == null)
+                return RedirectToAction("Login", "Autenticacion");
+
+            var hoy = DateTime.Today;
+            var periodoNormalizado = (periodo ?? string.Empty).Trim().ToLower();
+
+            var inicioSemana = hoy.AddDays(-(int)hoy.DayOfWeek + (int)DayOfWeek.Monday);
+            if (hoy.DayOfWeek == DayOfWeek.Sunday)
+                inicioSemana = hoy.AddDays(-6);
+
+            var finSemana = inicioSemana.AddDays(6);
+            var inicioMes = new DateTime(hoy.Year, hoy.Month, 1);
+            var finMes = new DateTime(hoy.Year, hoy.Month, DateTime.DaysInMonth(hoy.Year, hoy.Month));
+
+            var consultaBase =
+                from r in _context.reserva
+                join u in _context.usuario on r.Usuario_id_usuario equals u.id_usuario
+                join v in _context.vehiculo on r.Vehiculo_id_vehiculo equals v.id_vehiculo
+                where r.Estado == Estado.Finalizada || r.Estado == Estado.Cancelada
+                select new ReservaItemViewModel
+                {
+                    IdReserva = r.id_reserva,
+                    CodigoReserva = r.cod_reserva,
+                    Cliente = u.nombre + " " + u.apellido,
+                    Placa = v.placa,
+                    Fecha = r.fecha,
+                    HoraEntrada = r.hora_entrada,
+                    HoraSalida = r.hora_salida,
+                    HoraReservada = r.hora_reservada,
+                    Estado = r.Estado.ToString(),
+                    Monto = r.monto
+                };
+
+            IQueryable<ReservaItemViewModel> consultaFiltrada = consultaBase;
+            string titulo = "Reporte de reservas";
+            string textoPeriodo = "General";
+
+            switch (periodoNormalizado)
+            {
+                case "hoy":
+                    consultaFiltrada = consultaBase.Where(r => r.Fecha.Date == hoy);
+                    titulo = "Reporte del día";
+                    textoPeriodo = hoy.ToString("dd/MM/yyyy");
+                    break;
+                case "semana":
+                    consultaFiltrada = consultaBase.Where(r => r.Fecha.Date >= inicioSemana && r.Fecha.Date <= finSemana);
+                    titulo = "Reporte de la semana";
+                    textoPeriodo = $"{inicioSemana:dd/MM/yyyy} - {finSemana:dd/MM/yyyy}";
+                    break;
+                case "mes":
+                    consultaFiltrada = consultaBase.Where(r => r.Fecha.Date >= inicioMes && r.Fecha.Date <= finMes);
+                    titulo = "Reporte del mes";
+                    textoPeriodo = hoy.ToString("MMMM yyyy");
+                    break;
+                default:
+                    return RedirectToAction("Reportes");
+            }
+
+            var reservas = await consultaFiltrada
+                .OrderByDescending(r => r.Fecha)
+                .ThenByDescending(r => r.HoraEntrada)
+                .ToListAsync();
+
+            var vm = new ReportePeriodoEmpleadoViewModel
+            {
+                Titulo = titulo,
+                Periodo = textoPeriodo,
+                FechaGeneracion = DateTime.Now,
+                TotalReservas = reservas.Count,
+                TotalMonto = reservas.Sum(r => r.Monto ?? 0),
+                Reservas = reservas
+            };
+
+            return View(vm);
+        }
+
         [HttpGet]
         public async Task<IActionResult> ReporteReserva(int idReserva)
         {
@@ -506,4 +593,3 @@ namespace ParkYa.Controllers
 
 
 }
-
