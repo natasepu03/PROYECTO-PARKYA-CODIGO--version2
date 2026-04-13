@@ -75,21 +75,27 @@ namespace ParkYa.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var correoExiste = await _context.usuario.AnyAsync(u => u.correo == model.correo);
+            var correoNormalizado = model.correo.Trim().ToLower();
+            var documentoNormalizado = model.documento.Trim();
+            var preguntaSeguridad = model.PreguntaSeguridad?.Trim() ?? string.Empty;
+            var respuestaSeguridad = model.RespuestaSeguridad?.Trim() ?? string.Empty;
+
+            var correoExiste = await _context.usuario.AnyAsync(u => u.correo.ToLower() == correoNormalizado);
             if (correoExiste)
             {
                 ModelState.AddModelError("correo", "El correo ya está registrado.");
                 return View(model);
             }
 
-            var docExiste = await _context.usuario.AnyAsync(u => u.documento == model.documento);
+            var docExiste = await _context.usuario.AnyAsync(u => u.documento == documentoNormalizado);
             if (docExiste)
             {
                 ModelState.AddModelError("documento", "El documento ya está registrado.");
                 return View(model);
             }
 
-            var rolCliente = await _context.rol.FirstOrDefaultAsync(r => r.nombre_rol.ToLower() == "cliente");
+            var rolCliente = await _context.rol.FirstOrDefaultAsync(r =>
+                r.nombre_rol != null && r.nombre_rol.Trim().ToLower().Contains("cliente"));
             if (rolCliente == null)
             {
                 ModelState.AddModelError(string.Empty, "No existe un rol 'cliente' en la base de datos.");
@@ -101,20 +107,29 @@ namespace ParkYa.Controllers
                 nombre = model.nombre,
                 apellido = model.apellido,
                 tipo_doc = model.tipo_doc,
-                documento = model.documento ?? 0,
-                correo = model.correo,
-                telefono = model.telefono,
+                documento = documentoNormalizado,
+                correo = correoNormalizado,
+                telefono = model.telefono.Trim(),
                 contraseña = BCrypt.Net.BCrypt.HashPassword(model.contraseña),
                 estado = true,
                 Rol_id_rol = rolCliente.id_rol,
 
-                PreguntaSeguridad = model.PreguntaSeguridad,
-                RespuestaSeguridad = model.RespuestaSeguridad
+                PreguntaSeguridad = preguntaSeguridad,
+                RespuestaSeguridad = respuestaSeguridad
 
             };
 
-            _context.usuario.Add(usuario);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.usuario.Add(usuario);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                var detalle = ex.InnerException?.Message ?? ex.Message;
+                ModelState.AddModelError(string.Empty, $"No se pudo completar el registro. {detalle}");
+                return View(model);
+            }
 
             HttpContext.Session.SetInt32("UsuarioId", usuario.id_usuario);
             HttpContext.Session.SetString("UsuarioNombre", $"{usuario.nombre} {usuario.apellido}");
