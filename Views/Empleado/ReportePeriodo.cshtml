@@ -1,0 +1,235 @@
+@model ParkYa.ViewModels.ReportePeriodoEmpleadoViewModel
+@{
+    ViewData["Title"] = Model.Titulo;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>@Model.Titulo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+            padding: 32px;
+        }
+
+        .reporte {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 14px 40px rgba(15, 23, 42, 0.12);
+        }
+
+        .encabezado {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 24px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 18px;
+        }
+
+        .marca {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .marca img {
+            width: 68px;
+            height: 68px;
+            border-radius: 14px;
+            object-fit: cover;
+        }
+
+        .marca h1 {
+            margin: 0;
+            color: #163c76;
+            font-size: 30px;
+        }
+
+        .marca p {
+            margin: 4px 0 0;
+            color: #6b7280;
+        }
+
+        .meta {
+            text-align: right;
+            color: #4b5563;
+        }
+
+        .resumen {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            background: #f8fbff;
+            border: 1px solid #dbe7f5;
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .card span {
+            display: block;
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .card strong {
+            font-size: 26px;
+            color: #163c76;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        th {
+            background: #eef4fb;
+            color: #163c76;
+        }
+
+        .estado {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .estado-finalizada {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .estado-cancelada {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .acciones {
+            margin-top: 24px;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #1f4f8f;
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            margin: 0 6px;
+        }
+
+        @@media print {
+            body {
+                background: #fff;
+                padding: 0;
+            }
+
+            .reporte {
+                box-shadow: none;
+                padding: 0;
+            }
+
+            .acciones {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="reporte">
+        <div class="encabezado">
+            <div class="marca">
+                <img src="~/assets/logo1.jpeg" alt="ParkYa" />
+                <div>
+                    <h1>@Model.Titulo</h1>
+                    <p>Periodo: @Model.Periodo</p>
+                </div>
+            </div>
+            <div class="meta">
+                <div>Generado: @Model.FechaGeneracion.ToString("dd/MM/yyyy HH:mm")</div>
+            </div>
+        </div>
+
+        <div class="resumen">
+            <div class="card">
+                <span>Total de reservas</span>
+                <strong>@Model.TotalReservas</strong>
+            </div>
+            <div class="card">
+                <span>Total recaudado</span>
+                <strong>@Model.TotalMonto.ToString("C0")</strong>
+            </div>
+        </div>
+
+        @if (Model.Reservas.Any())
+        {
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Placa</th>
+                        <th>Fecha</th>
+                        <th>Entrada</th>
+                        <th>Salida</th>
+                        <th>Estado</th>
+                        <th>Monto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Reservas)
+                    {
+                        <tr>
+                            <td>@item.IdReserva</td>
+                            <td>@item.Cliente</td>
+                            <td>@item.Placa</td>
+                            <td>@item.Fecha.ToString("dd/MM/yyyy")</td>
+                            <td>@(item.HoraEntrada?.ToString(@"hh\:mm") ?? "--")</td>
+                            <td>@(item.HoraSalida?.ToString(@"hh\:mm") ?? "--")</td>
+                            <td>
+                                <span class="estado @(item.Estado == "Finalizada" ? "estado-finalizada" : "estado-cancelada")">
+                                    @item.Estado
+                                </span>
+                            </td>
+                            <td>@(item.Monto?.ToString("C0") ?? "$0")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No hay reservas para este periodo.</p>
+        }
+
+        <div class="acciones">
+            <button class="btn" onclick="window.print()">Imprimir / Guardar PDF</button>
+            <a class="btn" href="@Url.Action("Reportes", "Empleado")">Volver</a>
+        </div>
+    </div>
+</body>
+</html>
