@@ -26,12 +26,17 @@ var app = builder.Build();
 // Configuración del pipeline HTTP
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Errores/500");
     app.UseHsts();
+}
+else
+{
+    app.UseExceptionHandler("/Errores/500");
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseStatusCodePagesWithReExecute("/Errores/{0}");
 
 app.UseRouting();
 
@@ -43,4 +48,3 @@ app.MapControllerRoute(
     pattern: "{controller=Autenticacion}/{action=Login}/{id?}");
 
 app.Run();
-
