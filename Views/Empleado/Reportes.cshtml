@@ -128,7 +128,10 @@
                         </article>
                         <article class="panel-card table-card">
                             <h2>Historial del día</h2>
-                            <button class="btn btn-primary mb-3">Generar Reporte de Hoy</button>
+                            <a class="btn btn-primary mb-3"
+                               href="@Url.Action("ReportePeriodo", "Empleado", new { periodo = "hoy" })">
+                                Generar Reporte de Hoy
+                            </a>
 
                             <div class="table-wrap">
                                 @if (Model.HistorialHoy.Any())
@@ -187,7 +190,10 @@
                         </article>
                         <article class="panel-card table-card">
                             <h2>Historial de la semana</h2>
-                            <button class="btn btn-warning mb-3">Generar Reporte de la Semana</button>
+                            <a class="btn btn-warning mb-3"
+                               href="@Url.Action("ReportePeriodo", "Empleado", new { periodo = "semana" })">
+                                Generar Reporte de la Semana
+                            </a>
                             <div class="table-wrap">
                                 @if (Model.HistorialSemana.Any())
                                 {
@@ -244,7 +250,10 @@
                             </article>
                             <article class="panel-card table-card">
                                 <h2>Historial del mes</h2>
-                                <button class="btn btn-success mb-3">Generar Reporte del Mes</button>
+                                <a class="btn btn-success mb-3"
+                                   href="@Url.Action("ReportePeriodo", "Empleado", new { periodo = "mes" })">
+                                    Generar Reporte del Mes
+                                </a>
 
                                 <div class="table-wrap">
                                     @if (Model.HistorialMes.Any())
