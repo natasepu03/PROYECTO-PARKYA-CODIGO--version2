@@ -42,7 +42,7 @@ namespace ParkYa.Controllers
         parqueadero = new Parqueadero
         {
             nombre = "Mi Parqueadero",
-            direccion = "Sin direcci�n",
+            direccion = "Sin direccion",
             total_cupos = 0,
             cod_parqueadero = 1
         };
@@ -146,7 +146,7 @@ if (admin == null)
     {
          Administrador = admin,
          EmpleadosActivos = empleados
-            .Where(e => e.estado)
+            .Where(e => e.estado == true)
             .Select(e => new UsuarioViewModel
             {
                 Id = e.id_usuario,
@@ -159,11 +159,11 @@ if (admin == null)
                 TipoDocumento = e.tipo_doc,
                 Rol = "Empleado",
                 RolId = e.Rol_id_rol,
-                Estado = e.estado ? "Activo" : "Inactivo"
+                Estado = e.estado == true ? "Activo" : "Inactivo"
             }).ToList(),
 
         EmpleadosInactivos = empleados
-            .Where(e => !e.estado)
+            .Where(e => e.estado != true)
             .Select(e => new UsuarioViewModel
             {
                 Id = e.id_usuario,
@@ -180,7 +180,7 @@ if (admin == null)
             }).ToList(),
 
         ClientesActivos = clientes
-            .Where(c => c.estado)
+            .Where(c => c.estado == true)
             .Select(c => new UsuarioViewModel
             {
                 Id = c.id_usuario,
@@ -197,7 +197,7 @@ if (admin == null)
             }).ToList(),
 
         ClientesInactivos = clientes
-            .Where(c => !c.estado)
+            .Where(c => c.estado != true)
             .Select(c => new UsuarioViewModel
             {
                 Id = c.id_usuario,
@@ -860,4 +860,5 @@ public class ActualizarTarifaAdminViewModel
    }
    
 }
+
 
