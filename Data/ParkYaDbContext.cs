@@ -27,15 +27,24 @@ namespace ParkYa.Data
                 entity.HasKey(e => e.id_usuario);
                 entity.ToTable("usuario");
 
+                entity.Property(e => e.id_usuario)
+                    .HasColumnName("id_usuario")
+                    .ValueGeneratedOnAdd();
+                entity.Property(e => e.tipo_doc).HasColumnName("tipo_doc");
+                entity.Property(e => e.documento).HasColumnName("documento");
+                entity.Property(e => e.nombre).HasColumnName("nombre");
+                entity.Property(e => e.apellido).HasColumnName("apellido");
+                entity.Property(e => e.correo).HasColumnName("correo");
+                entity.Property(e => e.telefono).HasColumnName("telefono");
+                entity.Property(e => e.contraseña).HasColumnName("contraseña");
+                entity.Property(e => e.estado).HasColumnName("estado");
+                entity.Property(e => e.Rol_id_rol).HasColumnName("Rol_id_rol");
+                entity.Property(e => e.PreguntaSeguridad).HasColumnName("PreguntaSeguridad");
+                entity.Property(e => e.RespuestaSeguridad).HasColumnName("RespuestaSeguridad");
+
                 entity.HasOne(e => e.Rol)
                     .WithMany(r => r.Usuarios)
                     .HasForeignKey(e => e.Rol_id_rol);
-
-                entity.Property(e => e.PreguntaSeguridad) 
-                    .HasColumnName("PreguntaSeguridad"); 
-
-                entity.Property(e => e.RespuestaSeguridad) 
-                    .HasColumnName("RespuestaSeguridad");     
             });
 
             modelBuilder.Entity<Rol>(entity =>
@@ -145,6 +154,11 @@ namespace ParkYa.Data
                 entity.Property(e => e.Vehiculo_id_vehiculo)
                     .HasColumnName("Vehiculo_id_vehiculo");
 
+                entity.Property(e => e.monto)
+                    .HasColumnName("monto");
+
+                entity.Ignore(e => e.pagado);
+
                 entity.Ignore("Tarifaid_tarifas");
                 entity.Ignore("Tarifaid_tarifas1");
 
@@ -193,43 +207,50 @@ namespace ParkYa.Data
                 entity.Ignore("TipoVehiculo");
             });
 
-            modelBuilder.Entity<Venta>(entity =>
-            {
-                entity.HasKey(e => e.id_pago);
-                entity.ToTable("venta");
+           modelBuilder.Entity<Venta>(entity =>
+{
+    entity.HasKey(e => e.id_pago);
 
-                entity.Property(e => e.id_pago)
-                    .HasColumnName("id_pago");
+    entity.ToTable("venta");
 
-                entity.Property(e => e.cod_pago)
-                    .HasColumnName("cod_pago");
+    entity.Property(e => e.id_pago).HasColumnName("id_Pago");
+    entity.Property(e => e.cod_pago).HasColumnName("cod_pago");
+    entity.Property(e => e.monto).HasColumnName("monto");
+    entity.Property(e => e.fecha_pago).HasColumnName("fecha_pago");
+    entity.Property(e => e.metodo_pago).HasColumnName("metodo_pago");
+    entity.Property(e => e.Usuario_id_usuario).HasColumnName("Usuario_id_usuario");
+    entity.Property(e => e.Reserva_id_reserva).HasColumnName("Reserva_id_reserva");
 
-                entity.Property(e => e.monto)
-                    .HasColumnName("monto");
+    entity.Ignore("Usuarioid_usuario");
+entity.Ignore("Usuarioid_usuario1");
+entity.Ignore("Reservaid_reserva");
+entity.Ignore("Reservaid_reserva1");
 
-                entity.Property(e => e.fecha_pago)
-                    .HasColumnName("fecha_pago");
+   
+    entity.HasOne(v => v.Usuario)
+    .WithMany(u => u.Ventas) 
+    .HasForeignKey(v => v.Usuario_id_usuario)
+    .OnDelete(DeleteBehavior.Restrict);
 
-                entity.Property(e => e.metodo_pago)
-                    .HasColumnName("metodo_pago");
+  entity.HasOne(v => v.Reserva)
+    .WithMany(r => r.Ventas) 
+    .HasForeignKey(v => v.Reserva_id_reserva)
+    .OnDelete(DeleteBehavior.Restrict);
+});
 
-                entity.Property(e => e.Usuario_id_usuario)
-                    .HasColumnName("Usuario_id_usuario");
+           modelBuilder.Entity<DetalleVenta>(entity =>
+{
+    entity.HasKey(e => e.idfacturaDetalle);
+    entity.ToTable("detalleventa");
 
-                entity.Property(e => e.Reserva_id_reserva)
-                    .HasColumnName("Reserva_id_reserva");
+    entity.Property(e => e.Pago_id_Pago)
+        .HasColumnName("Pago_id_Pago");
 
-                entity.Ignore("Usuario");
-                entity.Ignore("Reserva");
-                entity.Ignore("Usuarioid_usuario");
-                entity.Ignore("Reservaid_reserva");
-            });
-
-            modelBuilder.Entity<DetalleVenta>(entity =>
-            {
-                entity.HasKey(e => e.idfacturaDetalle);
-                entity.ToTable("detalleventa");
-            });
+    entity.HasOne(d => d.Venta)
+        .WithMany(v => v.DetallesVenta)
+        .HasForeignKey(d => d.Pago_id_Pago)
+        .OnDelete(DeleteBehavior.Restrict);
+});
 
             base.OnModelCreating(modelBuilder);
         }
