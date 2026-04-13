@@ -1,0 +1,109 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 500 - Error interno</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            min-height: 100vh;
+            font-family: "Segoe UI", sans-serif;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            background:
+                radial-gradient(circle at top left, rgba(255,153,102,.16), transparent 28%),
+                radial-gradient(circle at bottom right, rgba(15,68,137,.18), transparent 30%),
+                linear-gradient(135deg, #fff5ef 0%, #eef5ff 45%, #f7fbff 100%);
+            color: #18366f;
+        }
+        .card {
+            width: min(760px, 100%);
+            background: rgba(255,255,255,.9);
+            border: 1px solid rgba(255,255,255,.72);
+            border-radius: 32px;
+            padding: 42px 32px;
+            text-align: center;
+            box-shadow: 0 24px 60px rgba(24,54,111,.12);
+            backdrop-filter: blur(12px);
+        }
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            color: #234f92;
+            font-weight: 700;
+        }
+        .brand-badge {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            color: white;
+            background: linear-gradient(135deg, #0f4489, #56a8ff);
+        }
+        .code {
+            font-size: clamp(84px, 20vw, 150px);
+            line-height: .95;
+            font-weight: 900;
+            color: #d05b2d;
+            margin-bottom: 12px;
+        }
+        h1 {
+            font-size: clamp(28px, 4vw, 42px);
+            margin-bottom: 10px;
+        }
+        p {
+            color: #4e648d;
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            text-decoration: none;
+            border-radius: 18px;
+            padding: 14px 22px;
+            font-weight: 700;
+            transition: .25s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #0f4489, #225d93);
+            color: white;
+            box-shadow: 0 14px 28px rgba(34,93,147,.28);
+        }
+        .btn-secondary {
+            background: #fff1e8;
+            color: #9a4a26;
+            border: 1px solid #ffd7c2;
+        }
+        .btn:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+    <main class="card">
+        <div class="brand">
+            <span class="brand-badge">P</span>
+            <span>ParkYa</span>
+        </div>
+        <div class="code">500</div>
+        <h1>Ocurrio un problema interno</h1>
+        <p>No pudimos completar la solicitud en este momento. Puedes volver al inicio o intentar nuevamente en unos minutos.</p>
+        <div class="actions">
+            <a class="btn btn-primary" href="@Url.Action("Index", "Home")">Ir al inicio</a>
+            <a class="btn btn-secondary" href="javascript:location.reload()">Intentar de nuevo</a>
+        </div>
+    </main>
+</body>
+</html>
