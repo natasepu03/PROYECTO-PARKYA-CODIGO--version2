@@ -1,0 +1,116 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(145deg, #002a68, #0053a6);
+    color: white;
+    height: 100vh;
+    overflow: hidden;
+}
+
+
+.header {
+    padding: 20px 40px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.icono {
+    background: #458cff;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.titulo h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.titulo span {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+
+.contenido {
+    text-align: center;
+    margin-top: 60px;
+}
+
+.codigo-error {
+    font-size: 210px;
+    font-weight: 800;
+    letter-spacing: -15px;
+}
+
+.cero {
+    display: inline-block;
+    width: 170px;
+    height: 170px;
+    background-image: url("img.png");
+    background-size: cover;
+    background-position: center;
+    margin: 0 -5px;
+}
+
+
+.mensaje-principal {
+    font-size: 32px;
+    margin-top: -20px;
+}
+
+.descripcion {
+    margin-top: 10px;
+    font-size: 16px;
+    opacity: 0.85;
+}
+
+.detalle {
+    margin-top: 25px;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+
+.btn-volver {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 26px;
+    background: #1e90ff;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-volver:hover {
+    background: #0b71d1;
+}
+
+
+.acciones {
+    margin-top: 30px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.acciones a {
+    color: #c5dcff;
+    text-decoration: none;
+}
+
+.acciones a:hover {
+    text-decoration: underline;
+}
