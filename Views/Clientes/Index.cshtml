@@ -494,7 +494,7 @@
                                                     <div class="reserva-card-header">
                                                         <h4>Reserva #@reserva.cod_reserva</h4>
                                                         <span class="estado-badge estado-@reserva.Estado.ToString().ToLower()">
-                                                            @reserva.Estado
+                                                            @(reserva.Estado == Estado.Cancelada ? "Cancelada por inasistencia" : reserva.Estado.ToString())
                                                         </span>
                                                     </div>
 

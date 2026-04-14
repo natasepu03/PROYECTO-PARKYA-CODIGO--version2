@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ParkYa")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+085108e6f81ebbdcb424ded11a9d240dd18a2722")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7256c98cf63cbc6068d564f680f60b5e303f55a5")]
 [assembly: System.Reflection.AssemblyProductAttribute("ParkYa")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ParkYa")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

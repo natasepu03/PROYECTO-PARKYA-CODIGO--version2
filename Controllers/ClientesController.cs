@@ -36,6 +36,8 @@ namespace ParkYa.Controllers
             if (usuario == null)
                 return RedirectToAction("Login", "Autenticacion");
 
+            await ActualizarReservasVencidas();
+
             var reservas = await _context.reserva
                 .Where(r => r.Usuario_id_usuario == usuarioId.Value)
                 .Include(r => r.Vehiculo)
@@ -45,6 +47,31 @@ namespace ParkYa.Controllers
             ViewBag.Reservas = reservas;
 
             return View(usuario);
+        }
+
+        private async Task ActualizarReservasVencidas()
+        {
+            var ahora = DateTime.Now;
+
+            var reservas = await _context.reserva.ToListAsync();
+
+            foreach (var reserva in reservas)
+            {
+                if (reserva.Estado == Estado.Pendiente && reserva.hora_reservada != null)
+                {
+                    // Combinar fecha + hora
+                    var fechaHoraReserva = reserva.fecha.Date + reserva.hora_reservada.Value;
+
+                    // Sumar 15 minutos
+                    var limite = fechaHoraReserva.AddMinutes(15);
+
+                    // Si ya pasó el tiempo y no llegó
+                    if (ahora > limite)
+                    {
+                        reserva.Estado = Estado.Cancelada;
+                    }
+                }
+            }
         }
 
         [HttpPost]
