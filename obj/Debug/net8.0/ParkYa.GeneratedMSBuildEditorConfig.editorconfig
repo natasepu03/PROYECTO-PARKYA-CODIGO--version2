@@ -70,6 +70,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbGVhZG9cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/USUARIO/OneDrive/Documentos/PROYECTO-PARKYA-CODIGO- version2/Views/Empleado/ReportePeriodo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbGVhZG9cUmVwb3J0ZVBlcmlvZG8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/USUARIO/OneDrive/Documentos/PROYECTO-PARKYA-CODIGO- version2/Views/Empleado/ReporteReserva.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbGVhZG9cUmVwb3J0ZVJlc2VydmEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -80,6 +84,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/USUARIO/OneDrive/Documentos/PROYECTO-PARKYA-CODIGO- version2/Views/Empleado/Reservas.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbGVhZG9cUmVzZXJ2YXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/USUARIO/OneDrive/Documentos/PROYECTO-PARKYA-CODIGO- version2/Views/Errores/404.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXJyb3Jlc1w0MDQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/USUARIO/OneDrive/Documentos/PROYECTO-PARKYA-CODIGO- version2/Views/Errores/500.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXJyb3Jlc1w1MDAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/USUARIO/OneDrive/Documentos/PROYECTO-PARKYA-CODIGO- version2/Views/Home/Index.cshtml]
