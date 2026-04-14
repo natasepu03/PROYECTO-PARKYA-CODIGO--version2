@@ -9,8 +9,11 @@ namespace ParkYa.Models
         public string metodo_pago { get; set; } = string.Empty;
 
         public int Usuario_id_usuario { get; set; }
-        public int Reserva_id_reserva { get; set; }
+        public Usuario? Usuario { get; set; }
 
-        public List <DetalleVenta> DetallesVenta { get; set; } = new List<DetalleVenta>();
+        public int Reserva_id_reserva { get; set; }
+        public Reserva? Reserva { get; set; }
+
+        public List<DetalleVenta> DetallesVenta { get; set; } = new List<DetalleVenta>();
     }
 }

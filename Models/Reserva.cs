@@ -21,6 +21,9 @@ namespace ParkYa.Models
         public Vehiculo? Vehiculo { get; set; }
         public decimal? monto { get; set;}
         public bool pagado { get; set; } = false;
+
+        public List<Venta> Ventas { get; set; } = 
+        new List<Venta>();
     }
 
     public enum Estado

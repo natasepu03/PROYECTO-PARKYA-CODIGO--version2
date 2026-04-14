@@ -41,6 +41,10 @@
       "PackagePath": "staticwebassets\\assets\\moto.png"
     },
     {
+      "Id": "C:\\Users\\USUARIO\\OneDrive\\Documentos\\PROYECTO-PARKYA-CODIGO- version2\\wwwroot\\css\\404.css",
+      "PackagePath": "staticwebassets\\css\\404.css"
+    },
+    {
       "Id": "C:\\Users\\USUARIO\\OneDrive\\Documentos\\PROYECTO-PARKYA-CODIGO- version2\\wwwroot\\css\\admin.css",
       "PackagePath": "staticwebassets\\css\\admin.css"
     },

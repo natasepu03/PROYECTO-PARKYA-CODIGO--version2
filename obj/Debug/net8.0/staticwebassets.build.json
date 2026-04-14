@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Gb0ljeXVTtxomT0mqUi7B3e3g/urEvwUt9LjMVzLHuo=",
+  "Hash": "KHwdTR/c2Qu97hJuCRsKWYbP0c5w3M8QI1R6Bp5SRSw=",
   "Source": "ParkYa",
   "BasePath": "_content/ParkYa",
   "Mode": "Default",
@@ -205,6 +205,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\moto.png"
+    },
+    {
+      "Identity": "C:\\Users\\USUARIO\\OneDrive\\Documentos\\PROYECTO-PARKYA-CODIGO- version2\\wwwroot\\css\\404.css",
+      "SourceId": "ParkYa",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\USUARIO\\OneDrive\\Documentos\\PROYECTO-PARKYA-CODIGO- version2\\wwwroot\\",
+      "BasePath": "_content/ParkYa",
+      "RelativePath": "css/404.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\404.css"
     },
     {
       "Identity": "C:\\Users\\USUARIO\\OneDrive\\Documentos\\PROYECTO-PARKYA-CODIGO- version2\\wwwroot\\css\\admin.css",

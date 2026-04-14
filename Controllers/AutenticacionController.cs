@@ -87,7 +87,11 @@ namespace ParkYa.Controllers
                 return View(model);
             }
 
-            var docExiste = await _context.usuario.AnyAsync(u => u.documento == documentoNormalizado);
+            int documentoInt = int.Parse(documentoNormalizado);
+
+            var docExiste = await _context.usuario
+                .AnyAsync(u => u.documento == documentoInt);
+
             if (docExiste)
             {
                 ModelState.AddModelError("documento", "El documento ya está registrado.");
@@ -107,7 +111,7 @@ namespace ParkYa.Controllers
                 nombre = model.nombre,
                 apellido = model.apellido,
                 tipo_doc = model.tipo_doc,
-                documento = documentoNormalizado,
+                documento = documentoInt,
                 correo = correoNormalizado,
                 telefono = model.telefono.Trim(),
                 contraseña = BCrypt.Net.BCrypt.HashPassword(model.contraseña),
@@ -224,7 +228,7 @@ namespace ParkYa.Controllers
             if (model.NuevaPassword != model.ConfirmarPassword)
             {
                 TempData["Error"] = "Las contraseñas no coinciden.";
-                model.PreguntaSeguridad = usuarioPaso2.PreguntaSeguridad ??"";
+                model.PreguntaSeguridad = usuarioPaso2.PreguntaSeguridad ?? "";
                 model.MostrarPaso2 = true;
                 return View(model);
             }

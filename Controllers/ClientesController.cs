@@ -68,12 +68,17 @@ namespace ParkYa.Controllers
             if (usuario == null)
                 return RedirectToAction("Login", "Autenticacion");
 
+            if (!int.TryParse(model.Documento, out int documentoInt))
+            {
+                TempData["Error"] = "El documento debe ser numérico.";
+                return RedirectToAction("Index");
+            }
 
             usuario.nombre = model.Nombre;
             usuario.apellido = model.Apellido;
             usuario.correo = model.Correo;
             usuario.telefono = model.Telefono;
-            usuario.documento = model.Documento;
+            usuario.documento = documentoInt;
             usuario.tipo_doc = model.TipoDocumento;
 
             await _context.SaveChangesAsync();
